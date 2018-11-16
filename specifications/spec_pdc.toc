@@ -1,0 +1,48 @@
+\babel@toc {french}{}
+\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}Objet du document}{2}{section.1.1}
+\contentsline {section}{\numberline {1.2}R\IeC {\'e}f\IeC {\'e}rents}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}Phases du projets}{2}{section.1.3}
+\contentsline {section}{\numberline {1.4}Terminologie}{2}{section.1.4}
+\contentsline {chapter}{\numberline {2}L'outil Excel}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Pr\IeC {\'e}sentation g\IeC {\'e}n\IeC {\'e}rale}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Feuille Consolid\IeC {\'e}}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Feuille Projets}{3}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Feuille Probable}{4}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}Feuille Autres}{4}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}Feuille Commandes}{4}{subsection.2.1.5}
+\contentsline {section}{\numberline {2.2}Utilisation}{4}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Quand ?}{4}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Qui ?}{5}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Comment ?}{5}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}But de l'adaptation en application web}{5}{section.2.3}
+\contentsline {chapter}{\numberline {3}User Requirements Specification}{6}{chapter.3}
+\contentsline {section}{\numberline {3.1}D\IeC {\'e}finition}{6}{section.3.1}
+\contentsline {section}{\numberline {3.2}Priorit\IeC {\'e}}{6}{section.3.2}
+\contentsline {section}{\numberline {3.3}Fonctionnalit\IeC {\'e}s obligatoires}{6}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Explication g\IeC {\'e}n\IeC {\'e}rale (1)}{6}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Organisation (1)}{7}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}Formulaire}{8}{subsection.3.3.3}
+\contentsline {subsubsection}{1.1}{8}{subsubsection*.2}
+\contentsline {subsubsection}{1.2}{8}{subsubsection*.3}
+\contentsline {subsubsection}{1.3}{8}{subsubsection*.4}
+\contentsline {subsubsection}{1.4}{9}{subsubsection*.5}
+\contentsline {subsubsection}{1.5}{9}{subsubsection*.6}
+\contentsline {subsubsection}{2.1}{9}{subsubsection*.7}
+\contentsline {subsubsection}{2.2}{9}{subsubsection*.8}
+\contentsline {subsubsection}{3.1}{9}{subsubsection*.9}
+\contentsline {subsubsection}{3.2}{9}{subsubsection*.10}
+\contentsline {subsubsection}{4.1}{10}{subsubsection*.11}
+\contentsline {subsubsection}{4.2}{10}{subsubsection*.12}
+\contentsline {section}{\numberline {3.4}Fonctionnalit\IeC {\'e}s optionnelles}{10}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Explication g\IeC {\'e}n\IeC {\'e}rale (2)}{10}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Organisation (2)}{10}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Fonctionnalit\IeC {\'e}s futures}{11}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Explication g\IeC {\'e}n\IeC {\'e}rale (3)}{11}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.5.2}Organisation (3)}{11}{subsection.3.5.2}
+\contentsline {chapter}{\numberline {4}Software Design Description}{12}{chapter.4}
+\contentsline {section}{\numberline {4.1}D\IeC {\'e}finition}{12}{section.4.1}
+\contentsline {section}{\numberline {4.2}Diagramme de cas d'utilisation}{12}{section.4.2}
+\contentsline {section}{\numberline {4.3}Diagramme de classes}{12}{section.4.3}
+\contentsline {section}{\numberline {4.4}Ergonomie}{13}{section.4.4}
+\contentsline {chapter}{\numberline {5}Annexes}{14}{chapter.5}
