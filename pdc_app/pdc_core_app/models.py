@@ -12,6 +12,9 @@ class Equipe(models.Model):
     )
     nomE = models.CharField(max_length=4, choices=EQUIPE)
 
+    def __str__(self):
+        return f'<Equipe {self.nomE}>'
+
 
 class Collaborateur(models.Model):
     trigrammeC = models.CharField(max_length=3, primary_key=True)
@@ -25,16 +28,25 @@ class Collaborateur(models.Model):
     role = models.CharField(max_length=3, choices=ROLE)
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'<Collaborateur {self.trigrammeC}, {self.nomC}>'
+
 
 class Responsable_E(models.Model):
     idRespE = models.AutoField(primary_key=True)
     RdE = models.OneToOneField(Collaborateur, on_delete=models.CASCADE)
     equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'<Responsable Equipe {self.RdE.nomC}, {self.equipe.nomE}>'
+
 
 class Client(models.Model):
     idClient = models.AutoField(primary_key=True)
     nomCl = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'<Client {self.nomCl}>'
 
 
 class Projet(models.Model):
@@ -45,6 +57,9 @@ class Projet(models.Model):
     RT = models.ForeignKey(Collaborateur, on_delete=models.CASCADE,
                            related_name="respT")
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'<Projet {self.nomP}, {self.client.nomCl}>'
 
 
 class Commande(models.Model):
@@ -62,6 +77,11 @@ class Commande(models.Model):
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'<Commande {self.projet.nomP},'
+        f'{self.projet.client.nomCl},'
+        f'{self.ref}>'
+
 
 class Activite(models.Model):
     idAct = models.AutoField(primary_key=True)
@@ -76,6 +96,9 @@ class Activite(models.Model):
     )
     nomAct = models.CharField(max_length=3, choices=ACTIVITE)
 
+    def __str__(self):
+        return f'<Activite {self.nomAct}>'
+
 
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
@@ -89,6 +112,10 @@ class RepartitionActivite(models.Model):
     def get_list(self, x):
         self.list_RA = json.loads(x)
 
+    def __str__(self):
+        return f'<Repartition Activité {self.activite.nomAct},'
+        f'{self.collaborateur.nomC}>'
+
 
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
@@ -101,3 +128,8 @@ class RepartitionProjet(models.Model):
 
     def get_list(self, x):
         self.list_RA = json.loads(x)
+
+    def __str__(self):
+        return f'<Repartition Projet {self.commande.projet.nomP},'
+        f'{self.commande.ref},'
+        f'{self.collaborateur.nomC}>'
