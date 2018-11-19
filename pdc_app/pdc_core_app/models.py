@@ -97,7 +97,7 @@ class Activite(models.Model):
     nomAct = models.CharField(max_length=3, choices=ACTIVITE)
 
     def __str__(self):
-        return f'{self.nomAct}'
+        return f'{self.get_nomAct_display()}'
 
 
 class RepartitionActivite(models.Model):
