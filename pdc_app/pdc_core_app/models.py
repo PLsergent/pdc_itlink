@@ -13,7 +13,7 @@ class Equipe(models.Model):
     nomE = models.CharField(max_length=4, choices=EQUIPE)
 
     def __str__(self):
-        return f'<Equipe {self.nomE}>'
+        return f'{self.get_nomE_display()}'
 
 
 class Collaborateur(models.Model):
@@ -29,7 +29,7 @@ class Collaborateur(models.Model):
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'<Collaborateur {self.trigrammeC}, {self.nomC}>'
+        return f'{self.trigrammeC}, {self.nomC}, {self.get_role_display()}'
 
 
 class Responsable_E(models.Model):
@@ -38,7 +38,7 @@ class Responsable_E(models.Model):
     equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'<Responsable Equipe {self.RdE.nomC}, {self.equipe.nomE}>'
+        return f'{self.RdE.nomC}, {self.equipe.nomE}'
 
 
 class Client(models.Model):
@@ -46,7 +46,7 @@ class Client(models.Model):
     nomCl = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'<Client {self.nomCl}>'
+        return f'{self.nomCl}'
 
 
 class Projet(models.Model):
@@ -59,7 +59,7 @@ class Projet(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'<Projet {self.nomP}, {self.client.nomCl}>'
+        return f'{self.nomP}, {self.client.nomCl}'
 
 
 class Commande(models.Model):
@@ -78,9 +78,9 @@ class Commande(models.Model):
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'<Commande {self.projet.nomP},'
+        return f'{self.projet.nomP},'
         f'{self.projet.client.nomCl},'
-        f'{self.ref}>'
+        f'{self.ref}'
 
 
 class Activite(models.Model):
@@ -97,7 +97,7 @@ class Activite(models.Model):
     nomAct = models.CharField(max_length=3, choices=ACTIVITE)
 
     def __str__(self):
-        return f'<Activite {self.nomAct}>'
+        return f'{self.nomAct}'
 
 
 class RepartitionActivite(models.Model):
@@ -113,8 +113,8 @@ class RepartitionActivite(models.Model):
         self.list_RA = json.loads(x)
 
     def __str__(self):
-        return f'<Repartition Activité {self.activite.nomAct},'
-        f'{self.collaborateur.nomC}>'
+        return f'{self.activite.nomAct},'
+        f'{self.collaborateur.nomC}'
 
 
 class RepartitionProjet(models.Model):
@@ -130,6 +130,6 @@ class RepartitionProjet(models.Model):
         self.list_RA = json.loads(x)
 
     def __str__(self):
-        return f'<Repartition Projet {self.commande.projet.nomP},'
+        return f'{self.commande.projet.nomP},'
         f'{self.commande.ref},'
-        f'{self.collaborateur.nomC}>'
+        f'{self.collaborateur.nomC}'
