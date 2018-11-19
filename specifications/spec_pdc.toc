@@ -22,7 +22,7 @@
 \contentsline {section}{\numberline {3.3}Fonctionnalit\IeC {\'e}s obligatoires}{6}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Explication g\IeC {\'e}n\IeC {\'e}rale (1)}{6}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Organisation (1)}{7}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Formulaire}{8}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.3}Formulaires}{8}{subsection.3.3.3}
 \contentsline {subsubsection}{1.1}{8}{subsubsection*.2}
 \contentsline {subsubsection}{1.2}{8}{subsubsection*.3}
 \contentsline {subsubsection}{1.3}{8}{subsubsection*.4}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.11.9)  16 NOV 2018 17:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.11.9)  19 NOV 2018 09:26
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1767,7 +1767,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 715.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 715.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 715.
 Package rerunfilecheck Info: File `spec_pdc.out' has not changed.
-(rerunfilecheck)             Checksum: 217176432AA6B5440537A2DB94DA9E80;2410.
+(rerunfilecheck)             Checksum: FDFA4CDA219BAFF500E56B9F26533272;2411.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1799,7 +1799,7 @@ onts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb>
-Output written on spec_pdc.pdf (18 pages, 331003 bytes).
+Output written on spec_pdc.pdf (18 pages, 330999 bytes).
 PDF statistics:
  750 PDF objects out of 1000 (max. 8388607)
  360 compressed objects within 4 object streams
