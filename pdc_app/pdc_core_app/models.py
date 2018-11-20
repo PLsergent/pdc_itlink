@@ -1,6 +1,6 @@
 from django.db import models
-from django.core.validators import MinValueValidator
-import json
+from month.models import MonthField
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Equipe(models.Model):
@@ -78,9 +78,9 @@ class Commande(models.Model):
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.projet.nomP},'
-        f'{self.projet.client.nomCl},'
-        f'{self.ref}'
+        return f'{self.projet.nomP}, ' + \
+            f'{self.projet.client.nomCl}, ' + \
+            f'{self.ref}'
 
 
 class Activite(models.Model):
@@ -100,36 +100,41 @@ class Activite(models.Model):
         return f'{self.get_nomAct_display()}'
 
 
+class Pourcentage(models.Model):
+    pourcentage = models.PositiveIntegerField(
+        validators=[MaxValueValidator(100)],
+    )
+
+    def __str__(self):
+        return f'{self.pourcentage}'
+
+
+class RDate(models.Model):
+    month = MonthField("Month Value", help_text="some help...")
+    pourcentage = models.ForeignKey(Pourcentage, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.month}, {self.pourcentage.pourcentage}'
+
+
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
     activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
     collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
-    list_RA = models.CharField(max_length=1000)
-
-    def set_list(self, x):
-        self.list_RA = json.dumps(x)
-
-    def get_list(self, x):
-        self.list_RA = json.loads(x)
+    list_RA = models.ManyToManyField(RDate)
 
     def __str__(self):
-        return f'{self.activite.nomAct},'
-        f'{self.collaborateur.nomC}'
+        return f'{self.activite.nomAct}, ' + \
+            f'{self.collaborateur.nomC}'
 
 
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
     commande = models.ForeignKey(Commande, on_delete=models.CASCADE)
     collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
-    list_R = models.CharField(max_length=1000)
-
-    def set_list(self, x):
-        self.list_RA = json.dumps(x)
-
-    def get_list(self, x):
-        self.list_RA = json.loads(x)
+    list_R = models.ManyToManyField(RDate)
 
     def __str__(self):
-        return f'{self.commande.projet.nomP},'
-        f'{self.commande.ref},'
-        f'{self.collaborateur.nomC}'
+        return f'{self.commande.projet.nomP}, ' + \
+            f'{self.commande.ref}, ' + \
+            f'{self.collaborateur.nomC}'
