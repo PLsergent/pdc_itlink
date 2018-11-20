@@ -1,4 +1,37 @@
 {% extends "./base.html" %}
 
 {% block content %}
+
+<div class="tile is-parent">
+   <article class="tile is-child notification is-info">
+     <p class="title is-2">PDC IT link</p>
+     <p class="subtitle">Web Application Python/Django</p>
+   </article>
+ </div>
+ <div class="tile is-parent">
+   <a href='/pdc/projets' class="tile is-child box">
+     <p class="subtitle is-3">Projets</p>
+     <p class="subtitle">Accéder à la liste des projets et aux répartitions.</p>
+   </a>
+ </div>
+ <div class="tile is-parent">
+   <a href='/pdc/collaborateurs' class="tile is-child box">
+     <p class="subtitle is-3">Collaborateurs</p>
+     <p class="subtitle">Accéder à la liste des collaborateurs et à leurs charges
+     de travail.</p>
+   </a>
+ </div>
+ <div class="tile is-parent">
+   <a href='/pdc/commandes' class="tile is-child box">
+     <p class="subtitle is-3">Commandes</p>
+     <p class="subtitle">Accéder à la liste des commandes passées.</p>
+   </a>
+ </div>
+ <div class="tile is-parent">
+   <a href='/pdc/autres' class="tile is-child box">
+     <p class="subtitle is-3">Autres</p>
+     <p class="subtitle">Accéder à la répartition des activités.</p>
+   </a>
+ </div>
+
 {% endblock %}
