@@ -124,7 +124,7 @@ class RepartitionActivite(models.Model):
     list_RA = models.ManyToManyField(RDate)
 
     def __str__(self):
-        return f'{self.activite.nomAct}, ' + \
+        return f'{self.activite.get_nomAct_display()}, ' + \
             f'{self.collaborateur.nomC}'
 
 
