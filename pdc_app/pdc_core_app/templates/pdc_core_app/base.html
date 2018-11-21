@@ -5,7 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-      <title>PDC for IT link</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    {% load static %}
+    <script src="{% static "pdc_core_app/projet.js" %}"></script>
+
+      {% if page_title %}
+      <title>{{ page_title }}</title>
+      {% else %}
+      <title>PDC IT link</title>
+      {% endif %}
   </head>
   <body>
     <nav class='navbar is-primary' role='navigation' aria-label='main navigation'>
@@ -23,7 +33,7 @@
       </div>
     </nav>
     <div class="container is-fluid">
-   {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
    </div>
   </body>
 </html>
