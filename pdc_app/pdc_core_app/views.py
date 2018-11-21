@@ -11,7 +11,7 @@ def index(request):
 def projets(request):
     page_title = 'Projets'
     list_month_display = []
-    for i in range(0, 12):
+    for i in range(0, 20):
         date_month_after = datet.now() + rd.relativedelta(months=i)
         list_month_display.append((date_month_after.month, date_month_after.year))
     repartitions = RepartitionProjet.objects.all()

@@ -1,3 +1,11 @@
 $(document).ready( function () {
-    $('#myTable').DataTable();
-} )
+    $('#myTable').DataTable({
+      scrollX:        true,
+      scrollCollapse: true,
+      paging:         false,
+      fixedColumns: {
+        leftColumns: 8
+      }
+    }
+    );
+} );
