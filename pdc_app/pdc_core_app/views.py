@@ -26,13 +26,13 @@ def projets(request):
                      rp.commande.projet.RdP.trigrammeC,
                      rp.commande.projet.RT.trigrammeC, rp.commande.etablie))
         list_month_repartition = []
-        for some in rp.list_R.all():
+        for some in rp.list_R.filter(month__gte=datet.now()):
             list_month_repartition.append(some.month)
 
         for lm in list_month:
             if lm in list_month_repartition:
                 i = list_month_repartition.index(lm)
-                pourc = rp.list_R.all()[i].pourcentage
+                pourc = rp.list_R.filter(month__gte=datet.now())[i].pourcentage
                 list.append(pourc)
             else:
                 list.append(0)
