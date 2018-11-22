@@ -1,9 +1,10 @@
 {% extends "./base.html" %}
 
-{% load static %}
-<script src="{% static "pdc_core_app/projet.js" %}"></script>
-
 {% block content %}
+
+{% load static %}
+<script src="{% static "pdc_core_app/projets.js" %}"></script>
+
 <br>
 <table id='myTable' class = "table is-fullwidth">
   <thead>
@@ -15,7 +16,6 @@
       <th>RdP</th>
       <th>RT</th>
       <th>Cmd</th>
-      <th>|</th>
       {% for month in list_month_display %}
         {% if month.0 > 9 %}
         <th>{{ month.0 }}-{{ month.1 }}</th>
@@ -26,36 +26,11 @@
     </tr>
   </thead>
   <tbody>
-    {% for rp in repartitions %}
+    {% for sku in all %}
     <tr>
-      <td>{{ rp.commande.equipe.nomE }}</td>
-      <td>{{ rp.collaborateur.trigrammeC }}</td>
-      <td>{{ rp.commande.projet.client.nomCl }}</td>
-      <td>{{ rp.commande.projet.nomP }}</td>
-      <td>{{ rp.commande.projet.RdP.trigrammeC }}</td>
-      <td>{{ rp.commande.projet.RT.trigrammeC }}</td>
-      <td>{{ rp.commande.etablie }}</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      {% for rp in sku %}
+        <td>{{ rp }}</td>
+      {% endfor %}
     </tr>
     {% endfor %}
   </tbody>

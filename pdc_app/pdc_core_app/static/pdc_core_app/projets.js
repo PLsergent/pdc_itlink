@@ -4,7 +4,7 @@ $(document).ready( function () {
       scrollCollapse: true,
       paging:         false,
       fixedColumns: {
-        leftColumns: 8
+        leftColumns: 7
       }
     }
     );

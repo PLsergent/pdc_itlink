@@ -2,6 +2,7 @@ from django.shortcuts import render
 from datetime import datetime as datet
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet
+import month
 
 
 def index(request):
@@ -11,14 +12,35 @@ def index(request):
 def projets(request):
     page_title = 'Projets'
     list_month_display = []
-    for i in range(0, 20):
+    list_month = []
+    all = []
+    for i in range(0, 13):
         date_month_after = datet.now() + rd.relativedelta(months=i)
         list_month_display.append((date_month_after.month, date_month_after.year))
+        list_month.append(month.Month(date_month_after.year, date_month_after.month))
     repartitions = RepartitionProjet.objects.all()
+    for rp in repartitions:
+        list = []
+        list.extend((rp.commande.equipe.nomE, rp.collaborateur.trigrammeC,
+                     rp.commande.projet.client.nomCl, rp.commande.projet.nomP,
+                     rp.commande.projet.RdP.trigrammeC,
+                     rp.commande.projet.RT.trigrammeC, rp.commande.etablie))
+        list_month_repartition = []
+        for some in rp.list_R.all():
+            list_month_repartition.append(some.month)
+
+        for lm in list_month:
+            if lm in list_month_repartition:
+                i = list_month_repartition.index(lm)
+                pourc = rp.list_R.all()[i].pourcentage
+                list.append(pourc)
+            else:
+                list.append(0)
+        all.append(list)
     return render(request, 'pdc_core_app/projets.html',
                   {'page_title': page_title,
                    'list_month_display': list_month_display,
-                   'repartitions': repartitions})
+                   'all': all})
 
 
 def collaborateurs(request):
