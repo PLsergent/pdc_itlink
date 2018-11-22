@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "16d59d39fd66f9db6d3fb26a66019a1ca47d5b1857cbd1084a373fc07b18ce11"
+            "sha256": "a4baf086f515929f42d6626e8b55cc65111be3cd17c38147f5f897b70e271fd4"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,13 @@
             ],
             "index": "pypi",
             "version": "==0.1.1"
+        },
+        "django-multiforloop": {
+            "hashes": [
+                "sha256:4a4c1832fbb2769e1b07e8c03c6cdcbfb2d361e22f15363007d311a914e7dd6b"
+            ],
+            "index": "pypi",
+            "version": "==0.2.1"
         },
         "python-dateutil": {
             "hashes": [
