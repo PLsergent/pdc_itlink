@@ -38,7 +38,7 @@ class Responsable_E(models.Model):
     equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.RdE.nomC}, {self.equipe.nomE}'
+        return f'{self.RdE.trigrammeC}'
 
 
 class Client(models.Model):
