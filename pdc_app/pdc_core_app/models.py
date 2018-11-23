@@ -121,7 +121,7 @@ class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
     activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
     collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
-    list_RA = models.ManyToManyField(RDate)
+    list_R = models.ManyToManyField(RDate)
 
     def __str__(self):
         return f'{self.activite.get_nomAct_display()}, ' + \

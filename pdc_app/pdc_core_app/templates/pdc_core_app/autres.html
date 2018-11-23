@@ -2,4 +2,34 @@
 
 {% block content %}
 
+{% load static %}
+<script src="{% static "pdc_core_app/autres.js" %}"></script>
+
+<br>
+<table id='myTable' class = "table is-fullwidth">
+  <thead>
+    <tr>
+      <th>Collab</th>
+      <th>Equipe</th>
+      <th>Activité</th>
+      {% for month in list_month_display %}
+        {% if month.0 > 9 %}
+        <th>{{ month.0 }}-{{ month.1 }}</th>
+        {% else %}
+        <th>0{{ month.0 }}-{{ month.1 }}</th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for sku in all %}
+    <tr>
+      {% for rp in sku %}
+        <td>{{ rp }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
 {% endblock %}
