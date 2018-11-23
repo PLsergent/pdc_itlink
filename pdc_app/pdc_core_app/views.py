@@ -38,8 +38,8 @@ def get_repartition(type):
                          rp.commande.projet.RT.trigrammeC,
                          rp.commande.etablie))
         elif type == 'A':
-            list.extend((rp.collaborateur.trigrammeC,
-                         rp.collaborateur.equipe.nomE,
+            list.extend((rp.collaborateur.equipe.nomE,
+                         rp.collaborateur.trigrammeC,
                          rp.activite))
         else:
             return None

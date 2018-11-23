@@ -27,10 +27,26 @@
         </a>
       </div>
         <div class='navbar-start'>
+          {% if page_title == 'Projets' %}
+          <a href='/pdc/projets' class='navbar-item is-active'>Projets</a>
+          {% else %}
           <a href='/pdc/projets' class='navbar-item'>Projets</a>
+          {% endif %}
+          {% if page_title == 'Collaborateurs' %}
+          <a href='/pdc/collaborateurs' class='navbar-item is-active'>Collaborateurs</a>
+          {% else %}
           <a href='/pdc/collaborateurs' class='navbar-item'>Collaborateurs</a>
+          {% endif %}
+          {% if page_title == 'Commandes' %}
+          <a href='/pdc/commandes' class='navbar-item is-active'>Commandes</a>
+          {% else %}
           <a href='/pdc/commandes' class='navbar-item'>Commandes</a>
+          {% endif %}
+          {% if page_title == 'Autres' %}
+          <a href='/pdc/autres' class='navbar-item is-active'>Autres</a>
+          {% else %}
           <a href='/pdc/autres' class='navbar-item'>Autres</a>
+          {% endif %}
       </div>
     </nav>
     {% if page_title %}
