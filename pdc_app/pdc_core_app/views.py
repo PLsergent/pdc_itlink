@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime as datet
 from dateutil import relativedelta as rd
-from .models import RepartitionProjet, RepartitionActivite
+from .models import RepartitionProjet, RepartitionActivite, Commande
 import month
 
 
@@ -83,8 +83,19 @@ def collaborateurs(request):
 
 def commandes(request):
     page_title = 'Commandes'
+    all = []
+    commandes = Commande.objects.all()
+
+    for cmd in commandes:
+        list = []
+        list.extend((cmd.equipe.nomE, cmd.date_commande, cmd.projet.nomP,
+                     cmd.projet.RdP.trigrammeC, cmd.charges, cmd.ref,
+                     cmd.etablie, cmd.commentaire))
+        all.append(list)
+
     return render(request, 'pdc_core_app/commandes.html',
-                  {'page_title': page_title})
+                  {'page_title': page_title,
+                   'all': all})
 
 
 def autres(request):
