@@ -188,7 +188,7 @@ def autres(request):
 class AjoutProjet(SuccessMessageMixin, CreateView):
     model = Projet
     fields = ('nomP', 'RdP', 'RT', 'client')
-    template_name = 'pdc_core_app/add.html'
+    template_name = 'pdc_core_app/projet_add.html'
     success_url = reverse_lazy('projets')
     success_message = "%(projet) a été créé avec succès."
 
@@ -206,6 +206,6 @@ class AjoutProjet(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         exist = Projet.objects.filter(nomP=form.cleaned_data['nomP'])
         if exist:
-            form.add_error('nomP', 'Already exist')
+            form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)
         return super(AjoutProjet, self).form_valid(form)

@@ -64,9 +64,19 @@
       {% for message in messages %}
       <div id="notif" class='notification is-success'>
         <button class="delete"></button>
-        {{ message }}
+        <p class="subtitle">
+          {{ message }}
+        </p>
       </div>
       {% endfor %}
+  {% endif %}
+  {% if form.errors %}
+      <div id="notif" class='notification is-danger'>
+        <button class="delete"></button>
+        <p class="subtitle">
+          Error(s) in form.
+        </p>
+      </div>
   {% endif %}
     <div class="container is-fluid">
       {% block content %}{% endblock %}

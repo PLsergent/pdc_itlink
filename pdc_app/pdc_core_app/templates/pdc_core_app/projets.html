@@ -4,48 +4,19 @@
 
 {% load static %}
 <script src="{% static "pdc_core_app/projets.js" %}"></script>
+<nav class="level">
+  <div class="level-left">
 <div class="columns">
-  <div class="column is-half">
+  <div class="column">
     <a href="/pdc/projets/add" class="button is-link is-outlined is-medium">
        <span>Ajouter projet</span>
        <span class="icon">
          <i class="fas fa-plus"></i>
        </span>
      </a>
-    <a class="button is-black is-outlined is-medium">
-        <span>Modifier projet</span>
-        <span class="icon">
-          <i class="fas fa-edit"></i>
-        </span>
-      </a>
-    <a class="button is-danger is-outlined is-medium">
-      <span>Supprimer projet</span>
-      <span class="icon">
-        <i class="fas fa-times"></i>
-      </span>
-    </a>
-  </div>
-  <div class="column">
-    <div class="columns">
-      <div class="column">
-      <div class="field is-flex">
-        <input id="switchAll" type="checkbox" name="switchAll" class="switch is-medium" checked="checked">
-        <label for="switchAll">All</label>
-      </div></div>
-      <div class="column">
-      <div class="field is-flex">
-        <input id="switchE" type="checkbox" name="switchE" class="switch is-medium">
-        <label for="switchE">Etabli</label>
-      </div></div>
-      <div class="column">
-      <div class="field is-flex">
-        <input id="switchP" type="checkbox" name="switchP" class="switch is-medium">
-        <label for="switchP">Probable</label>
-      </div></div>
-    </div>
-  </div>
-  <div class="column">
-    <a class="button is-primary is-outlined is-medium is-pulled-right">
+   </div>
+   <div class="column">
+    <a class="button is-primary is-outlined is-medium">
       <span>Affecter collaborateur</span>
       <span class="icon">
         <i class="fas fa-folder-plus"></i>
@@ -53,8 +24,29 @@
     </a>
   </div>
 </div>
-
-<br>
+</div>
+<div class="level-right">
+<div class="column">
+  <div class="columns">
+    <div class="column">
+    <div class="field is-flex">
+      <input id="switchAll" type="checkbox" name="switchAll" class="switch is-medium" checked="checked">
+      <label for="switchAll">All</label>
+    </div></div>
+    <div class="column">
+    <div class="field is-flex">
+      <input id="switchE" type="checkbox" name="switchE" class="switch is-medium">
+      <label for="switchE">Etabli</label>
+    </div></div>
+    <div class="column">
+    <div class="field is-flex">
+      <input id="switchP" type="checkbox" name="switchP" class="switch is-medium">
+      <label for="switchP">Probable</label>
+    </div></div>
+  </div>
+</div>
+</div>
+</nav>
 
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
