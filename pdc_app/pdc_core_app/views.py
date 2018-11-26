@@ -2,7 +2,10 @@ from django.shortcuts import render
 from datetime import datetime as datet
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
-from .models import Collaborateur, Responsable_E
+from .models import Collaborateur, Responsable_E, Projet
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 import month
 
 
@@ -180,3 +183,29 @@ def autres(request):
                   {'page_title': page_title,
                    'list_month_display': list_month_display,
                    'all': all})
+
+
+class AjoutProjet(SuccessMessageMixin, CreateView):
+    model = Projet
+    fields = ('nomP', 'RdP', 'RT', 'client')
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('projets')
+    success_message = "%(projet) a été créé avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Ajout projet'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            projet=self.object.nomP,
+        )
+
+    def form_valid(self, form):
+        exist = Projet.objects.filter(nomP=form.cleaned_data['nomP'])
+        if exist:
+            form.add_error('nomP', 'Already exist')
+            return self.form_invalid(form)
+        return super(AjoutProjet, self).form_valid(form)

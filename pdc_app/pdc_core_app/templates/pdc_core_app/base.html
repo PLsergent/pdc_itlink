@@ -13,6 +13,9 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
 
+    {% load static %}
+    <script src="{% static "pdc_core_app/base.js" %}"></script>
+
       {% if page_title %}
       <title>{{ page_title }}</title>
       {% else %}
@@ -57,6 +60,14 @@
       </div>
     </div>
     {% endif %}
+    {% if messages %}
+      {% for message in messages %}
+      <div id="notif" class='notification is-success'>
+        <button class="delete"></button>
+        {{ message }}
+      </div>
+      {% endfor %}
+  {% endif %}
     <div class="container is-fluid">
       {% block content %}{% endblock %}
    </div>

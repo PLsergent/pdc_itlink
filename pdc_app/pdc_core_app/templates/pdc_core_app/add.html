@@ -1,0 +1,14 @@
+{% extends './base.html' %}
+
+{% block content %}
+<br>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button class="button is-link is-medium" type="submit">Save</button>
+  </form>
+
+
+{% endblock %}
