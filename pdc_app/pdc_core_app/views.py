@@ -65,6 +65,36 @@ def get_repartition(type):
     return list_month, list_month_display, all
 
 
+# get_repartition_without_information, used in collaborateurs()
+def get_repartition_wo_inf(type, collab):
+    list_month, list_month_display = get_month(18)
+
+    if type == 'P':
+        repartition = RepartitionProjet.objects.filter(collaborateur=collab)
+    elif type == 'A':
+        repartition = RepartitionActivite.objects.filter(collaborateur=collab)
+    else:
+        return None
+
+    pourcentages = []
+    for rp in repartition:
+        listP = []
+        list_month_repartition = []
+        for some in rp.list_R.filter(month__gte=datet.now()):
+            list_month_repartition.append(some.month)
+
+        for lm in list_month:
+            if lm in list_month_repartition:
+                i = list_month_repartition.index(lm)
+                pourc_collab = rp.list_R.filter(
+                    month__gte=datet.now())[i].pourcentage.pourcentage
+                listP.append(pourc_collab)
+            else:
+                listP.append(0)
+        pourcentages.append(listP)
+    return pourcentages
+
+
 def index(request):
     return render(request, 'pdc_core_app/index.html')
 
@@ -99,43 +129,13 @@ def collaborateurs(request):
         list = []
         rde = Responsable_E.objects.filter(equipe=collab.equipe)
         list.extend((collab.equipe.nomE, collab.trigrammeC, rde[0]))
-        repartitionP = RepartitionProjet.objects.filter(collaborateur=collab)
-        repartitionA = RepartitionActivite.objects.filter(collaborateur=collab)
-        pourcentages = []
-    # Dans la liste pourcentages on va stocker des listes, chaque liste
+    # Dans la liste pourcentagesP on va stocker des listes, chaque liste
     # correspond aux pourcentages par mois d'un projet
-        for rp in repartitionP:
-            listP = []
-            list_month_repartition = []
-            for some in rp.list_R.filter(month__gte=datet.now()):
-                list_month_repartition.append(some.month)
-
-            for lm in list_month:
-                if lm in list_month_repartition:
-                    i = list_month_repartition.index(lm)
-                    pourc_collab = rp.list_R.filter(
-                        month__gte=datet.now())[i].pourcentage.pourcentage
-                    listP.append(pourc_collab)
-                else:
-                    listP.append(0)
-            pourcentages.append(listP)
+        pourcentagesP = get_repartition_wo_inf('P', collab)
     # De même pour les activité, on fait une liste des pourcentages par
-    # activité et on les stocks dans la liste pourcentage
-        for ra in repartitionA:
-            listP = []
-            list_month_repartition = []
-            for some in ra.list_R.filter(month__gte=datet.now()):
-                list_month_repartition.append(some.month)
-
-            for lm in list_month:
-                if lm in list_month_repartition:
-                    i = list_month_repartition.index(lm)
-                    pourc_collab = ra.list_R.filter(
-                        month__gte=datet.now())[i].pourcentage.pourcentage
-                    listP.append(pourc_collab)
-                else:
-                    listP.append(0)
-            pourcentages.append(listP)
+    # activité et on les stocks dans la liste pourcentagesA
+        pourcentagesA = get_repartition_wo_inf('A', collab)
+        pourcentages = pourcentagesP + pourcentagesA
     # Maintenant on a donc une liste de liste contenant les pourcentages par
     # projet et par activité. Ainsi on peut faire la somme de tous les éléments
     # de même rang pour avoir la somme des pourcentages par mois.
