@@ -115,8 +115,8 @@ def collaborateurs(request):
     page_title = 'Collaborateurs'
     list_month_display = []
     list_month = []
-# Liste (all) finale contenant des listes, chaque liste contenant les
-# informations relative à un collaborateur
+    # Liste finale (all) contenant des listes, chaque liste contenant les
+    # informations relative à un collaborateur
     all = []
     list_month, list_month_display = get_month(18)
     collaborateurs = Collaborateur.objects.all()
