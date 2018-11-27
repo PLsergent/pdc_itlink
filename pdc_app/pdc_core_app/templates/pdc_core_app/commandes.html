@@ -5,6 +5,35 @@
 {% load static %}
 <script src="{% static "pdc_core_app/commandes.js" %}"></script>
 
+<nav class="level">
+  <div class="level-left">
+    <div class="columns">
+      <div class="column">
+       <a href="/pdc/clients/add" class="button is-warning is-medium">
+         <span>Ajouter client</span>
+         <span class="icon">
+           <i class="fas fa-plus"></i>
+         </span>
+       </a>
+       <br>
+       <a href="/pdc/data/#myTable2" class="button is-dark is-outlined is-small">
+          <span>Liste clients</span>
+          <span class="icon">
+            <i class="fas fa-list"></i>
+          </span>
+        </a>
+     </div>
+      <div class="column">
+       <a class="button is-success is-medium">
+         <span>Passer commande</span>
+         <span class="icon">
+           <i class="fas fa-terminal"></i>
+         </span>
+       </a>
+     </div>
+    </div>
+  </div>
+</nav>
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
