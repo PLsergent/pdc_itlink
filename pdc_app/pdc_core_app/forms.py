@@ -14,3 +14,14 @@ class AjoutProjetForm(forms.ModelForm):
         self.fields['client'].queryset = Client.objects.none()
         self.fields['RdP'].queryset = Collaborateur.objects.none()
         self.fields['RT'].queryset = Collaborateur.objects.none()
+
+
+class AjoutClientForm(forms.ModelForm):
+
+    class Meta:
+        model = Client
+        fields = ('nomCl',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nomCl'].label = "Nom client"

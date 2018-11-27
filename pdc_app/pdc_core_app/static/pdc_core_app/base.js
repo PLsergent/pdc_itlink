@@ -1,5 +1,5 @@
-$(document).on('click', '.notification > button.delete', function() {
-    $(this).parent().addClass('is-hidden');
+$(document).on('click', '.notification', function() {
+    $(this).addClass('is-hidden');
     return false;
 });
 

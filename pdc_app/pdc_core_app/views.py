@@ -7,6 +7,7 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 import month
+from .forms import AjoutClientForm
 
 
 def get_month(number_month):
@@ -222,3 +223,29 @@ class AjoutProjet(SuccessMessageMixin, CreateView):
             form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)
         return super(AjoutProjet, self).form_valid(form)
+
+
+class AjoutClient(SuccessMessageMixin, CreateView):
+    model = Client
+    form_class = AjoutClientForm
+    template_name = 'pdc_core_app/client_add.html'
+    success_url = reverse_lazy('data')
+    success_message = "%(client) a été créé avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Ajout client'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            client=self.object.nomCl,
+        )
+
+    def form_valid(self, form):
+        exist = Client.objects.filter(nomCl=form.cleaned_data['nomCl'])
+        if exist:
+            form.add_error('nomCl', 'This name already exist')
+            return self.form_invalid(form)
+        return super(AjoutClient, self).form_valid(form)

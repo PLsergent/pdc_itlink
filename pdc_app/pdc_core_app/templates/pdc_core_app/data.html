@@ -5,6 +5,37 @@
 {% load static %}
 <script src="{% static "pdc_core_app/data.js" %}"></script>
 
+<nav class="level">
+  <div class="level-left">
+<div class="columns">
+  <div class="column">
+    <a href="/pdc/projets/add" class="button is-link is-outlined is-medium">
+       <span>Ajouter projet</span>
+       <span class="icon">
+         <i class="fas fa-plus"></i>
+       </span>
+     </a>
+   </div>
+   <div class="column">
+    <a href="/pdc/clients/add" class="button is-danger is-outlined is-medium">
+      <span>Ajouter client</span>
+      <span class="icon">
+        <i class="fas fa-plus"></i>
+      </span>
+    </a>
+  </div>
+  <div class="column">
+   <a class="button is-black is-outlined is-medium">
+     <span>Ajouter collaborateur</span>
+     <span class="icon">
+       <i class="fas fa-plus"></i>
+     </span>
+   </a>
+ </div>
+</div>
+</div>
+</nav>
+
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
