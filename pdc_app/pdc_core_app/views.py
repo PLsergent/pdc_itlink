@@ -2,7 +2,7 @@ from django.shortcuts import render
 from datetime import datetime as datet
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
-from .models import Collaborateur, Responsable_E, Projet
+from .models import Collaborateur, Responsable_E, Projet, Client
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
@@ -183,6 +183,19 @@ def autres(request):
                   {'page_title': page_title,
                    'list_month_display': list_month_display,
                    'all': all})
+
+
+def data(request):
+    page_title = 'Données'
+    projets = Projet.objects.all()
+    clients = Client.objects.all()
+    collabs = Collaborateur.objects.all()
+
+    return render(request, 'pdc_core_app/data.html',
+                  {'page_title': page_title,
+                   'projets': projets,
+                   'clients': clients,
+                   'collabs': collabs})
 
 
 class AjoutProjet(SuccessMessageMixin, CreateView):

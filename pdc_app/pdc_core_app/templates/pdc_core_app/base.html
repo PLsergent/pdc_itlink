@@ -51,6 +51,11 @@
           {% else %}
           <a href='/pdc/autres' class='navbar-item'>Autres</a>
           {% endif %}
+          {% if page_title == 'Données' %}
+          <a href='/pdc/data' class='navbar-item is-active'>Données</a>
+          {% else %}
+          <a href='/pdc/data' class='navbar-item'>Données</a>
+          {% endif %}
       </div>
     </nav>
     {% if page_title %}
