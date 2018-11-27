@@ -57,7 +57,35 @@
           <a href='/pdc/data' class='navbar-item'>Données</a>
           {% endif %}
       </div>
+      <div class="navbar-end">
+          <a href='/pdc/projets/add' class='button is-link is-medium'>
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          </a>
+          <a href='/pdc/clients/add' class='button is-warning is-medium'>
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+        </a>
+        <a href='/pdc/collaborateurs/add' class='button is-black is-medium'>
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+        </a>
+        <a href='/pdc/commandes/add' class='button is-success is-medium'>
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+        </a>
+        <a class='button is-danger is-medium'>
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+        </a>
+      </div>
     </nav>
+
     {% if page_title %}
     <div class="container is-fluid">
       <div class="notification">
