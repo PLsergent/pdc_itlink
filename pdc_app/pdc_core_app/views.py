@@ -249,3 +249,30 @@ class AjoutClient(SuccessMessageMixin, CreateView):
             form.add_error('nomCl', 'This name already exist')
             return self.form_invalid(form)
         return super(AjoutClient, self).form_valid(form)
+
+
+class AjoutCollab(SuccessMessageMixin, CreateView):
+    model = Collaborateur
+    fields = ('trigrammeC', 'nomC', 'prenomC', 'role', 'equipe')
+    template_name = 'pdc_core_app/collaborateur_add.html'
+    success_url = reverse_lazy('collaborateurs')
+    success_message = "%(collab) a été créé avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Ajout collaborateur'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            collab=self.object.nomC,
+        )
+
+    def form_valid(self, form):
+        exist_name = Collaborateur.objects.filter(
+                    nomC=form.cleaned_data['nomC'])
+        if exist_name:
+            form.add_error('nomC', 'This name already exist')
+            return self.form_invalid(form)
+        return super(AjoutCollab, self).form_valid(form)
