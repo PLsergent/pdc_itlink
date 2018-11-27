@@ -13,6 +13,8 @@ urlpatterns = [
     path('collaborateurs/add/', views.AjoutCollab.as_view(),
          name='AjoutCollab'),
     path('commandes/', views.commandes, name='commandes'),
+    path('commandes/add/', views.PasserCommande.as_view(),
+         name='PasserCommande'),
     path('autres/', views.autres, name='autres'),
     path('data/', views.data, name='data')
 ]

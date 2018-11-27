@@ -1,19 +1,5 @@
 from django import forms
-from .models import Projet, Client, Collaborateur, Equipe
-
-
-class AjoutProjetForm(forms.ModelForm):
-
-    class Meta:
-        model = Projet
-        fields = ('nomP', 'RdP', 'RT', 'client')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['nomP'].label = "Nom projet"
-        self.fields['client'].queryset = Client.objects.none()
-        self.fields['RdP'].queryset = Collaborateur.objects.none()
-        self.fields['RT'].queryset = Collaborateur.objects.none()
+from .models import Client
 
 
 class AjoutClientForm(forms.ModelForm):
@@ -25,14 +11,3 @@ class AjoutClientForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['nomCl'].label = "Nom client"
-
-
-class AjoutCollabForm(forms.ModelForm):
-
-    class Meta:
-        model = Collaborateur
-        fields = ('trigrammeC', 'nomC', 'prenomC', 'role', 'equipe')
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['equipe'].queryset = Equipe.objects.none()

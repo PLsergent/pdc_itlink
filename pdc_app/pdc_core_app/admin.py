@@ -22,8 +22,8 @@ admin.site.register(RepartitionActivite, RepartitionActiviteAdmin)
 
 class CommandeAdmin(admin.ModelAdmin):
     ordering = ['projet']
-    list_display = ('projet', 'equipe', 'date_commande', 'charges', 'ref',
-                    'etablie')
+    list_display = ('projet', 'equipe', 'date_commande', 'charges',
+                    'chargesRAF', 'ref', 'etablie')
 
 
 admin.site.register(Commande, CommandeAdmin)

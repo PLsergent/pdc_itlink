@@ -82,6 +82,11 @@ class Commande(models.Model):
             f'{self.projet.client.nomCl}, ' + \
             f'{self.ref}'
 
+    def save(self, *args, **kwargs):
+        if not self.chargesRAF:
+            self.chargesRAF = self.charges
+        super(Commande, self).save(*args, **kwargs)
+
 
 class Activite(models.Model):
     idAct = models.AutoField(primary_key=True)

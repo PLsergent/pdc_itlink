@@ -2,6 +2,9 @@
 
 {% block content %}
 
+{% load static %}
+<script src="{% static "pdc_core_app/add.js" %}"></script>
+
 <br>
   <form method="post" novalidate>
     {% csrf_token %}

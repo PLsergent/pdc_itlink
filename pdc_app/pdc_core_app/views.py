@@ -202,7 +202,7 @@ def data(request):
 class AjoutProjet(SuccessMessageMixin, CreateView):
     model = Projet
     fields = ('nomP', 'RdP', 'RT', 'client')
-    template_name = 'pdc_core_app/projet_add.html'
+    template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
     success_message = "%(projet) a été créé avec succès."
 
@@ -228,7 +228,7 @@ class AjoutProjet(SuccessMessageMixin, CreateView):
 class AjoutClient(SuccessMessageMixin, CreateView):
     model = Client
     form_class = AjoutClientForm
-    template_name = 'pdc_core_app/client_add.html'
+    template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
     success_message = "%(client) a été créé avec succès."
 
@@ -254,7 +254,7 @@ class AjoutClient(SuccessMessageMixin, CreateView):
 class AjoutCollab(SuccessMessageMixin, CreateView):
     model = Collaborateur
     fields = ('trigrammeC', 'nomC', 'prenomC', 'role', 'equipe')
-    template_name = 'pdc_core_app/collaborateur_add.html'
+    template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
     success_message = "%(collab) a été créé avec succès."
 
@@ -276,3 +276,32 @@ class AjoutCollab(SuccessMessageMixin, CreateView):
             form.add_error('nomC', 'This name already exist')
             return self.form_invalid(form)
         return super(AjoutCollab, self).form_valid(form)
+
+
+class PasserCommande(SuccessMessageMixin, CreateView):
+    model = Commande
+    fields = ('projet', 'ref', 'charges',
+              'date_commande', 'etablie', 'equipe', 'commentaire')
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('commandes')
+    success_message = "La commande pour le projet %(proj) " + \
+                      "a été passée avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Passer commande'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            proj=self.object.projet.nomP,
+        )
+
+    def form_valid(self, form):
+        exist = Commande.objects.filter(projet=form.cleaned_data['projet'],
+                                        ref=form.cleaned_data['ref'])
+        if exist:
+            form.add_error('ref', 'This ref already exist')
+            return self.form_invalid(form)
+        return super(PasserCommande, self).form_valid(form)
