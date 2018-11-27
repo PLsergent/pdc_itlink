@@ -104,7 +104,7 @@ def index(request):
 
 
 def projets(request):
-    page_title = 'Projets'
+    page_title = 'Affectations projets'
     list_month_display = []
     list_month = []
     all = []

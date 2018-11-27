@@ -10,7 +10,7 @@
     <div class="columns">
       <div class="column">
        <a class="button is-danger is-medium">
-         <span>Affecter collaborateur</span>
+         <span>Affecter collaborateur (projet)</span>
          <span class="icon">
            <i class="fas fa-folder-plus"></i>
          </span>
@@ -25,11 +25,37 @@
      </div>
        <div class="column">
         <a href="/pdc/collaborateurs/add" class="button is-black is-medium">
-          <span>Ajouter collaborateur</span>
+          <span>Nouveau collaborateur</span>
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
         </a>
+      </div>
+    </div>
+  </div>
+  <div class="level-right">
+    <div class="column">
+      <div class="columns">
+        <div class="column">
+        <div class="field is-flex">
+          <input id="switchAll" type="checkbox" name="switchAll" class="switch is-medium" checked="checked">
+          <label for="switchAll">All</label>
+        </div></div>
+        <div class="column">
+        <div class="field is-flex">
+          <input id="switchW" type="checkbox" name="switchW" class="switch is-medium">
+          <label for="switchW">PythonWeb</label>
+        </div></div>
+        <div class="column">
+        <div class="field is-flex">
+          <input id="switchPQ" type="checkbox" name="switchPQ" class="switch is-medium">
+          <label for="switchPQ">PythonQt</label>
+        </div></div>
+        <div class="column">
+        <div class="field is-flex">
+          <input id="switchCQ" type="checkbox" name="switchCQ" class="switch is-medium">
+          <label for="switchCQ">CPlusQt</label>
+        </div></div>
       </div>
     </div>
   </div>
