@@ -25,3 +25,67 @@ $(document).ready(function() {
       order: [0, "asc"]
     });
 } );
+
+var getCookie = function (name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+
+function mydelete(){
+    var id = $(this).attr('id');
+    $.ajax({
+        url: "http://127.0.0.1:8000/pdc/projets/delete/29/",
+        type: 'POST',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        },
+        success: function(response){
+
+        }
+    });
+}
+
+$(document).ready(function() {
+  $('#myTable .mydelete').on('click', function(){
+    console.log('toto');
+    var $this = $(this)
+    var id = $(this).data('id');
+    $.ajax({
+        url: "http://127.0.0.1:8000/pdc/projets/delete/"+id+"/",
+        type: 'POST',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        },
+        success: function(response){
+            $this.parent().fadeOut(800);
+        }
+    });
+  });
+
+  $('#myTable2 .mydelete').on('click', function(){
+    console.log('toto');
+    var $this = $(this)
+    var id = $(this).data('id');
+    $.ajax({
+        url: "http://127.0.0.1:8000/pdc/clients/delete/"+id+"/",
+        type: 'POST',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        },
+        success: function(response){
+            $this.parent().fadeOut(800);
+        }
+    });
+  });
+});

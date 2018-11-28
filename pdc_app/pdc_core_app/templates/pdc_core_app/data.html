@@ -61,7 +61,7 @@
                       <i class="far fa-edit"></i>
                     </span>
                   </a>
-                  <a href="/pdc/projets/delete/{{ item.idProjet }}/" class="button is-small is-rounded is-danger">
+                  <a data-id="{{ item.idProjet }}" class="button is-small is-rounded is-danger mydelete">
                     <span class="icon">
                       <i class="far fa-trash-alt"></i>
                     </span>
@@ -93,7 +93,7 @@
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/clients/delete/{{ item.idClient }}" class="button is-small is-rounded is-danger">
+                <a data-id="{{ item.idClient }}" class="button is-small is-rounded is-danger mydelete">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
@@ -125,7 +125,7 @@
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/collaborateurs/delete/{{ item.trigrammeC }}" class="button is-small is-rounded is-danger">
+                <a href="/pdc/collaborateurs/delete/{{ item.trigrammeC }}" class="button is-small is-rounded is-danger mydelete">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
@@ -157,7 +157,7 @@
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/projets/tache_probable_delete/{{ item.idCom }}"  class="button is-small is-rounded is-danger">
+                <a href="/pdc/projets/tache_probable_delete/{{ item.idCom }}"  class="button is-small is-rounded is-danger mydelete">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>

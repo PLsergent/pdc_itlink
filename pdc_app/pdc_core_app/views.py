@@ -479,3 +479,12 @@ class DeleteProjet(DeleteView):
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
+
+
+class DeleteClient(DeleteView):
+    model = Client
+    success_url = reverse_lazy('data')
+    template_name = 'pdc_core_app/del.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Client, idClient=self.kwargs['idClient'])

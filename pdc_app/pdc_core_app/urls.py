@@ -20,6 +20,8 @@ urlpatterns = [
     path('clients/add/', views.AjoutClient.as_view(), name='AjoutClient'),
     path('clients/update/<int:idClient>/', views.UpdateClient.as_view(),
          name='UpdateClient'),
+    path('clients/delete/<int:idClient>/', views.DeleteClient.as_view(),
+         name='DeleteClient'),
 
     path('collaborateurs/', views.collaborateurs, name='collaborateurs'),
     path('collaborateurs/add/', views.AjoutCollab.as_view(),
