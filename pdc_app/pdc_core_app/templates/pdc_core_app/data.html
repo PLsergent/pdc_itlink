@@ -33,7 +33,7 @@
        </a>
      </div>
      <div class="column">
-      <a href="/pdc/projets/tache_probable_add" class="button has-background-grey-light is-medium">
+      <a href="/pdc/projets/tache_probable_add" class="button has-background-grey-light is-white is-medium">
         <span>Nouvelle tâche probable</span>
         <span class="icon">
           <i class="fas fa-terminal"></i>
@@ -53,7 +53,24 @@
   <tbody>
     {% for item in projets %}
     <tr>
-        <td>{{ item }}</td>
+        <td>
+          <nav class="level">
+            <div class="level-left">
+                  <a href="/pdc/projets/projet_update/{{ item.idProjet }}/" class="button is-small is-rounded is-warning">
+                    <span class="icon">
+                      <i class="far fa-edit"></i>
+                    </span>
+                  </a>
+                  <a href="/pdc/projets/projet_delete/{{ item.idProjet }}/" class="button is-small is-rounded is-danger">
+                    <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+                  &nbsp;
+                  {{ item }}
+            </div>
+          </nav>
+        </td>
     </tr>
     {% endfor %}
   </tbody>
@@ -68,7 +85,24 @@
   <tbody>
     {% for item in clients %}
     <tr>
-        <td>{{ item }}</td>
+      <td>
+        <nav class="level">
+          <div class="level-left">
+                <a href="/pdc/projets/projet_update/{{ item.idClient }}" class="button is-small is-rounded is-warning">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a href="/pdc/projets/projet_delete/{{ item.idClient }}" class="button is-small is-rounded is-danger">
+                  <span class="icon">
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+                &nbsp;
+                {{ item }}
+          </div>
+        </nav>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
@@ -83,7 +117,24 @@
   <tbody>
     {% for item in collabs %}
     <tr>
-        <td>{{ item }}</td>
+      <td>
+        <nav class="level">
+          <div class="level-left">
+                <a href="/pdc/projets/projet_update/{{ item.trigrammeC }}" class="button is-small is-rounded is-warning">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a href="/pdc/projets/projet_delete/{{ item.trigrammeC }}" class="button is-small is-rounded is-danger">
+                  <span class="icon">
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+                &nbsp;
+                {{ item }}
+          </div>
+        </nav>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
@@ -98,7 +149,24 @@
   <tbody>
     {% for item in commandes %}
     <tr>
-        <td>{{ item }}, charges : {{ item.charges }}</td>
+      <td>
+        <nav class="level">
+          <div class="level-left">
+                <a href="/pdc/projets/projet_update/{{ item.idClient }}" class="button is-small is-rounded is-warning">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a href="/pdc/projets/projet_delete/{{ item.idClient }}" class="button is-small is-rounded is-danger">
+                  <span class="icon">
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+                &nbsp;
+                {{ item }}, charges : {{item.charges}}
+          </div>
+        </nav>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

@@ -1,9 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from datetime import datetime as datet
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 import month
@@ -338,3 +338,32 @@ class NouvelleTacheProbable(SuccessMessageMixin, CreateView):
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
         return super(NouvelleTacheProbable, self).form_valid(form)
+
+
+class UpdateProjet(SuccessMessageMixin, UpdateView):
+    model = Projet
+    fields = ('nomP', 'RdP', 'RT', 'client')
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('projets')
+    success_message = "%(projet) a été modifié avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification projet'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            projet=self.object.nomP,
+        )
+
+    def form_valid(self, form):
+        exist = Projet.objects.filter(nomP=form.cleaned_data['nomP'])
+        if exist:
+            form.add_error('nomP', 'This name already exist')
+            return self.form_invalid(form)
+        return super(UpdateProjet, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
