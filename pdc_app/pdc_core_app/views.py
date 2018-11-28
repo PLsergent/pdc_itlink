@@ -163,10 +163,11 @@ def commandes(request):
 
     for cmd in commandes:
         list = []
-        list.extend((cmd.equipe.nomE, cmd.date_commande,
-                     cmd.projet.client.nomCl, cmd.projet.nomP,
-                     cmd.projet.RdP.trigrammeC, cmd.charges, cmd.ref,
-                     cmd.etablie, cmd.commentaire))
+        if cmd.etablie is True:
+            list.extend((cmd.equipe.nomE, cmd.date_commande,
+                         cmd.projet.client.nomCl, cmd.projet.nomP,
+                         cmd.projet.RdP.trigrammeC, cmd.charges, cmd.ref,
+                         cmd.etablie, cmd.commentaire))
         all.append(list)
 
     return render(request, 'pdc_core_app/commandes.html',
@@ -191,12 +192,14 @@ def data(request):
     projets = Projet.objects.all()
     clients = Client.objects.all()
     collabs = Collaborateur.objects.all()
+    commandes = Commande.objects.filter(etablie=False)
 
     return render(request, 'pdc_core_app/data.html',
                   {'page_title': page_title,
                    'projets': projets,
                    'clients': clients,
-                   'collabs': collabs})
+                   'collabs': collabs,
+                   'commandes': commandes})
 
 
 class AjoutProjet(SuccessMessageMixin, CreateView):
@@ -300,8 +303,38 @@ class PasserCommande(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         exist = Commande.objects.filter(projet=form.cleaned_data['projet'],
-                                        ref=form.cleaned_data['ref'])
+                                        ref=form.cleaned_data['ref'],
+                                        etablie=form.cleaned_data['etablie'])
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
         return super(PasserCommande, self).form_valid(form)
+
+
+class NouvelleTacheProbable(SuccessMessageMixin, CreateView):
+    model = Commande
+    fields = ('projet', 'ref', 'charges', 'equipe', 'commentaire')
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('projets')
+    success_message = "La tâche probable pour le projet %(proj) " + \
+                      "a été ajouté avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Ajout tâche probable'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            proj=self.object.projet.nomP,
+        )
+
+    def form_valid(self, form):
+        exist = Commande.objects.filter(projet=form.cleaned_data['projet'],
+                                        ref=form.cleaned_data['ref'],
+                                        etablie=False)
+        if exist:
+            form.add_error('ref', 'This ref already exist')
+            return self.form_invalid(form)
+        return super(NouvelleTacheProbable, self).form_valid(form)

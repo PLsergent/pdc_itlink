@@ -18,3 +18,10 @@ $(document).ready(function() {
       order: [0, "asc"]
     });
 } );
+
+$(document).ready(function() {
+    $('#myTable4').DataTable({
+      paging:         false,
+      order: [0, "asc"]
+    });
+} );

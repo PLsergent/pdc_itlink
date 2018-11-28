@@ -32,7 +32,15 @@
          </span>
        </a>
      </div>
+     <div class="column">
+      <a href="/pdc/projets/tache_probable_add" class="button has-background-grey-light is-medium">
+        <span>Nouvelle tâche probable</span>
+        <span class="icon">
+          <i class="fas fa-terminal"></i>
+        </span>
+      </a>
     </div>
+  </div>
 </div>
 </nav>
 
@@ -76,6 +84,21 @@
     {% for item in collabs %}
     <tr>
         <td>{{ item }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<table id='myTable4' class = "stripe hover table is-fullwidth">
+  <thead>
+    <tr>
+      <th>Tâches probables</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in commandes %}
+    <tr>
+        <td>{{ item }}, charges : {{ item.charges }}</td>
     </tr>
     {% endfor %}
   </tbody>

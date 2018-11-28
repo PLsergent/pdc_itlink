@@ -1,6 +1,7 @@
 from django.db import models
 from month.models import MonthField
 from django.core.validators import MinValueValidator, MaxValueValidator
+from datetime import datetime as dt
 
 
 class Equipe(models.Model):
@@ -85,6 +86,10 @@ class Commande(models.Model):
     def save(self, *args, **kwargs):
         if not self.chargesRAF:
             self.chargesRAF = self.charges
+        if not self.etablie:
+            self.etablie = False
+        if not self.date_commande:
+            self.date_commande = dt.today()
         super(Commande, self).save(*args, **kwargs)
 
 
