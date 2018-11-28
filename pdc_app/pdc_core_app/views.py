@@ -4,10 +4,13 @@ from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client
 from django.views.generic import CreateView, UpdateView
+from vanilla import DeleteView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 import month
-from .forms import AjoutClientForm
+from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
+from .forms import AjoutProjetForm, NouvelleTacheProbableForm
+from .forms import ModifTacheProbableForm
 
 
 def get_month(number_month):
@@ -204,10 +207,10 @@ def data(request):
 
 class AjoutProjet(SuccessMessageMixin, CreateView):
     model = Projet
-    fields = ('nomP', 'RdP', 'RT', 'client')
+    form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "%(projet) a été créé avec succès."
+    success_message = "Le projet %(projet) a été créé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -233,7 +236,7 @@ class AjoutClient(SuccessMessageMixin, CreateView):
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
-    success_message = "%(client) a été créé avec succès."
+    success_message = "Le client %(client) a été créé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -256,10 +259,10 @@ class AjoutClient(SuccessMessageMixin, CreateView):
 
 class AjoutCollab(SuccessMessageMixin, CreateView):
     model = Collaborateur
-    fields = ('trigrammeC', 'nomC', 'prenomC', 'role', 'equipe')
+    form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
-    success_message = "%(collab) a été créé avec succès."
+    success_message = "Le collaborateur %(collab) a été créé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -283,8 +286,7 @@ class AjoutCollab(SuccessMessageMixin, CreateView):
 
 class PasserCommande(SuccessMessageMixin, CreateView):
     model = Commande
-    fields = ('projet', 'ref', 'charges',
-              'date_commande', 'etablie', 'equipe', 'commentaire')
+    form_class = PasserCommandeForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('commandes')
     success_message = "La commande pour le projet %(proj) " + \
@@ -313,7 +315,7 @@ class PasserCommande(SuccessMessageMixin, CreateView):
 
 class NouvelleTacheProbable(SuccessMessageMixin, CreateView):
     model = Commande
-    fields = ('projet', 'ref', 'charges', 'equipe', 'commentaire')
+    form_class = NouvelleTacheProbableForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
     success_message = "La tâche probable pour le projet %(proj) " + \
@@ -342,10 +344,10 @@ class NouvelleTacheProbable(SuccessMessageMixin, CreateView):
 
 class UpdateProjet(SuccessMessageMixin, UpdateView):
     model = Projet
-    fields = ('nomP', 'RdP', 'RT', 'client')
+    form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "%(projet) a été modifié avec succès."
+    success_message = "Le projet %(projet) a été modifié avec succès."
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -364,6 +366,116 @@ class UpdateProjet(SuccessMessageMixin, UpdateView):
             form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)
         return super(UpdateProjet, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
+
+
+class UpdateClient(SuccessMessageMixin, UpdateView):
+    model = Client
+    form_class = AjoutClientForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('data')
+    success_message = "Le client %(client) a été modifié avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification client'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            client=self.object.nomCl,
+        )
+
+    def form_valid(self, form):
+        exist = Client.objects.filter(nomCl=form.cleaned_data['nomCl'])
+        if exist:
+            form.add_error('nomCl', 'This name already exist')
+            return self.form_invalid(form)
+        return super(UpdateClient, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Client, idClient=self.kwargs['idClient'])
+
+
+class UpdateCollab(SuccessMessageMixin, UpdateView):
+    model = Collaborateur
+    form_class = AjoutCollabForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('collaborateurs')
+    success_message = "Le collaborateur %(collab) a été modifié avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification collaborateur'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            collab=self.object.nomC,
+        )
+
+    def form_valid(self, form):
+        exist_name = Collaborateur.objects.filter(
+                    nomC=form.cleaned_data['nomC'])
+        if exist_name:
+            form.add_error('nomC', 'This name already exist')
+            return self.form_invalid(form)
+        return super(UpdateCollab, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Collaborateur,
+                                 trigrammeC=self.kwargs['pk'])
+
+
+class ModifTacheProbable(SuccessMessageMixin, UpdateView):
+    model = Commande
+    form_class = ModifTacheProbableForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('projets')
+    success_message = "La tâche probable pour le projet %(proj) " + \
+                      "a été modifié avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification tâche probable'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            proj=self.object.projet.nomP,
+        )
+
+    def form_valid(self, form):
+        exist = Commande.objects.filter(
+            projet=form.cleaned_data['projet'],
+            ref=form.cleaned_data['ref'],
+            etablie=False,
+            charges=form.cleaned_data['charges'],
+            chargesRAF=form.cleaned_data['chargesRAF'],
+            equipe=form.cleaned_data['equipe'],
+            commentaire=form.cleaned_data['commentaire'])
+        if exist:
+            form.add_error('ref', 'This ref already exist')
+            return self.form_invalid(form)
+        if form.cleaned_data['chargesRAF'] > form.cleaned_data['charges']:
+            form.add_error('chargesRAF', 'ChargesRAF cannot exceed Charges')
+            return self.form_invalid(form)
+
+        return super(ModifTacheProbable, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
+
+
+class DeleteProjet(DeleteView):
+    model = Projet
+    success_url = reverse_lazy('projets')
+    template_name = 'pdc_core_app/del.html'
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])

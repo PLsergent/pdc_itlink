@@ -56,12 +56,12 @@
         <td>
           <nav class="level">
             <div class="level-left">
-                  <a href="/pdc/projets/projet_update/{{ item.idProjet }}/" class="button is-small is-rounded is-warning">
+                  <a href="/pdc/projets/update/{{ item.idProjet }}/" class="button is-small is-rounded is-warning">
                     <span class="icon">
                       <i class="far fa-edit"></i>
                     </span>
                   </a>
-                  <a href="/pdc/projets/projet_delete/{{ item.idProjet }}/" class="button is-small is-rounded is-danger">
+                  <a href="/pdc/projets/delete/{{ item.idProjet }}/" class="button is-small is-rounded is-danger">
                     <span class="icon">
                       <i class="far fa-trash-alt"></i>
                     </span>
@@ -88,12 +88,12 @@
       <td>
         <nav class="level">
           <div class="level-left">
-                <a href="/pdc/projets/projet_update/{{ item.idClient }}" class="button is-small is-rounded is-warning">
+                <a href="/pdc/clients/update/{{ item.idClient }}" class="button is-small is-rounded is-warning">
                   <span class="icon">
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/projets/projet_delete/{{ item.idClient }}" class="button is-small is-rounded is-danger">
+                <a href="/pdc/clients/delete/{{ item.idClient }}" class="button is-small is-rounded is-danger">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
@@ -120,12 +120,12 @@
       <td>
         <nav class="level">
           <div class="level-left">
-                <a href="/pdc/projets/projet_update/{{ item.trigrammeC }}" class="button is-small is-rounded is-warning">
+                <a href="/pdc/collaborateurs/update/{{ item.trigrammeC }}" class="button is-small is-rounded is-warning">
                   <span class="icon">
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/projets/projet_delete/{{ item.trigrammeC }}" class="button is-small is-rounded is-danger">
+                <a href="/pdc/collaborateurs/delete/{{ item.trigrammeC }}" class="button is-small is-rounded is-danger">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
@@ -152,18 +152,19 @@
       <td>
         <nav class="level">
           <div class="level-left">
-                <a href="/pdc/projets/projet_update/{{ item.idClient }}" class="button is-small is-rounded is-warning">
+                <a href="/pdc/projets/tache_probable_update/{{ item.idCom }}" class="button is-small is-rounded is-warning">
                   <span class="icon">
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/projets/projet_delete/{{ item.idClient }}" class="button is-small is-rounded is-danger">
+                <a href="/pdc/projets/tache_probable_delete/{{ item.idCom }}"  class="button is-small is-rounded is-danger">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
                 </a>
                 &nbsp;
-                {{ item }}, charges : {{item.charges}}
+                {{ item }}, charges : {{ item.charges }},
+                chargesRAF : {{ item.chargesRAF }}
           </div>
         </nav>
       </td>

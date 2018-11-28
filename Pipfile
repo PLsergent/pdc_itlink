@@ -8,6 +8,7 @@ django = "*"
 django-monthfield = "*"
 python-dateutil = "*"
 django-multiforloop = "*"
+django-vanilla-views = "*"
 
 [dev-packages]
 

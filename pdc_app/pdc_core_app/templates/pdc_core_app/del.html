@@ -1,0 +1,19 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+{% load static %}
+<script src="{% static "pdc_core_app/del.js" %}"></script>
+
+<section class="hero has-text-centered">
+      <div class="hero-body">
+        <div class="container">
+          <form method="post">{% csrf_token %}
+              <h1 class="title">Are you sure you want to delete "{{ object }}"?</h1>
+              <input id="del" type="submit" class="button is-large" value="Confirm" autofocus>
+          </form>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

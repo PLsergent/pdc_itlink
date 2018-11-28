@@ -5,4 +5,4 @@ $(document).on('click', '.notification', function() {
 
 setTimeout(function() {
     $('#notif').fadeOut('slow');
-}, 3000);
+}, 4000);
