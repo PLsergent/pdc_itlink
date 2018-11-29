@@ -43,63 +43,108 @@ var getCookie = function (name) {
     };
 
 $(document).ready(function() {
+
   $('#myTable .mydelete').on('click', function(){
     var $this = $(this)
     var id = $(this).data('id');
-    $.ajax({
-        url: "http://127.0.0.1:8000/pdc/projets/delete/"+id,
-        type: 'POST',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    $.confirm({
+    title: 'Confirm pop-up',
+    content: 'Do you want to proceed ?',
+    buttons: {
+        confirm: function () {
+          $.ajax({
+              url: "http://127.0.0.1:8000/pdc/projets/delete/"+id,
+              type: 'POST',
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+              },
+              success: function(response){
+                  $this.parent().fadeOut(500);
+              }
+          });
         },
-        success: function(response){
-            $this.parent().fadeOut(800);
-        }
-    });
+        cancel: function () {
+            return;
+        },
+    }
+  });
   });
 
   $('#myTable2 .mydelete').on('click', function(){
     var $this = $(this)
     var id = $(this).data('id');
-    $.ajax({
-        url: "http://127.0.0.1:8000/pdc/clients/delete/"+id,
-        type: 'POST',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    $.confirm({
+    title: 'Confirm pop-up',
+    content: 'Do you want to proceed ?',
+    buttons: {
+        confirm: function () {
+          $.ajax({
+              url: "http://127.0.0.1:8000/pdc/clients/delete/"+id,
+              type: 'POST',
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+              },
+              success: function(response){
+                  $this.parent().fadeOut(500);
+              }
+          });
         },
-        success: function(response){
-            $this.parent().fadeOut(800);
-        }
-    });
+        cancel: function () {
+            return;
+        },
+    }
+  });
   });
 
   $('#myTable3 .mydelete').on('click', function(){
     var $this = $(this)
     var id = $(this).data('id');
-    $.ajax({
-        url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
-        type: 'POST',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    $.confirm({
+    title: 'Confirm pop-up',
+    content: 'Do you want to proceed ?',
+    buttons: {
+        confirm: function () {
+          $.ajax({
+              url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
+              type: 'POST',
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+              },
+              success: function(response){
+                  $this.parent().fadeOut(500);
+              }
+          });
         },
-        success: function(response){
-            $this.parent().fadeOut(800);
-        }
-    });
+        cancel: function () {
+            return;
+        },
+    }
+  });
   });
 
   $('#myTable4 .mydelete').on('click', function(){
     var $this = $(this)
     var id = $(this).data('id');
-    $.ajax({
-        url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
-        type: 'POST',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    $.confirm({
+    title: 'Confirm pop-up',
+    content: 'Do you want to proceed ?',
+    buttons: {
+        confirm: function () {
+          $.ajax({
+              url: "http://127.0.0.1:8000/pdc/projets/tache_probable_delete/"+id,
+              type: 'POST',
+              beforeSend: function(xhr) {
+                  xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+              },
+              success: function(response){
+                  $this.parent().fadeOut(500);
+              }
+          });
         },
-        success: function(response){
-            $this.parent().fadeOut(800);
-        }
-    });
+        cancel: function () {
+            return;
+        },
+    }
+  });
   });
 });

@@ -10,7 +10,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 import month
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
-from .forms import ModifTacheProbableForm
+from .forms import UpdateCommandeForm
 
 
 def get_month(number_month):
@@ -170,7 +170,7 @@ def commandes(request):
     for cmd in commandes:
         list = []
         if cmd.etablie is True:
-            list.extend((cmd.equipe.nomE, cmd.date_commande,
+            list.extend((cmd.idCom, cmd.equipe.nomE, cmd.date_commande,
                          cmd.projet.client.nomCl, cmd.projet.nomP,
                          cmd.projet.RdP.trigrammeC, cmd.charges, cmd.ref,
                          cmd.etablie, cmd.commentaire))
@@ -434,9 +434,45 @@ class UpdateCollab(SuccessMessageMixin, UpdateView):
                                  trigrammeC=self.kwargs['pk'])
 
 
+class UpdateCommande(SuccessMessageMixin, UpdateView):
+    model = Commande
+    form_class = UpdateCommandeForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('commandes')
+    success_message = "La commande pour le projet %(cmd) a été modifié " + \
+                      "avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification commande'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            cmd=self.object.projet.nomP,
+        )
+
+    def form_valid(self, form):
+        exist = Commande.objects.filter(
+            projet=form.cleaned_data['projet'],
+            ref=form.cleaned_data['ref'],
+            etablie=False)
+        if exist:
+            form.add_error('ref', 'This ref already exist')
+            return self.form_invalid(form)
+        if form.cleaned_data['chargesRAF'] > form.cleaned_data['charges']:
+            form.add_error('chargesRAF', 'ChargesRAF cannot exceed Charges')
+            return self.form_invalid(form)
+        return super(UpdateCommande, self).form_valid(form)
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
+
+
 class ModifTacheProbable(SuccessMessageMixin, UpdateView):
     model = Commande
-    form_class = ModifTacheProbableForm
+    form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
     success_message = "La tâche probable pour le projet %(proj) " + \
@@ -457,18 +493,13 @@ class ModifTacheProbable(SuccessMessageMixin, UpdateView):
         exist = Commande.objects.filter(
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
-            etablie=False,
-            charges=form.cleaned_data['charges'],
-            chargesRAF=form.cleaned_data['chargesRAF'],
-            equipe=form.cleaned_data['equipe'],
-            commentaire=form.cleaned_data['commentaire'])
+            etablie=False)
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
         if form.cleaned_data['chargesRAF'] > form.cleaned_data['charges']:
             form.add_error('chargesRAF', 'ChargesRAF cannot exceed Charges')
             return self.form_invalid(form)
-
         return super(ModifTacheProbable, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -493,7 +524,7 @@ class DeleteClient(DeleteView):
         return get_object_or_404(Client, idClient=self.kwargs['idClient'])
 
 
-class DeleteCollab(SuccessMessageMixin, DeleteView):
+class DeleteCollab(DeleteView):
     model = Collaborateur
     success_url = reverse_lazy('collaborateurs')
     template_name = 'pdc_core_app/del.html'
@@ -503,7 +534,7 @@ class DeleteCollab(SuccessMessageMixin, DeleteView):
                                  trigrammeC=self.kwargs['pk'])
 
 
-class DeleteTacheProbable(SuccessMessageMixin, DeleteView):
+class DeleteTacheProbable(DeleteView):
     model = Commande
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
@@ -512,3 +543,14 @@ class DeleteTacheProbable(SuccessMessageMixin, DeleteView):
         return get_object_or_404(Commande,
                                  idCom=self.kwargs['idCom'],
                                  etablie=False)
+
+
+class DeleteCommande(DeleteView):
+    model = Commande
+    success_url = reverse_lazy('commandes')
+    template_name = 'pdc_core_app/del.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Commande,
+                                 idCom=self.kwargs['idCom'],
+                                 etablie=True)

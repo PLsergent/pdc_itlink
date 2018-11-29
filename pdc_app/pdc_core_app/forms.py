@@ -68,7 +68,7 @@ class NouvelleTacheProbableForm(forms.ModelForm):
         self.fields['equipe'].queryset = Equipe.objects.all()
 
 
-class ModifTacheProbableForm(forms.ModelForm):
+class UpdateCommandeForm(forms.ModelForm):
 
     class Meta:
         model = Commande

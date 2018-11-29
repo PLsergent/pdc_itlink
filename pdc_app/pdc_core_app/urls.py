@@ -37,6 +37,10 @@ urlpatterns = [
     path('commandes/', views.commandes, name='commandes'),
     path('commandes/add/', views.PasserCommande.as_view(),
          name='PasserCommande'),
+    path('commandes/update/<int:idCom>', views.UpdateCommande.as_view(),
+         name='PasserCommande'),
+    path('commandes/delete/<int:idCom>', views.DeleteCommande.as_view(),
+         name='DeleteCommande'),
 
     path('autres/', views.autres, name='autres'),
     path('data/', views.data, name='data')

@@ -35,25 +35,25 @@ $(document).ready( function () {
 
 
     $('#switchW').on('change', function filter(){
-      tableP.fnFilter('PyWe', 0);
+      tableP.fnFilter('PyWe', 1);
       $('#switchPQ').prop('checked', false);
       $('#switchAll').prop('checked', false);
       $('#switchCQ').prop('checked', false);
     });
     $('#switchPQ').on('change', function filter(){
-      tableP.fnFilter('PyQt', 0);
+      tableP.fnFilter('PyQt', 1);
       $('#switchW').prop('checked', false);
       $('#switchAll').prop('checked', false);
       $('#switchCQ').prop('checked', false);
     });
     $('#switchAll').on('change', function filter(){
-      tableP.fnFilter('PyWe|PyQt|CPQt', 0, true);
+      tableP.fnFilter('PyWe|PyQt|CPQt', 1, true);
       $('#switchW').prop('checked', false);
       $('#switchPQ').prop('checked', false);
       $('#switchCQ').prop('checked', false);
     });
     $('#switchCQ').on('change', function filter(){
-      tableP.fnFilter('CPQt', 0);
+      tableP.fnFilter('CPQt', 1);
       $('#switchW').prop('checked', false);
       $('#switchPQ').prop('checked', false);
       $('#switchAll').prop('checked', false);
@@ -79,17 +79,27 @@ $(document).ready( function () {
       var $this = $(this)
       var id = $(this).data('id');
       var row = $(this).closest('td').data('dt-row')
-      console.log(row)
-      $.ajax({
-          url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
-          type: 'POST',
-          beforeSend: function(xhr) {
-              xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-          },
-          success: function(response){
-              $this.closest('tr').fadeOut(800);
-              $("#myTable tr").slice(row+1,row+2).fadeOut(800);
-          }
+      $.confirm({
+        title: 'Deletion confirm pop-up',
+        content: 'Do you want to proceed ?',
+        buttons: {
+            confirm: function () {
+              $.ajax({
+                  url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
+                  type: 'POST',
+                  beforeSend: function(xhr) {
+                      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                  },
+                  success: function(response){
+                      $this.closest('tr').fadeOut(500);
+                      $("#myTable tr").slice(row+1,row+2).fadeOut(500);
+                  }
+              });
+            },
+            cancel: function () {
+                return;
+            }
+        }
       });
     });
-});
+  });

@@ -37,6 +37,7 @@
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
+      <th>Edit/Delete</th>
       <th>Equipe</th>
       <th>Date</th>
       <th>Client</th>
@@ -51,8 +52,27 @@
   <tbody>
     {% for sku in all %}
     <tr>
+      <td>
+        <nav class="level">
+          <div class="level-left">
+                <a href="/pdc/commandes/update/{{ sku.0 }}" class="button is-small is-rounded is-warning">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a data-id="{{ sku.0 }}" class="button is-small is-rounded is-danger mydelete">
+                  <span class="icon">
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+          </div>
+        </nav>
+      </td>
       {% for rp in sku %}
-        <td>{{ rp }}</td>
+        {% if forloop.first %}
+        {% else %}
+          <td>{{ rp }}</td>
+        {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}
