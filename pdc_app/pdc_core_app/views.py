@@ -135,7 +135,10 @@ def collaborateurs(request):
         # incluant les pourcentages qui sont ajoutés plus bas
         list = []
         rde = Responsable_E.objects.filter(equipe=collab.equipe)
-        list.extend((collab.equipe.nomE, collab.trigrammeC, rde[0]))
+        if rde:
+            list.extend((collab.equipe.nomE, collab.trigrammeC, rde[0]))
+        else:
+            list.extend((collab.equipe.nomE, collab.trigrammeC, 'XXX'))
     # Dans la liste pourcentagesP on va stocker des listes, chaque liste
     # correspond aux pourcentages par mois d'un projet
         pourcentagesP = get_repartition_wo_inf('P', collab)
@@ -488,3 +491,24 @@ class DeleteClient(DeleteView):
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Client, idClient=self.kwargs['idClient'])
+
+
+class DeleteCollab(SuccessMessageMixin, DeleteView):
+    model = Collaborateur
+    success_url = reverse_lazy('collaborateurs')
+    template_name = 'pdc_core_app/del.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Collaborateur,
+                                 trigrammeC=self.kwargs['pk'])
+
+
+class DeleteTacheProbable(SuccessMessageMixin, DeleteView):
+    model = Commande
+    success_url = reverse_lazy('projets')
+    template_name = 'pdc_core_app/del.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Commande,
+                                 idCom=self.kwargs['idCom'],
+                                 etablie=False)

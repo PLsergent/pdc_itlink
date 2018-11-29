@@ -42,27 +42,12 @@ var getCookie = function (name) {
         return cookieValue;
     };
 
-function mydelete(){
-    var id = $(this).attr('id');
-    $.ajax({
-        url: "http://127.0.0.1:8000/pdc/projets/delete/29/",
-        type: 'POST',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        },
-        success: function(response){
-
-        }
-    });
-}
-
 $(document).ready(function() {
   $('#myTable .mydelete').on('click', function(){
-    console.log('toto');
     var $this = $(this)
     var id = $(this).data('id');
     $.ajax({
-        url: "http://127.0.0.1:8000/pdc/projets/delete/"+id+"/",
+        url: "http://127.0.0.1:8000/pdc/projets/delete/"+id,
         type: 'POST',
         beforeSend: function(xhr) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
@@ -74,11 +59,40 @@ $(document).ready(function() {
   });
 
   $('#myTable2 .mydelete').on('click', function(){
-    console.log('toto');
     var $this = $(this)
     var id = $(this).data('id');
     $.ajax({
-        url: "http://127.0.0.1:8000/pdc/clients/delete/"+id+"/",
+        url: "http://127.0.0.1:8000/pdc/clients/delete/"+id,
+        type: 'POST',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        },
+        success: function(response){
+            $this.parent().fadeOut(800);
+        }
+    });
+  });
+
+  $('#myTable3 .mydelete').on('click', function(){
+    var $this = $(this)
+    var id = $(this).data('id');
+    $.ajax({
+        url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
+        type: 'POST',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        },
+        success: function(response){
+            $this.parent().fadeOut(800);
+        }
+    });
+  });
+
+  $('#myTable4 .mydelete').on('click', function(){
+    var $this = $(this)
+    var id = $(this).data('id');
+    $.ajax({
+        url: "http://127.0.0.1:8000/pdc/collaborateurs/delete/"+id,
         type: 'POST',
         beforeSend: function(xhr) {
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));

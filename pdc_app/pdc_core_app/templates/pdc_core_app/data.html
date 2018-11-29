@@ -56,7 +56,7 @@
         <td>
           <nav class="level">
             <div class="level-left">
-                  <a href="/pdc/projets/update/{{ item.idProjet }}/" class="button is-small is-rounded is-warning">
+                  <a href="/pdc/projets/update/{{ item.idProjet }}" class="button is-small is-rounded is-warning">
                     <span class="icon">
                       <i class="far fa-edit"></i>
                     </span>
@@ -125,7 +125,7 @@
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/collaborateurs/delete/{{ item.trigrammeC }}" class="button is-small is-rounded is-danger mydelete">
+                <a data-id="{{ item.trigrammeC }}" class="button is-small is-rounded is-danger mydelete">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
@@ -157,7 +157,7 @@
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
-                <a href="/pdc/projets/tache_probable_delete/{{ item.idCom }}"  class="button is-small is-rounded is-danger mydelete">
+                <a data-id="{{ item.idCom }}" class="button is-small is-rounded is-danger mydelete">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
