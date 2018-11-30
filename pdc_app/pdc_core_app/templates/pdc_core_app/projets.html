@@ -96,10 +96,12 @@
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
+      <th>Edit/Delete</th>
       <th>Equipe</th>
       <th>Collab</th>
       <th>Client</th>
       <th>Nom projet</th>
+      <th>Ref</th>
       <th>RdP</th>
       <th>RT</th>
       <th>Cmd</th>
@@ -116,7 +118,33 @@
     {% for sku in all %}
     <tr>
       {% for rp in sku %}
+      {% if forloop.first %}
+      <td>
+        <nav class="level">
+          <div class="level-left">
+                {% if sku.8 is False %}
+                <a data-id="{{ rp }}" class="button is-small is-rounded is-success myupdate">
+                  <span class="icon">
+                    <i class="fas fa-chevron-circle-down"></i>
+                  </span>
+                </a>
+                {% endif %}
+                <a href="/pdc/commandes/update/{{ rp }}" class="button is-small is-rounded is-warning">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a data-id="{{ rp }}" class="button is-small is-rounded is-danger mydelete">
+                  <span class="icon">
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+          </div>
+        </nav>
+      </td>
+      {% else %}
         <td>{{ rp }}</td>
+      {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}

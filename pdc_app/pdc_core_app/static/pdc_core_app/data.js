@@ -147,4 +147,30 @@ $(document).ready(function() {
     }
   });
   });
+
+  $('.myupdate').on('click', function(){
+    var $this = $(this)
+    var id = $(this).data('id');
+    $.confirm({
+      title: 'Pass command pop-up',
+      content: 'Do you want to proceed ?',
+      buttons: {
+          confirm: function () {
+            $.ajax({
+                url: "http://127.0.0.1:8000/pdc/commandes/fromtask/"+id,
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                },
+                success: function(response){
+                    $this.closest('tr').fadeOut(500);
+                }
+            });
+          },
+          cancel: function () {
+              return;
+          }
+      }
+    });
+  });
 });

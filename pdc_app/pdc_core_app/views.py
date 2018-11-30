@@ -10,7 +10,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 import month
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
-from .forms import UpdateCommandeForm
+from .forms import UpdateCommandeForm, PassCommandFromTaskForm
+from django.http import HttpResponse
 
 
 def get_month(number_month):
@@ -38,9 +39,10 @@ def get_repartition(type):
     for rp in repartitions:
         list = []
         if type == 'P':
-            list.extend((rp.commande.equipe.nomE, rp.collaborateur.trigrammeC,
+            list.extend((rp.commande.idCom, rp.commande.equipe.nomE,
+                         rp.collaborateur.trigrammeC,
                          rp.commande.projet.client.nomCl,
-                         rp.commande.projet.nomP,
+                         rp.commande.projet.nomP, rp.commande.ref,
                          rp.commande.projet.RdP.trigrammeC,
                          rp.commande.projet.RT.trigrammeC,
                          rp.commande.etablie))
@@ -174,7 +176,8 @@ def commandes(request):
                          cmd.projet.client.nomCl, cmd.projet.nomP,
                          cmd.projet.RdP.trigrammeC, cmd.charges, cmd.ref,
                          cmd.etablie, cmd.commentaire))
-        all.append(list)
+        if list:
+            all.append(list)
 
     return render(request, 'pdc_core_app/commandes.html',
                   {'page_title': page_title,
@@ -314,6 +317,7 @@ class PasserCommande(SuccessMessageMixin, CreateView):
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
+
         return super(PasserCommande, self).form_valid(form)
 
 
@@ -338,8 +342,7 @@ class NouvelleTacheProbable(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         exist = Commande.objects.filter(projet=form.cleaned_data['projet'],
-                                        ref=form.cleaned_data['ref'],
-                                        etablie=False)
+                                        ref=form.cleaned_data['ref'])
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
@@ -458,7 +461,7 @@ class UpdateCommande(SuccessMessageMixin, UpdateView):
         exist = Commande.objects.filter(
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
-            etablie=False)
+            etablie=form.cleaned_data['etablie'])
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
@@ -471,7 +474,7 @@ class UpdateCommande(SuccessMessageMixin, UpdateView):
         return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
 
 
-class ModifTacheProbable(SuccessMessageMixin, UpdateView):
+class UpdateTacheProbable(SuccessMessageMixin, UpdateView):
     model = Commande
     form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
@@ -495,13 +498,17 @@ class ModifTacheProbable(SuccessMessageMixin, UpdateView):
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
             etablie=False)
-        if exist:
+        exist_cmd = Commande.objects.filter(
+            projet=form.cleaned_data['projet'],
+            ref=form.cleaned_data['ref'],
+            etablie=True)
+        if exist or exist_cmd:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
         if form.cleaned_data['chargesRAF'] > form.cleaned_data['charges']:
             form.add_error('chargesRAF', 'ChargesRAF cannot exceed Charges')
             return self.form_invalid(form)
-        return super(ModifTacheProbable, self).form_valid(form)
+        return super(UpdateTacheProbable, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
@@ -555,3 +562,18 @@ class DeleteCommande(DeleteView):
         return get_object_or_404(Commande,
                                  idCom=self.kwargs['idCom'],
                                  etablie=True)
+
+
+class PassCommandFromTask(UpdateView):
+    model = Commande
+    form_class = PassCommandFromTaskForm
+    template_name = 'pdc_core_app/add.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
+
+    def post(self, request, idCom):
+        cmd = self.object = self.get_object()
+        cmd.etablie = True
+        cmd.save()
+        return HttpResponse('Successfully Updated!')

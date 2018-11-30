@@ -74,7 +74,7 @@ class Commande(models.Model):
     )
     date_commande = models.DateField()
     etablie = models.BooleanField(default=False)
-    commentaire = models.CharField(max_length=200)
+    commentaire = models.CharField(max_length=200, blank=True)
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
 

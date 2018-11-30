@@ -54,6 +54,7 @@ class PasserCommandeForm(forms.ModelForm):
         self.fields['projet'].queryset = Projet.objects.all()
         self.fields['equipe'].queryset = Equipe.objects.all()
         self.fields['date_commande'].label = "Date"
+        self.fields['etablie'].initial = True
 
 
 class NouvelleTacheProbableForm(forms.ModelForm):
@@ -80,3 +81,11 @@ class UpdateCommandeForm(forms.ModelForm):
         self.fields['chargesRAF'].label = "Charges reste à faire"
         self.fields['projet'].queryset = Projet.objects.all()
         self.fields['equipe'].queryset = Equipe.objects.all()
+
+
+class PassCommandFromTaskForm(forms.ModelForm):
+
+    class Meta:
+        model = Commande
+        fields = ('projet', 'ref', 'charges',
+                  'date_commande', 'etablie', 'equipe', 'commentaire')
