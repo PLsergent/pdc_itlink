@@ -227,7 +227,8 @@ class AjoutProjet(SuccessMessageMixin, CreateView):
         )
 
     def form_valid(self, form):
-        exist = Projet.objects.filter(nomP=form.cleaned_data['nomP'])
+        exist = Projet.objects.filter(nomP=form.cleaned_data['nomP'],
+                                      client=form.cleaned_data['client'])
         if exist:
             form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)

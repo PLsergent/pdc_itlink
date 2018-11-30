@@ -52,24 +52,24 @@
   <tbody>
     {% for sku in all %}
     <tr>
-      <td>
-        <nav class="level">
-          <div class="level-left">
-                <a href="/pdc/commandes/update/{{ sku.0 }}" class="button is-small is-rounded is-warning">
-                  <span class="icon">
-                    <i class="far fa-edit"></i>
-                  </span>
-                </a>
-                <a data-id="{{ sku.0 }}" class="button is-small is-rounded is-danger mydelete">
-                  <span class="icon">
-                    <i class="far fa-trash-alt"></i>
-                  </span>
-                </a>
-          </div>
-        </nav>
-      </td>
       {% for rp in sku %}
         {% if forloop.first %}
+        <td>
+          <nav class="level">
+            <div class="level-left">
+                  <a href="/pdc/commandes/update/{{ sku.0 }}" class="button is-small is-rounded is-warning">
+                    <span class="icon">
+                      <i class="far fa-edit"></i>
+                    </span>
+                  </a>
+                  <a data-id="{{ sku.0 }}" class="button is-small is-rounded is-danger mydelete">
+                    <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+            </div>
+          </nav>
+        </td>
         {% else %}
           <td>{{ rp }}</td>
         {% endif %}

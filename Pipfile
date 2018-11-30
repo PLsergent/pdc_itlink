@@ -9,6 +9,7 @@ django-monthfield = "*"
 python-dateutil = "*"
 django-multiforloop = "*"
 django-vanilla-views = "*"
+black = "*"
 
 [dev-packages]
 
