@@ -461,7 +461,7 @@ class UpdateCommande(SuccessMessageMixin, UpdateView):
         exist = Commande.objects.filter(
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
-            etablie=form.cleaned_data['etablie'])
+            etablie=True)
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
