@@ -92,6 +92,37 @@
     </div>
   </div>
 </nav>
+<hr>
+<a class="button is-grey is-small toggle-all">
+  <span>All</span>
+  <span class="icon">
+    <i class="far fa-eye" id="icon"></i>
+  </span>
+</a>
+<a class="button is-grey is-small toggle" data-column="3">
+  <span>Client</span>
+  <span class="icon">
+    <i class="far fa-eye" id="icon"></i>
+  </span>
+</a>
+<a class="button is-grey is-small toggle" data-column="6">
+  <span>Responsable de projet</span>
+  <span class="icon">
+    <i class="far fa-eye" id="icon"></i>
+  </span>
+</a>
+<a class="button is-grey is-small toggle" data-column="7">
+  <span>Responsable technique</span>
+  <span class="icon">
+    <i class="far fa-eye" id="icon"></i>
+  </span>
+</a>
+<a class="button is-grey is-small toggle" data-column="8">
+  <span>Commande</span>
+  <span class="icon">
+    <i class="far fa-eye" id="icon"></i>
+  </span>
+</a>
 
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
@@ -112,6 +143,8 @@
         <th>0{{ month.0 }}-{{ month.1 }}</th>
         {% endif %}
       {% endfor %}
+      <th>Charges</th>
+      <th>ChargesRAF</th>
     </tr>
   </thead>
   <tbody>

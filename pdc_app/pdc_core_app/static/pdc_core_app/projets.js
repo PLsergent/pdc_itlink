@@ -1,15 +1,66 @@
 $(document).ready( function () {
-    var tableP = $('#myTable').dataTable({
+    var table = $('#myTable').dataTable({
       sScrollX:     "100%",
       scrollX:        true,
       scrollCollapse: true,
       paging:         false,
       fixedColumns: {
-        leftColumns: 9
+        leftColumns: 9,
+        rightColumns: 2
       },
-    }
-    );
+  });
+
     var table = new $.fn.dataTable.Api( '#myTable' );
+
+    $('a.toggle').on( 'click', function (e) {
+       e.preventDefault();
+       var column = table.column( $(this).attr('data-column') );
+       var getIcon = this.querySelector("#icon");
+       if (column.visible()){
+         column.visible(false);
+         getIcon.classList.remove('fa-eye');
+         getIcon.classList.add('fa-eye-slash');
+       }
+       else{
+         column.visible(true);
+         getIcon.classList.remove('fa-eye-slash');
+         getIcon.classList.add('fa-eye');
+       }
+   } );
+
+   $('a.toggle-all').on( 'click', function(){
+     var list = [3, 6, 7, 8];
+     var getAllIcon = document.querySelectorAll("#icon");
+     for (var i in list){
+       var column = table.column(list[i]);
+       if (getAllIcon[0].classList.contains('fa-eye')){
+         if (column.visible()){
+           column.visible(false);
+         }
+         else{}
+       }else{
+         if (!column.visible()){
+           column.visible(true);
+         }else{}
+       }
+   }
+   if (getAllIcon[0].classList.contains('fa-eye')){
+     getAllIcon[0].classList.remove('fa-eye');
+     getAllIcon[0].classList.add('fa-eye-slash');
+   }else{
+     getAllIcon[0].classList.add('fa-eye');
+     getAllIcon[0].classList.remove('fa-eye-slash');
+   }
+     for (i = 1; i < getAllIcon.length; ++i) {
+       if (getAllIcon[0].classList.contains('fa-eye')){
+         getAllIcon[i].classList.add('fa-eye');
+         getAllIcon[i].classList.remove('fa-eye-slash');
+       }else{
+         getAllIcon[i].classList.remove('fa-eye');
+         getAllIcon[i].classList.add('fa-eye-slash');
+       }
+    }
+   } );
 
     table.cells().every( function () {
         var data = this.data()

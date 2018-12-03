@@ -70,6 +70,9 @@ def get_repartition(type):
                 list.append(pourc_collab)
             else:
                 list.append(0)
+        # Ajout des charges et charges RAF
+        if type == 'P':
+            list.extend((rp.commande.charges, rp.commande.chargesRAF))
         all.append(list)
     return list_month, list_month_display, all
 
