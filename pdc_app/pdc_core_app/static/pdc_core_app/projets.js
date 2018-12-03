@@ -144,4 +144,7 @@ $(document).ready( function () {
         }
       });
     });
+
+    $('.tooltip').hover(function(){$(this).attr('data-tooltip','oui')})
+
 });

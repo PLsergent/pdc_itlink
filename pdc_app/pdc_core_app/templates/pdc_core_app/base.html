@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="{% static "pdc_core_app/logo.png" %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch@2.0.0/dist/css/bulma-switch.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-tooltip@2.0.2/dist/css/bulma-tooltip.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
@@ -60,32 +61,32 @@
           {% endif %}
       </div>
       <div class="navbar-end">
-          <a href='/pdc/projets/add' class='button is-link is-medium'>
+          <a href='/pdc/projets/add' class='button is-link tooltip is-tooltip-bottom' data-tooltip="Nouveau projet">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
           </a>
-          <a href='/pdc/clients/add' class='button is-warning is-medium'>
+          <a href='/pdc/clients/add' class='button is-warning tooltip is-tooltip-bottom' data-tooltip="Nouveau client">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
         </a>
-        <a href='/pdc/collaborateurs/add' class='button is-black is-medium'>
+        <a href='/pdc/collaborateurs/add' class='button is-black tooltip is-tooltip-bottom' data-tooltip="Nouveau collaborateur">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
         </a>
-        <a href='/pdc/commandes/add' class='button is-success is-medium'>
+        <a href='/pdc/commandes/add' class='button is-success tooltip is-tooltip-bottom' data-tooltip="Passer commande">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
         </a>
-        <a href='/pdc/projets/tache_probable_add' class='button has-background-grey-light is-medium'>
+        <a href='/pdc/projets/tache_probable_add' class='button has-background-grey-light tooltip is-tooltip-left' data-tooltip="Nouvelle tâche probable">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
         </a>
-        <a class='button is-danger is-medium'>
+        <a class='button is-danger tooltip is-tooltip-left' data-tooltip="Nouvelle affectation">
           <span class="icon">
             <i class="fas fa-plus"></i>
           </span>
