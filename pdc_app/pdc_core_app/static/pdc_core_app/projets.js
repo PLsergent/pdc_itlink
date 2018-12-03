@@ -4,6 +4,7 @@ $(document).ready( function () {
       scrollX:        true,
       scrollCollapse: true,
       paging:         false,
+      order: [[ 5, "asc" ]],
       fixedColumns: {
         leftColumns: 9,
         rightColumns: 2
@@ -64,7 +65,7 @@ $(document).ready( function () {
 
     table.cells().every( function () {
         var data = this.data()
-        if (data % 1 === 0){
+        if (!isNaN(data) && data.toString().indexOf('.') != -1){}else{
           if ( this.data() >= 80 ) {
               $(this.node()).addClass( 'has-background-success' );
           }
@@ -77,6 +78,7 @@ $(document).ready( function () {
           else {
               $(this.node()).removeClass( 'has-background-success' );
           }
+
         }
     } );
 
