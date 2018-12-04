@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from datetime import datetime as datet
+from datetime import datetime as datet, date
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client
@@ -12,6 +12,8 @@ from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
 from django.http import HttpResponse
+from workdays import networkdays
+import calendar
 
 
 def get_month(number_month):
@@ -72,9 +74,36 @@ def get_repartition(type):
                 list.append(0)
         # Ajout des charges et charges RAF
         if type == 'P':
-            list.extend((rp.commande.charges, rp.commande.chargesRAF))
+            list.extend((rp.commande.chargesRAF,
+                         assigned_charges(rp.commande)))
         all.append(list)
     return list_month, list_month_display, all
+
+
+def assigned_charges(cmd):
+    list_month, list_month_display = get_month(18)
+    repartition_projet = RepartitionProjet.objects.filter(commande=cmd)
+    sum_list = []
+    for rp in repartition_projet:
+        list_month_repartition = []
+        for some in rp.list_R.filter(month__gte=datet.now()):
+            list_month_repartition.append(some.month)
+
+        for lm in list_month:
+            if lm in list_month_repartition:
+                i = list_month_repartition.index(lm)
+                pourc_collab = rp.list_R.filter(
+                    month__gte=datet.now())[i].pourcentage.pourcentage
+                sum_list.append(pourc_collab/100)
+    sum_rp = sum(sum_list)
+    days_list = []
+    for lm in list_month_display:
+        start_date = date(lm[1], lm[0], 1)
+        end_date = date(lm[1], lm[0],
+                        calendar.monthrange(lm[1], lm[0])[1])
+        days_list.append(networkdays(start_date, end_date))
+    days = sum(days_list)
+    return "%.1f" % (sum_rp * days / len(list_month_display))
 
 
 # get_repartition_without_information, used in collaborateurs()

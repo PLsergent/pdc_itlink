@@ -10,6 +10,7 @@ python-dateutil = "*"
 django-multiforloop = "*"
 django-vanilla-views = "*"
 black = "*"
+workdays = "*"
 
 [dev-packages]
 

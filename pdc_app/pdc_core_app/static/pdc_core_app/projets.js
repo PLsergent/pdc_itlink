@@ -1,5 +1,5 @@
 $(document).ready( function () {
-    var table = $('#myTable').dataTable({
+    var tableP = $('#myTable').dataTable({
       sScrollX:     "100%",
       scrollX:        true,
       scrollCollapse: true,
@@ -146,15 +146,16 @@ $(document).ready( function () {
     });
 
     $('.tooltip').hover(function(){
-      var total = 0
-      var colIndex = $(this).index();
-      var collab = table.cell($(this).closest('tr').index(), 2).data();
-      table.rows( { search:'applied' } ).data().each(function(value, index) {
-        if ( value[2] == collab ){
-          total += parseInt(value[colIndex])
-        }
+      if ($(this).attr('data-tooltip') == ""){
+        var total = 0
+        var colIndex = $(this).index();
+        var collab = table.cell($(this).closest('tr').index(), 2).data();
+        table.rows( { search:'applied' } ).data().each(function(value, index) {
+          if ( value[2] == collab ){
+            total += parseInt(value[colIndex])
+          }
+      });
+        $(this).attr('data-tooltip', collab + ":" + total);
+      }
     });
-      $(this).attr('data-tooltip', collab + ":" + total);
-    });
-
 });

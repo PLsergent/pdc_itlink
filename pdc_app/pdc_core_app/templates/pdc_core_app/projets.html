@@ -93,36 +93,49 @@
   </div>
 </nav>
 <hr>
-<a class="button is-grey is-small toggle-all">
-  <span>All</span>
-  <span class="icon">
-    <i class="far fa-eye" id="icon"></i>
-  </span>
-</a>
-<a class="button is-grey is-small toggle" data-column="3">
-  <span>Client</span>
-  <span class="icon">
-    <i class="far fa-eye" id="icon"></i>
-  </span>
-</a>
-<a class="button is-grey is-small toggle" data-column="6">
-  <span>Responsable de projet</span>
-  <span class="icon">
-    <i class="far fa-eye" id="icon"></i>
-  </span>
-</a>
-<a class="button is-grey is-small toggle" data-column="7">
-  <span>Responsable technique</span>
-  <span class="icon">
-    <i class="far fa-eye" id="icon"></i>
-  </span>
-</a>
-<a class="button is-grey is-small toggle" data-column="8">
-  <span>Commande</span>
-  <span class="icon">
-    <i class="far fa-eye" id="icon"></i>
-  </span>
-</a>
+
+<nav class="level">
+  <div class="level-left">
+    <a class="button is-grey is-small toggle-all">
+      <span>All</span>
+      <span class="icon">
+        <i class="far fa-eye" id="icon"></i>
+      </span>
+    </a>
+    <a class="button is-grey is-small toggle" data-column="3">
+      <span>Client</span>
+      <span class="icon">
+        <i class="far fa-eye" id="icon"></i>
+      </span>
+    </a>
+    <a class="button is-grey is-small toggle" data-column="6">
+      <span>Responsable de projet</span>
+      <span class="icon">
+        <i class="far fa-eye" id="icon"></i>
+      </span>
+    </a>
+    <a class="button is-grey is-small toggle" data-column="7">
+      <span>Responsable technique</span>
+      <span class="icon">
+        <i class="far fa-eye" id="icon"></i>
+      </span>
+    </a>
+    <a class="button is-grey is-small toggle" data-column="8">
+      <span>Commande</span>
+      <span class="icon">
+        <i class="far fa-eye" id="icon"></i>
+      </span>
+    </a>
+  </div>
+  <div class ="level-right">
+    <a class="button is-link">
+      <span>Changer RAF</span>
+      <span class="icon">
+        <i class="far fa-edit"></i>
+      </span>
+    </a>
+  </div>
+</nav>
 
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
@@ -143,8 +156,8 @@
         <th>0{{ month.0 }}-{{ month.1 }}</th>
         {% endif %}
       {% endfor %}
-      <th>Charges</th>
       <th>ChargesRAF</th>
+      <th>Charges Affectées</th>
     </tr>
   </thead>
   <tbody>
