@@ -146,16 +146,19 @@ $(document).ready( function () {
     });
 
     $('.tooltip').hover(function(){
+
       if ($(this).attr('data-tooltip') == ""){
         var total = 0
-        var colIndex = $(this).index();
+        var colIndex = table.cell($(this)).index().column
         var collab = table.cell($(this).closest('tr').index(), 2).data();
-        table.rows( { search:'applied' } ).data().each(function(value, index) {
+        table.rows( { filter: 'applied' } ).data().each(function(value, index) {
           if ( value[2] == collab ){
             total += parseInt(value[colIndex])
           }
       });
         $(this).attr('data-tooltip', collab + ":" + total);
       }
+    }, function(){
+      $(this).attr('data-tooltip', "");
     });
 });
