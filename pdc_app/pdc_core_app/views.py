@@ -11,6 +11,7 @@ import month
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
+from .forms import AffectationCollabProjetForm
 from django.http import HttpResponse
 from workdays import networkdays
 import calendar
@@ -609,3 +610,24 @@ class PassCommandFromTask(UpdateView):
         cmd.etablie = True
         cmd.save()
         return HttpResponse('Successfully Updated!')
+
+
+class AffectationCollabProjet(SuccessMessageMixin, CreateView):
+    model = RepartitionProjet
+    form_class = AffectationCollabProjetForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('projets')
+    success_message = "L'affectation pour le collaborateur %(col) " + \
+                      "sur le projet %(proj) a été réalisé avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Nouvelle affectation'
+        return context
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            proj=self.object.commande.projet.nomP,
+            col=self.object.collaborateur.nomC
+        )

@@ -150,7 +150,7 @@ $(document).ready( function () {
       if ($(this).attr('data-tooltip') == ""){
         var total = 0
         var colIndex = table.cell($(this)).index().column
-        var collab = table.cell($(this).closest('tr').index(), 2).data();
+        var collab = $(this).closest('tr').children('td:eq(2)').text();
         table.rows( { filter: 'applied' } ).data().each(function(value, index) {
           if ( value[2] == collab ){
             total += parseInt(value[colIndex])
@@ -158,7 +158,5 @@ $(document).ready( function () {
       });
         $(this).attr('data-tooltip', collab + ":" + total);
       }
-    }, function(){
-      $(this).attr('data-tooltip', "");
     });
 });

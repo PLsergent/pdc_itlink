@@ -33,6 +33,8 @@ urlpatterns = [
          name='UpdateCollab'),
     path('collaborateurs/delete/<str:pk>', views.DeleteCollab.as_view(),
          name='DeleteCollab'),
+    path('collaborateurs/assign/', views.AffectationCollabProjet.as_view(),
+         name='AffectationCollabProjet'),
 
     path('commandes/', views.commandes, name='commandes'),
     path('commandes/add/', views.PasserCommande.as_view(),

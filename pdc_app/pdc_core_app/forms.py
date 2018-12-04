@@ -1,5 +1,20 @@
 from django import forms
 from .models import Projet, Client, Collaborateur, Equipe, Commande
+from .models import RepartitionProjet, RDate
+
+
+class AffectationCollabProjetForm(forms.ModelForm):
+
+    class Meta:
+        model = RepartitionProjet
+        fields = ('commande', 'collaborateur', 'list_R')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['list_R'].label = "Liste date"
+        self.fields['commande'].queryset = Commande.objects.all()
+        self.fields['collaborateur'].queryset = Collaborateur.objects.all()
+        self.fields['list_R'].queryset = RDate.objects.all()
 
 
 class AjoutProjetForm(forms.ModelForm):
