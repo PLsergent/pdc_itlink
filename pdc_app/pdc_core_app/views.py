@@ -1,21 +1,24 @@
-from django.shortcuts import render, get_object_or_404
 from datetime import datetime as datet, date
 from dateutil import relativedelta as rd
-from .models import RepartitionProjet, RepartitionActivite, Commande
-from .models import Collaborateur, Responsable_E, Projet, Client
-from django.views.generic import CreateView, UpdateView
+from workdays import networkdays
+import calendar
 from vanilla import DeleteView
+import month
+
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
-import month
+from django.http import HttpResponse
+
+from .models import RepartitionProjet, RepartitionActivite, Commande
+from .models import Collaborateur, Responsable_E, Projet, Client, RDate
+from .models import Pourcentage
+
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
-from .forms import AffectationCollabProjetForm, AffCollabProjetImprovedForm
-from django.http import HttpResponse
-from workdays import networkdays
-import calendar
-from django.http import HttpResponseRedirect
+from .forms import AffectationCollabProjetForm
 
 
 def get_month(number_month):
@@ -250,7 +253,7 @@ class AjoutProjet(SuccessMessageMixin, CreateView):
     form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "Le projet %(projet) a été créé avec succès."
+    success_message = "Le projet %(projet) aa été créé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -277,7 +280,7 @@ class AjoutClient(SuccessMessageMixin, CreateView):
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
-    success_message = "Le client %(client) a été créé avec succès."
+    success_message = "Le client %(client) aa été créé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -303,7 +306,7 @@ class AjoutCollab(SuccessMessageMixin, CreateView):
     form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
-    success_message = "Le collaborateur %(collab) a été créé avec succès."
+    success_message = "Le collaborateur %(collab) aa été créé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -331,7 +334,7 @@ class PasserCommande(SuccessMessageMixin, CreateView):
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('commandes')
     success_message = "La commande pour le projet %(proj) " + \
-                      "a été passée avec succès."
+                      "aa été passée avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -361,7 +364,7 @@ class NouvelleTacheProbable(SuccessMessageMixin, CreateView):
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
     success_message = "La tâche probable pour le projet %(proj) " + \
-                      "a été ajouté avec succès."
+                      "aa été ajouté avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -388,7 +391,7 @@ class UpdateProjet(SuccessMessageMixin, UpdateView):
     form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "Le projet %(projet) a été modifié avec succès."
+    success_message = "Le projet %(projet) aa été modifié avec succès."
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -417,7 +420,7 @@ class UpdateClient(SuccessMessageMixin, UpdateView):
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
-    success_message = "Le client %(client) a été modifié avec succès."
+    success_message = "Le client %(client) aa été modifié avec succès."
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -446,7 +449,7 @@ class UpdateCollab(SuccessMessageMixin, UpdateView):
     form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
-    success_message = "Le collaborateur %(collab) a été modifié avec succès."
+    success_message = "Le collaborateur %(collab) aa été modifié avec succès."
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -477,7 +480,7 @@ class UpdateCommande(SuccessMessageMixin, UpdateView):
     form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('commandes')
-    success_message = "La commande pour le projet %(cmd) a été modifié " + \
+    success_message = "La commande pour le projet %(cmd) aa été modifié " + \
                       "avec succès."
 
     def get_context_data(self, **args):
@@ -514,7 +517,7 @@ class UpdateTacheProbable(SuccessMessageMixin, UpdateView):
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
     success_message = "La tâche probable pour le projet %(proj) " + \
-                      "a été modifié avec succès."
+                      "aa été modifié avec succès."
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -618,8 +621,7 @@ class AffectationCollabProjet(SuccessMessageMixin, CreateView):
     form_class = AffectationCollabProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "L'affectation pour le collaborateur %(col) " + \
-                      "sur le projet %(proj) a été réalisé avec succès."
+    success_message = "Affectation réalisé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -633,19 +635,23 @@ class AffectationCollabProjet(SuccessMessageMixin, CreateView):
             col=self.object.collaborateur.nomC
         )
 
-
-def affectation_projet(request):
-    page_title = "Nouvelle affectation"
-
-    if request.method == "POST":
-        Affectation = AffCollabProjetImprovedForm(request.POST)
-
-        if Affectation.is_valid():
-            return HttpResponseRedirect('/pdc/projets/')
-
-    else:
-        Affectation = AffCollabProjetImprovedForm()
-
-    return render(request, "pdc_core_app/add.html",
-                  {"page_title": page_title,
-                   "form": Affectation})
+    def form_valid(self, form):
+        exist = RepartitionProjet.objects.filter(
+                    commande=form.cleaned_data['commande'],
+                    collaborateur=form.cleaned_data['collaborateur']
+                    )
+        if exist:
+            form.add_error('collaborateur', 'This assignment already exist')
+            return self.form_invalid(form)
+        affectation = form.save(commit=False)
+        date = form.cleaned_data['date']
+        prct = form.cleaned_data['pourcentage'].pourcentage
+        pourcentage = Pourcentage.objects.get(pourcentage=prct)
+        date_month = month.Month(date.year, date.month)
+        obj, created = RDate.objects.get_or_create(
+                    month=date_month,
+                    pourcentage=pourcentage
+                    )
+        form.save()
+        affectation.list_R.add(obj)
+        return super(AffectationCollabProjet, self).form_valid(form)

@@ -1,34 +1,21 @@
 from django import forms
 from .models import Projet, Client, Collaborateur, Equipe, Commande
-from .models import RepartitionProjet, RDate, Pourcentage
-from datetime import datetime
-
-
-class AffCollabProjetImprovedForm(forms.Form):
-    commande = forms.ModelChoiceField(queryset=None)
-    collaborateur = forms.ModelChoiceField(queryset=None)
-    date = forms.DateField(initial=datetime.today().strftime("%Y-%m"))
-    pourcentage = forms.ModelChoiceField(queryset=None)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['commande'].queryset = Commande.objects.all()
-        self.fields['collaborateur'].queryset = Collaborateur.objects.all()
-        self.fields['pourcentage'].queryset = Pourcentage.objects.all()
+from .models import RepartitionProjet, Pourcentage
 
 
 class AffectationCollabProjetForm(forms.ModelForm):
 
+    date = forms.DateField()
+    pourcentage = forms.ModelChoiceField(queryset=Pourcentage.objects.all())
+
     class Meta:
         model = RepartitionProjet
-        fields = ('commande', 'collaborateur', 'list_R')
+        fields = ('commande', 'collaborateur', 'date', 'pourcentage')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['list_R'].label = "Liste date"
         self.fields['commande'].queryset = Commande.objects.all()
         self.fields['collaborateur'].queryset = Collaborateur.objects.all()
-        self.fields['list_R'].queryset = RDate.objects.all()
 
 
 class AjoutProjetForm(forms.ModelForm):
