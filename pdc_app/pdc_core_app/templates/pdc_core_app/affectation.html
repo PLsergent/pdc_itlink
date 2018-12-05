@@ -1,7 +1,7 @@
 {% extends './base.html' %}
 
 {% block content %}
-      <form name = "form" action = "http://127.0.0.1:8000/pdc/collaborateurs/assign/"
+      <form name = "Affectation" action = "http://127.0.0.1:8000/pdc/collaborateurs/assign/"
          method = "POST" >{% csrf_token %}
 
          <div class="field">
@@ -38,6 +38,7 @@
        <div class="columns">
         <div class="field">
          <div class="column">
+           <label class="label">Date</label>
            <input type="date" name="date" required="" id="id_date">
          </div>
        </div>

@@ -636,7 +636,7 @@ class AffectationCollabProjet(SuccessMessageMixin, CreateView):
 def affectation_projet(request):
     page_title = "Nouvelle affectation"
 
-    if request.POST:
+    if request.method == "POST":
         Affectation = AffCollabProjetImprovedForm(request.POST)
 
         if Affectation.is_valid():
@@ -645,4 +645,5 @@ def affectation_projet(request):
     else:
         Affectation = AffCollabProjetImprovedForm()
 
-    return render(request, "pdc_core_app/affectation.html", {"page_title": page_title})
+    return render(request, "pdc_core_app/affectation.html",
+                  {"page_title": page_title})
