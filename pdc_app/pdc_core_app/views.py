@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from datetime import datetime as datet, date
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
-from .models import Collaborateur, Responsable_E, Projet, Client
+from .models import Collaborateur, Responsable_E, Projet, Client, Pourcentage
 from django.views.generic import CreateView, UpdateView
 from vanilla import DeleteView
 from django.urls import reverse_lazy
@@ -11,7 +11,7 @@ import month
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
-from .forms import AffectationCollabProjetForm
+from .forms import AffectationCollabProjetForm, AffCollabProjetImprovedForm
 from django.http import HttpResponse
 from workdays import networkdays
 import calendar
@@ -631,3 +631,18 @@ class AffectationCollabProjet(SuccessMessageMixin, CreateView):
             proj=self.object.commande.projet.nomP,
             col=self.object.collaborateur.nomC
         )
+
+
+def affectation_projet(request):
+    page_title = "Nouvelle affectation"
+
+    if request.POST:
+        Affectation = AffCollabProjetImprovedForm(request.POST)
+
+        if Affectation.is_valid():
+            reverse_lazy('projets')
+
+    else:
+        Affectation = AffCollabProjetImprovedForm()
+
+    return render(request, "pdc_core_app/affectation.html", {"page_title": page_title})

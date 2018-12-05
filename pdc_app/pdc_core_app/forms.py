@@ -1,6 +1,21 @@
 from django import forms
 from .models import Projet, Client, Collaborateur, Equipe, Commande
-from .models import RepartitionProjet, RDate
+from .models import RepartitionProjet, RDate, Pourcentage
+from datetime import datetime
+
+
+class AffCollabProjetImprovedForm(forms.Form):
+    commande = forms.ModelChoiceField(queryset=None)
+    collaborateur = forms.ModelChoiceField(queryset=None)
+    date = forms.DateField(initial=datetime.today().strftime("%Y-%m"),
+                           input_formats="%Y-%m")
+    pourcentage = forms.ModelChoiceField(queryset=None)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['commande'].queryset = Commande.objects.all()
+        self.fields['collaborateur'].queryset = Collaborateur.objects.all()
+        self.fields['pourcentage'].queryset = Pourcentage.objects.all()
 
 
 class AffectationCollabProjetForm(forms.ModelForm):

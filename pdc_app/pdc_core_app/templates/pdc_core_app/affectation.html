@@ -1,0 +1,69 @@
+{% extends './base.html' %}
+
+{% block content %}
+      <form name = "form" action = "http://127.0.0.1:8000/pdc/collaborateurs/assign/"
+         method = "POST" >{% csrf_token %}
+
+         <div class="field">
+          <label class="label">Commande</label>
+          <div class="control">
+            <div class="select">
+              <select>
+                 {% for cmd in commandes %}
+                      <option>{{ cmd }}</option>
+                 {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="field">
+         <label class="label">Collaborateur</label>
+         <div class="control">
+           <div class="select">
+             <select>
+                {% for collab in collaborateurs %}
+                     <option>{{ collab }}</option>
+                {% endfor %}
+             </select>
+           </div>
+         </div>
+       </div>
+
+       <br>
+
+
+       <div class="columns">
+        <div class="field">
+         <div class="column">
+           <input type="date" name="date" required="" id="id_date">
+         </div>
+       </div>
+        <div class="column">
+          <div class="field">
+           <label class="label">Pourcentage</label>
+           <div class="control">
+             <div class="select">
+               <select>
+                  {% for prct in pourcentages %}
+                       <option>{{ prct }}</option>
+                  {% endfor %}
+               </select>
+             </div>
+           </div>
+         </div>
+        </div>
+      </div>
+
+      <div class="control">
+        <button class="button is-link" type="submit" value="affectation">Save</button>
+      </div>
+
+      </form>
+
+   </body>
+</html>
+
+{% endblock %}
