@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from datetime import datetime as datet, date
 from dateutil import relativedelta as rd
 from .models import RepartitionProjet, RepartitionActivite, Commande
-from .models import Collaborateur, Responsable_E, Projet, Client, Pourcentage
+from .models import Collaborateur, Responsable_E, Projet, Client
 from django.views.generic import CreateView, UpdateView
 from vanilla import DeleteView
 from django.urls import reverse_lazy
@@ -15,6 +15,7 @@ from .forms import AffectationCollabProjetForm, AffCollabProjetImprovedForm
 from django.http import HttpResponse
 from workdays import networkdays
 import calendar
+from django.http import HttpResponseRedirect
 
 
 def get_month(number_month):
@@ -640,10 +641,11 @@ def affectation_projet(request):
         Affectation = AffCollabProjetImprovedForm(request.POST)
 
         if Affectation.is_valid():
-            reverse_lazy('projets')
+            return HttpResponseRedirect('/pdc/projets/')
 
     else:
         Affectation = AffCollabProjetImprovedForm()
 
-    return render(request, "pdc_core_app/affectation.html",
-                  {"page_title": page_title})
+    return render(request, "pdc_core_app/add.html",
+                  {"page_title": page_title,
+                   "form": Affectation})

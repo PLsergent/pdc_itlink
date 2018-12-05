@@ -7,8 +7,7 @@ from datetime import datetime
 class AffCollabProjetImprovedForm(forms.Form):
     commande = forms.ModelChoiceField(queryset=None)
     collaborateur = forms.ModelChoiceField(queryset=None)
-    date = forms.DateField(initial=datetime.today().strftime("%Y-%m"),
-                           input_formats="%Y-%m")
+    date = forms.DateField(initial=datetime.today().strftime("%Y-%m"))
     pourcentage = forms.ModelChoiceField(queryset=None)
 
     def __init__(self, *args, **kwargs):
