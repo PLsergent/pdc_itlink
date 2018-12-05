@@ -4,7 +4,7 @@ $(document).ready( function () {
       scrollX:        true,
       scrollCollapse: true,
       paging:         false,
-      order: [[ 5, "asc" ]],
+      orderFixed: [[ 5, "asc" ]],
       fixedColumns: {
         leftColumns: 9,
         rightColumns: 2
@@ -158,5 +158,32 @@ $(document).ready( function () {
       });
         $(this).attr('data-tooltip', collab + ":" + total);
       }
+    });
+    var value = ""
+    var projet = ""
+    var color = color1
+    var color1 = ""
+    var color2 = "has-background-grey-lighter"
+    var rows = $('#myTable > tbody > tr').each(function(index){
+      value_update = $(this).children('td:eq(5)').text()
+      projet_udpdate = $(this).children('td:eq(4)').text()
+      if (value != value_update || projet != projet_udpdate){
+        value = value_update
+        projet = projet_udpdate
+        if (color == color1){
+          color = color2
+        }else{
+          color = color1
+        }
+        $(this).addClass(color)
+        $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+        $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+
+      }else{
+        $(this).addClass(color)
+        $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+        $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+      }
+
     });
 });

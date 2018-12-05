@@ -643,6 +643,7 @@ class AffectationCollabProjet(SuccessMessageMixin, CreateView):
         if exist:
             form.add_error('collaborateur', 'This assignment already exist')
             return self.form_invalid(form)
+
         affectation = form.save(commit=False)
         date = form.cleaned_data['date']
         prct = form.cleaned_data['pourcentage'].pourcentage
