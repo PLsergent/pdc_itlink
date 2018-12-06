@@ -18,7 +18,7 @@ from .models import Pourcentage
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
-from .forms import AffectationCollabProjetForm
+from .forms import AffectationCollabProjetForm, DateFormSet
 
 
 def get_month(number_month):
@@ -616,26 +616,39 @@ class PassCommandFromTask(UpdateView):
         return HttpResponse('Successfully Updated!')
 
 
-class AffectationCollabProjet(SuccessMessageMixin, CreateView):
-    model = RepartitionProjet
+class AffectationProjetDateSet(SuccessMessageMixin, CreateView):
     form_class = AffectationCollabProjetForm
-    template_name = 'pdc_core_app/add.html'
+    template_name = 'pdc_core_app/assign.html'
+    model = RepartitionProjet
     success_url = reverse_lazy('projets')
-    success_message = "Affectation réalisé avec succès."
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
         context['page_title'] = 'Nouvelle affectation'
         return context
 
-    def get_success_message(self, cleaned_data):
-        return self.success_message % dict(
-            cleaned_data,
-            proj=self.object.commande.projet.nomP,
-            col=self.object.collaborateur.nomC
-        )
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        date_prct_form = DateFormSet()
+        return self.render_to_response(self.get_context_data(
+                    form=form,
+                    date_prct_form=date_prct_form)
+                    )
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        date_prct_form = DateFormSet(self.request.POST)
+
+        if form.is_valid() and date_prct_form.is_valid():
+            return self.form_valid(form, date_prct_form)
+        else:
+            return self.form_invalid(form, date_prct_form)
+
+    def form_valid(self, form, date_prct_form):
         exist = RepartitionProjet.objects.filter(
                     commande=form.cleaned_data['commande'],
                     collaborateur=form.cleaned_data['collaborateur']
@@ -644,15 +657,30 @@ class AffectationCollabProjet(SuccessMessageMixin, CreateView):
             form.add_error('collaborateur', 'This assignment already exist')
             return self.form_invalid(form)
 
-        affectation = form.save(commit=False)
-        date = form.cleaned_data['date']
-        prct = form.cleaned_data['pourcentage'].pourcentage
-        pourcentage = Pourcentage.objects.get(pourcentage=prct)
-        date_month = month.Month(date.year, date.month)
-        obj, created = RDate.objects.get_or_create(
-                    month=date_month,
-                    pourcentage=pourcentage
-                    )
-        form.save()
-        affectation.list_R.add(obj)
-        return super(AffectationCollabProjet, self).form_valid(form)
+        affectation = form.save()
+
+        for date_form in date_prct_form:
+            date_form.save(commit=False)
+            month = date_form.cleaned_data['month']
+            prct = date_form.cleaned_data['pourcentage'].pourcentage
+            pourcentage = Pourcentage.objects.get(pourcentage=prct)
+            exist = RDate.objects.filter(
+                        month=month,
+                        pourcentage=pourcentage
+                        )
+            if exist:
+                obj = RDate.objects.get(
+                            month=month,
+                            pourcentage=pourcentage
+                            )
+            else:
+                obj = date_form.save()
+            affectation.list_R.add(obj)
+        return super(AffectationProjetDateSet, self).form_valid(form)
+
+    def form_invalid(self, form, date_prct_form):
+
+        return self.render_to_response(self.get_context_data(
+                                    form=form,
+                                    date_prct_form=date_prct_form)
+                                    )

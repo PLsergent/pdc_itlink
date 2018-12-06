@@ -1,21 +1,33 @@
 from django import forms
+from django.forms import formset_factory
 from .models import Projet, Client, Collaborateur, Equipe, Commande
-from .models import RepartitionProjet, Pourcentage
+from .models import RepartitionProjet, RDate, Pourcentage
+
+
+class DatePrtForm(forms.ModelForm):
+
+    class Meta:
+        model = RDate
+        fields = ('month', 'pourcentage')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['pourcentage'].queryset = Pourcentage.objects.all()
 
 
 class AffectationCollabProjetForm(forms.ModelForm):
 
-    date = forms.DateField()
-    pourcentage = forms.ModelChoiceField(queryset=Pourcentage.objects.all())
-
     class Meta:
         model = RepartitionProjet
-        fields = ('commande', 'collaborateur', 'date', 'pourcentage')
+        fields = ('commande', 'collaborateur')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['commande'].queryset = Commande.objects.all()
         self.fields['collaborateur'].queryset = Collaborateur.objects.all()
+
+
+DateFormSet = formset_factory(DatePrtForm, extra=3)
 
 
 class AjoutProjetForm(forms.ModelForm):

@@ -4,7 +4,7 @@ $(document).ready( function () {
       scrollX:        true,
       scrollCollapse: true,
       paging:         false,
-      orderFixed: [[ 5, "asc" ]],
+      orderFixed: [[ 5, "asc" ], [4, "asc"]],
       fixedColumns: {
         leftColumns: 9,
         rightColumns: 2

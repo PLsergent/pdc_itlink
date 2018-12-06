@@ -1,0 +1,21 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+{% load static %}
+<script src="{% static "pdc_core_app/assign.js" %}"></script>
+
+<br>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+      {{ date_prct_form.management_form }}
+      {% for form in date_prct_form %}
+        {{ form.as_table }}
+      {% endfor %}
+    </table>
+    <button class="button is-link is-medium" type="submit">Save</button>
+  </form>
+
+{% endblock %}

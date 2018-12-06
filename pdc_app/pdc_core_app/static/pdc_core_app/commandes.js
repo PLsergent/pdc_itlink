@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#myTable').DataTable({
+      orderFixed: [[ 4, "asc" ], [7, "asc"]],
       paging:         false,
     });
 
