@@ -120,7 +120,7 @@ class Pourcentage(models.Model):
 
 
 class RDate(models.Model):
-    month = MonthField("Month Value", help_text="some help...")
+    month = MonthField("Month Value")
     pourcentage = models.ForeignKey(Pourcentage, on_delete=models.CASCADE)
 
     def __str__(self):

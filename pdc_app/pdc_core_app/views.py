@@ -655,7 +655,7 @@ class AffectationProjetDateSet(SuccessMessageMixin, CreateView):
                     )
         if exist:
             form.add_error('collaborateur', 'This assignment already exist')
-            return self.form_invalid(form)
+            return self.form_invalid(form, date_prct_form)
 
         affectation = form.save()
 
