@@ -27,7 +27,7 @@ class AffectationCollabProjetForm(forms.ModelForm):
         self.fields['collaborateur'].queryset = Collaborateur.objects.all()
 
 
-DateFormSet = formset_factory(DatePrtForm)
+DateFormSet = formset_factory(DatePrtForm, extra=7)
 
 
 class AjoutProjetForm(forms.ModelForm):
