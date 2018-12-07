@@ -102,25 +102,25 @@
         <i class="far fa-eye" id="icon"></i>
       </span>
     </a>
-    <a class="button is-grey is-small toggle" data-column="3">
+    <a class="button is-grey is-small toggle" data-column="4">
       <span>Client</span>
       <span class="icon">
         <i class="far fa-eye" id="icon"></i>
       </span>
     </a>
-    <a class="button is-grey is-small toggle" data-column="6">
+    <a class="button is-grey is-small toggle" data-column="7">
       <span>Responsable de projet</span>
       <span class="icon">
         <i class="far fa-eye" id="icon"></i>
       </span>
     </a>
-    <a class="button is-grey is-small toggle" data-column="7">
+    <a class="button is-grey is-small toggle" data-column="8">
       <span>Responsable technique</span>
       <span class="icon">
         <i class="far fa-eye" id="icon"></i>
       </span>
     </a>
-    <a class="button is-grey is-small toggle" data-column="8">
+    <a class="button is-grey is-small toggle" data-column="9">
       <span>Commande</span>
       <span class="icon">
         <i class="far fa-eye" id="icon"></i>
@@ -132,7 +132,8 @@
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
-      <th>Edit/Delete</th>
+      <th>Delete/Edit</th>
+      <th>Edit cmd</th>
       <th>Equipe</th>
       <th>Collab</th>
       <th>Client</th>
@@ -156,25 +157,37 @@
     {% for sku in all %}
     <tr>
       {% for rp in sku %}
-      {% if forloop.first %}
+      {% if rp == sku.0 %}
       <td>
         <nav class="level">
           <div class="level-left">
-                {% if sku.8 is False %}
-                <a data-id="{{ rp }}" class="button is-small is-rounded is-success myupdate">
+                <a data-id="{{ rp }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete assignment">
+                  <span class="icon">
+                    <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+                <a data-id="{{ rp }}" class="button is-small is-rounded is-info tooltip is-tooltip-right" data-tooltip="Change assignment">
+                  <span class="icon">
+                    <i class="fas fa-redo"></i>
+                  </span>
+                </a>
+            </div>
+        </nav>
+      </td>
+      {% elif rp == sku.1 %}
+      <td>
+        <nav class="level">
+          <div class="level-left">
+                {% if sku.9 is False %}
+                <a data-id="{{ rp }}" class="button is-small is-rounded is-success myupdate tooltip is-tooltip-right" data-tooltip="Order in">
                   <span class="icon">
                     <i class="fas fa-chevron-circle-down"></i>
                   </span>
                 </a>
                 {% endif %}
-                <a href="/pdc/commandes/update/{{ rp }}" class="button is-small is-rounded is-warning">
+                <a href="/pdc/commandes/update/{{ rp }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
                   <span class="icon">
                     <i class="far fa-edit"></i>
-                  </span>
-                </a>
-                <a data-id="{{ rp }}" class="button is-small is-rounded is-danger mydelete">
-                  <span class="icon">
-                    <i class="far fa-trash-alt"></i>
                   </span>
                 </a>
           </div>

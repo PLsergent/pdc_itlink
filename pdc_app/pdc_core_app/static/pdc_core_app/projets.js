@@ -4,9 +4,9 @@ $(document).ready( function () {
       scrollX:        true,
       scrollCollapse: true,
       paging:         false,
-      orderFixed: [[ 5, "asc" ],[4, "asc"]],
+      orderFixed: [[ 6, "asc" ],[5, "asc"]],
       fixedColumns: {
-        leftColumns: 9,
+        leftColumns: 10,
         rightColumns: 2
       },
   });
@@ -30,7 +30,7 @@ $(document).ready( function () {
    } );
 
    $('a.toggle-all').on( 'click', function(){
-     var list = [3, 6, 7, 8];
+     var list = [4, 7, 8, 9];
      var getAllIcon = document.querySelectorAll("#icon");
      for (var i in list){
        var column = table.column(list[i]);
@@ -87,17 +87,17 @@ $(document).ready( function () {
     $('#switchP').prop('checked', false);
 
     $('#switchE').on('change', function filter(){
-      tableP.fnFilter('True', 8);
+      tableP.fnFilter('True', 9);
       $('#switchP').prop('checked', false);
       $('#switchAll').prop('checked', false);
     });
     $('#switchP').on('change', function filter(){
-      tableP.fnFilter('False', 8);
+      tableP.fnFilter('False', 9);
       $('#switchE').prop('checked', false);
       $('#switchAll').prop('checked', false);
     });
     $('#switchAll').on('change', function filter(){
-      tableP.fnFilter('True|False', 8, true);
+      tableP.fnFilter('True|False', 9, true);
       $('#switchE').prop('checked', false);
       $('#switchP').prop('checked', false);
     });
@@ -134,7 +134,7 @@ $(document).ready( function () {
                   },
                   success: function(response){
                       $this.fadeOut(200);
-                      $this.closest('tr').children('td:eq(8)').replaceWith('<td>True</td>');
+                      $this.closest('tr').children('td:eq(9)').replaceWith('<td>True</td>');
                   }
               });
             },
@@ -150,9 +150,9 @@ $(document).ready( function () {
       if ($(this).attr('data-tooltip') == ""){
         var total = 0
         var colIndex = table.cell($(this)).index().column
-        var collab = $(this).closest('tr').children('td:eq(2)').text();
+        var collab = $(this).closest('tr').children('td:eq(3)').text();
         table.rows( { filter: 'applied' } ).data().each(function(value, index) {
-          if ( value[2] == collab ){
+          if ( value[3] == collab ){
             total += parseInt(value[colIndex])
           }
       });
@@ -165,8 +165,8 @@ $(document).ready( function () {
     var color1 = ""
     var color2 = "has-background-grey-lighter"
     var rows = $('#myTable > tbody > tr').each(function(index){
-      value_update = $(this).children('td:eq(5)').text()
-      projet_udpdate = $(this).children('td:eq(4)').text()
+      value_update = $(this).children('td:eq(6)').text()
+      projet_udpdate = $(this).children('td:eq(5)').text()
       if (value != value_update || projet != projet_udpdate){
         value = value_update
         projet = projet_udpdate

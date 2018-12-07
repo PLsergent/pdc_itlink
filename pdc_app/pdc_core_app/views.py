@@ -46,7 +46,7 @@ def get_repartition(type):
     for rp in repartitions:
         list = []
         if type == 'P':
-            list.extend((rp.commande.idCom, rp.commande.equipe.nomE,
+            list.extend((rp.idRP, rp.commande.idCom, rp.commande.equipe.nomE,
                          rp.collaborateur.trigrammeC,
                          rp.commande.projet.client.nomCl,
                          rp.commande.projet.nomP, rp.commande.ref,
