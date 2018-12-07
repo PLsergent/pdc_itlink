@@ -85,6 +85,7 @@ def get_repartition(type):
     return list_month, list_month_display, all
 
 
+# Calcul charges affectées
 def assigned_charges(cmd):
     list_month, list_month_display = get_month(18)
     repartition_projet = RepartitionProjet.objects.filter(commande=cmd)

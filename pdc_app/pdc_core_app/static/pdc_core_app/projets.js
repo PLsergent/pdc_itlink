@@ -4,7 +4,7 @@ $(document).ready( function () {
       scrollX:        true,
       scrollCollapse: true,
       paging:         false,
-      orderFixed: [[ 5, "asc" ], [4, "asc"]],
+      orderFixed: [[ 5, "asc" ],[4, "asc"]],
       fixedColumns: {
         leftColumns: 9,
         rightColumns: 2
@@ -122,7 +122,7 @@ $(document).ready( function () {
       var $this = $(this)
       var id = $(this).data('id');
       $.confirm({
-        title: 'Pass command pop-up',
+        title: 'Order in pop-up',
         content: 'Do you want to proceed ?',
         buttons: {
             confirm: function () {
