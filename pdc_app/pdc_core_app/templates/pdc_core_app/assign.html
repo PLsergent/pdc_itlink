@@ -6,6 +6,16 @@
 <script src="{% static "pdc_core_app/assign.js" %}"></script>
 
 <br>
+<table style="display: none" id="template">
+  {{ date_prct_form.empty_form }}
+</table>
+<div id="deletebutton" style="display: none">
+  <a class='button is-danger tooltip' data-tooltip='Delete month' id='delete'>
+    <span class='icon'>
+      <i class='far fa-trash-alt'></i>
+    </span>
+  </a>
+</div>
   <form method="post" novalidate>
     {% csrf_token %}
     <table id="assign">
@@ -16,7 +26,7 @@
       {% endfor %}
     </table>
     <button class="button is-link is-medium" type="submit">Save</button>
-    <a class='button is-danger tooltip' data-tooltip="New month" id="new">
+    <a class='button is-success tooltip' data-tooltip="New month" id="new">
       <span class="icon">
         <i class="fas fa-plus"></i>
       </span>

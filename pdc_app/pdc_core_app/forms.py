@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import formset_factory
+from django.forms import BaseFormSet
 from .models import Projet, Client, Collaborateur, Equipe, Commande
 from .models import RepartitionProjet, RDate, Pourcentage
 
@@ -27,7 +28,7 @@ class AffectationCollabProjetForm(forms.ModelForm):
         self.fields['collaborateur'].queryset = Collaborateur.objects.all()
 
 
-DateFormSet = formset_factory(DatePrtForm, extra=7)
+DateFormSet = formset_factory(DatePrtForm, formset=BaseFormSet)
 
 
 class AjoutProjetForm(forms.ModelForm):
