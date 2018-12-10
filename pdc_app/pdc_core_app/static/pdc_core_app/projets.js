@@ -119,7 +119,7 @@ $(document).ready( function () {
         };
 
     $('.myupdate').on('click', function(){
-      var $this = $(this)
+      var $this = $(this);
       var id = $(this).data('id');
       $.confirm({
         title: 'Order in pop-up',
@@ -135,6 +135,36 @@ $(document).ready( function () {
                   success: function(response){
                       $this.fadeOut(200);
                       $this.closest('tr').children('td:eq(9)').replaceWith('<td>True</td>');
+                  }
+              });
+            },
+            cancel: function () {
+                return;
+            }
+        }
+      });
+    });
+
+    $('.mydelete').on('click', function(){
+      var $this = $(this)
+      var id = $(this).data('id');
+      var row = table.cell($(this)).index().row;
+      var idRow = table.rows().eq(0).indexOf(row);
+      $.confirm({
+        title: 'Deletion pop-up',
+        content: 'Do you want to proceed ?',
+        buttons: {
+            confirm: function () {
+              $.ajax({
+                  url: "http://127.0.0.1:8000/pdc/collaborateurs/assign/delete/"+id,
+                  type: 'POST',
+                  beforeSend: function(xhr) {
+                      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                  },
+                  success: function(response){
+                      $this.closest('tr').fadeOut(500);
+                      $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
                   }
               });
             },

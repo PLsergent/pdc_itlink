@@ -755,3 +755,14 @@ class UpdateAffectationProjetDateSet(SuccessMessageMixin, UpdateView):
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(RepartitionProjet, idRP=self.kwargs['idRP'])
+
+
+class DeleteAffectation(DeleteView):
+    model = RepartitionProjet
+    success_url = reverse_lazy('projets')
+    template_name = 'pdc_core_app/del.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(RepartitionProjet,
+                                 idRP=self.kwargs['idRP'],
+                                 )

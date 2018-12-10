@@ -14,8 +14,13 @@ $(document).ready(function() {
     }
     number ++;
   });
-  number = (number-2)/2
-  console.log($("#id_form-TOTAL_FORMS").val(number))
+
+  index -= 1;
+  var today = new Date();
+  var month = today.getMonth()+1;
+  var year = today.getFullYear();
+  $("#id_form-"+index+"-month_0").val(month);
+  $("#id_form-"+index+"-month_1").val(year)
 
   $("#new").on('click', function(){
     var index = $("#id_form-TOTAL_FORMS").val();

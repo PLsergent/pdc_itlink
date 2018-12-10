@@ -78,7 +78,8 @@ $(document).ready( function () {
     $('.mydelete').on('click', function(){
       var $this = $(this)
       var id = $(this).data('id');
-      var row = $(this).closest('td').data('dt-row')
+      var row = table.cell($(this)).index().row;
+      var idRow = table.rows().eq(0).indexOf(row);
       $.confirm({
         title: 'Deletion confirm pop-up',
         content: 'Do you want to proceed ?',
@@ -92,7 +93,7 @@ $(document).ready( function () {
                   },
                   success: function(response){
                       $this.closest('tr').fadeOut(500);
-                      $("#myTable tr").slice(row+1,row+2).fadeOut(500);
+                      $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                   }
               });
             },

@@ -38,6 +38,9 @@ urlpatterns = [
     path('collaborateurs/assign/update/<int:idRP>',
          views.UpdateAffectationProjetDateSet.as_view(),
          name='UpdateAffectationProjetDateSet'),
+    path('collaborateurs/assign/delete/<int:idRP>',
+         views.DeleteAffectation.as_view(),
+         name='DeleteAffectation'),
 
     path('commandes/', views.commandes, name='commandes'),
     path('commandes/add/', views.PasserCommande.as_view(),

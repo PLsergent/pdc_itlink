@@ -24,7 +24,7 @@ $(document).ready(function() {
       var $this = $(this)
       var id = $(this).data('id');
       $.confirm({
-        title: 'Confirm pop-up',
+        title: 'Delete pop-up',
         content: 'Do you want to proceed ?',
         buttons: {
             confirm: function () {
