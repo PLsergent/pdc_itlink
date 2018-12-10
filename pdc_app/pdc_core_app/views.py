@@ -613,6 +613,7 @@ class PassCommandFromTask(UpdateView):
     def post(self, request, idCom):
         cmd = self.object = self.get_object()
         cmd.etablie = True
+        cmd.odds = 100
         cmd.save()
         return HttpResponse('Successfully Updated!')
 

@@ -74,6 +74,7 @@ class Commande(models.Model):
     )
     date_commande = models.DateField()
     etablie = models.BooleanField(default=False)
+    odds = models.PositiveIntegerField(default=100)
     commentaire = models.CharField(max_length=200, blank=True)
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
     projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
@@ -90,6 +91,8 @@ class Commande(models.Model):
             self.etablie = False
         if not self.date_commande:
             self.date_commande = dt.today()
+        if not self.odds:
+            self.odds = 100
         super(Commande, self).save(*args, **kwargs)
 
 

@@ -90,12 +90,13 @@ class NouvelleTacheProbableForm(forms.ModelForm):
 
     class Meta:
         model = Commande
-        fields = ('projet', 'ref', 'charges', 'equipe', 'commentaire')
+        fields = ('projet', 'ref', 'charges', 'odds', 'equipe', 'commentaire')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['projet'].queryset = Projet.objects.all()
         self.fields['equipe'].queryset = Equipe.objects.all()
+        self.fields['odds'].label = "Probabilité"
 
 
 class UpdateCommandeForm(forms.ModelForm):
