@@ -699,17 +699,12 @@ class UpdateAffectationProjetDateSet(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification affectation'
-        return context
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
         date_prct_form = DateFormSet(
             initial=[{'month': x.month,
                       'pourcentage': x.pourcentage}
                      for x in self.object.list_R.all()])
-        return self.render_to_response(self.get_context_data(
-            date_prct_form=date_prct_form,
-        ))
+        context['date_prct_form'] = date_prct_form
+        return context
 
     def post(self, request, *args, **kwargs):
         self.object = None
@@ -723,9 +718,15 @@ class UpdateAffectationProjetDateSet(SuccessMessageMixin, UpdateView):
             return self.form_invalid(form, date_prct_form)
 
     def form_valid(self, form, date_prct_form):
+        exist = RepartitionProjet.objects.filter(
+                    commande=form.cleaned_data['commande'],
+                    collaborateur=form.cleaned_data['collaborateur']
+                    )
+        if exist:
+            form.add_error('collaborateur', 'This assignment already exist')
+            return self.form_invalid(form, date_prct_form)
+
         affectation = form.save()
-        self.object = self.get_object()
-        RepartitionProjet.objects.get(idRP=self.object.idRP).delete()
 
         for date_form in date_prct_form:
             date_form.save(commit=False)
@@ -744,7 +745,7 @@ class UpdateAffectationProjetDateSet(SuccessMessageMixin, UpdateView):
             else:
                 obj = date_form.save()
             affectation.list_R.add(obj)
-        return super(UpdateAffectationProjetDateSet, self).form_valid(form)
+        return super(AffectationProjetDateSet, self).form_valid(form)
 
     def form_invalid(self, form, date_prct_form):
 

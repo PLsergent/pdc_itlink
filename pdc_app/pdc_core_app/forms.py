@@ -5,7 +5,7 @@ from .models import Projet, Client, Collaborateur, Equipe, Commande
 from .models import RepartitionProjet, RDate, Pourcentage
 
 
-class DatePrtForm(forms.ModelForm):
+class DatePrctForm(forms.ModelForm):
 
     class Meta:
         model = RDate
@@ -28,7 +28,7 @@ class AffectationCollabProjetForm(forms.ModelForm):
         self.fields['collaborateur'].queryset = Collaborateur.objects.all()
 
 
-DateFormSet = formset_factory(DatePrtForm, formset=BaseFormSet)
+DateFormSet = formset_factory(DatePrctForm, formset=BaseFormSet)
 
 
 class AjoutProjetForm(forms.ModelForm):

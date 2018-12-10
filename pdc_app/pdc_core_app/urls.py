@@ -35,6 +35,9 @@ urlpatterns = [
          name='DeleteCollab'),
     path('collaborateurs/assign/', views.AffectationProjetDateSet.as_view(),
          name='AffectationProjetDateSet'),
+    path('collaborateurs/assign/update/<int:idRP>',
+         views.UpdateAffectationProjetDateSet.as_view(),
+         name='UpdateAffectationProjetDateSet'),
 
     path('commandes/', views.commandes, name='commandes'),
     path('commandes/add/', views.PasserCommande.as_view(),

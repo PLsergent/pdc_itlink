@@ -1,0 +1,36 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+{% load static %}
+<script src="{% static "pdc_core_app/assign_update.js" %}"></script>
+
+<br>
+<table style="display: none" id="template">
+  {{ date_prct_form.empty_form }}
+</table>
+<div id="deletebutton" style="display: none">
+  <a class='button is-danger tooltip mydelete' data-tooltip='Delete month' id='0'>
+    <span class='icon'>
+      <i class='far fa-trash-alt'></i>
+    </span>
+  </a>
+</div>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <table id="assign">
+      {{ form.as_table }}
+      {{ date_prct_form.management_form }}
+      {% for form in date_prct_form %}
+        {{ form.as_table }}
+      {% endfor %}
+    </table>
+    <button class="button is-link is-medium" type="submit">Save</button>
+    <a class='button is-success tooltip' data-tooltip="New month" id="new">
+      <span class="icon">
+        <i class="fas fa-plus"></i>
+      </span>
+    </a>
+  </form>
+
+{% endblock %}
