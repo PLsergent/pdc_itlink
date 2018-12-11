@@ -1,4 +1,4 @@
-$(document).on('click', '.notification', function() {
+$(document).on('click', '#notif', function() {
     $(this).addClass('is-hidden');
     return false;
 });

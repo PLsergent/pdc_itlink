@@ -451,6 +451,7 @@ class UpdateProjet(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification projet'
+        context['id'] = self.object.idProjet
         return context
 
     def get_success_message(self, cleaned_data):
@@ -484,6 +485,7 @@ class UpdateClient(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification client'
+        context['id'] = self.object.idClient
         return context
 
     def get_success_message(self, cleaned_data):
@@ -517,6 +519,7 @@ class UpdateCollab(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification collaborateur'
+        context['id'] = self.object.trigrammeC
         return context
 
     def get_success_message(self, cleaned_data):
@@ -551,6 +554,7 @@ class UpdateCommande(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification commande'
+        context['id'] = self.kwargs['idCom']
         return context
 
     def get_success_message(self, cleaned_data):
@@ -587,6 +591,7 @@ class UpdateTacheProbable(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification tâche probable'
+        context['id'] = self.object.idCom
         return context
 
     def get_success_message(self, cleaned_data):
@@ -655,7 +660,7 @@ class DeleteTacheProbable(DeleteView):
                                  etablie=False)
 
 
-class DeleteCommande(DeleteView):
+class DeleteCommande(SuccessMessageMixin, DeleteView):
     model = Commande
     success_url = reverse_lazy('commandes')
     template_name = 'pdc_core_app/del.html'
@@ -763,7 +768,8 @@ class UpdateAffectationProjetDateSet(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
-        context['page_title'] = 'Modification affectation'
+        context['page_title'] = 'Modification affectation projet'
+        context['id'] = self.kwargs['idRP']
         return context
 
     def get(self, request, *args, **kwargs):
@@ -915,6 +921,7 @@ class UpdateAffectationAutres(SuccessMessageMixin, UpdateView):
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
         context['page_title'] = 'Modification affectation activité'
+        context['id'] = self.object.idRA
         return context
 
     def get(self, request, *args, **kwargs):

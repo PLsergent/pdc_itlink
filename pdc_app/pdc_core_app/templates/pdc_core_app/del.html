@@ -9,7 +9,8 @@
         <div class="container">
           <form method="post">{% csrf_token %}
               <h1 class="title">Are you sure you want to delete "{{ object }}"?</h1>
-              <input id="del" type="submit" class="button is-large" value="Confirm" autofocus>
+              <input id="del" type="submit" class="button is-large is-link" value="Confirm" autofocus>
+              <button onclick="window.history.back();" class="button is-large is-danger" type="button">Cancel</button>
           </form>
         </div>
       </div>

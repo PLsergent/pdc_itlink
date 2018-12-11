@@ -31,6 +31,19 @@
         <i class="fas fa-plus"></i>
       </span>
     </a>
+    {% if page_title == 'Modification affectation projet' %}
+      <a href="/pdc/collaborateurs/assign/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% elif page_title == 'Modification affectation activité'%}
+      <a href="/pdc/autres/assign/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% endif %}
   </form>
 
 {% endblock %}

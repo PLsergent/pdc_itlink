@@ -12,6 +12,37 @@
       {{ form.as_table }}
     </table>
     <button class="button is-link is-medium" type="submit">Save</button>
+    {% if page_title == 'Modification commande' %}
+      <a href="/pdc/commandes/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% elif page_title == 'Modification projet' %}
+      <a href="/pdc/projets/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% elif page_title == 'Modification client' %}
+      <a href="/pdc/clients/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% elif page_title == 'Modification collaborateur' %}
+      <a href="/pdc/collaborateurs/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% elif page_title == 'Modification tâche probable' %}
+      <a href="/pdc/projets/tache_probable_delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
+        <span class="icon">
+          <i class="far fa-trash-alt"></i>
+        </span>
+      </a>
+    {% endif %}
   </form>
 
 {% endblock %}
