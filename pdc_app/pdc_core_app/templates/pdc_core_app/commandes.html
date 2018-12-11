@@ -72,14 +72,14 @@
         <td>
           <nav class="level">
             <div class="level-left">
-                  <a href="/pdc/commandes/update/{{ rp }}" class="button is-small is-rounded is-warning">
-                    <span class="icon">
-                      <i class="far fa-edit"></i>
-                    </span>
-                  </a>
-                  <a data-id="{{ rp }}" class="button is-small is-rounded is-danger mydelete">
+                  <a data-id="{{ rp }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete command">
                     <span class="icon">
                       <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+                  <a href="/pdc/commandes/update/{{ rp }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
+                    <span class="icon">
+                      <i class="far fa-edit"></i>
                     </span>
                   </a>
             </div>

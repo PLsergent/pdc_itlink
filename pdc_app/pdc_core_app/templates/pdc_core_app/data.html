@@ -56,14 +56,14 @@
         <td>
           <nav class="level">
             <div class="level-left">
-                  <a href="/pdc/projets/update/{{ item.idProjet }}" class="button is-small is-rounded is-warning">
-                    <span class="icon">
-                      <i class="far fa-edit"></i>
-                    </span>
-                  </a>
-                  <a data-id="{{ item.idProjet }}" class="button is-small is-rounded is-danger mydelete">
+                  <a data-id="{{ item.idProjet }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete project">
                     <span class="icon">
                       <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+                  <a href="/pdc/projets/update/{{ item.idProjet }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update project">
+                    <span class="icon">
+                      <i class="far fa-edit"></i>
                     </span>
                   </a>
                   &nbsp;
@@ -88,14 +88,14 @@
       <td>
         <nav class="level">
           <div class="level-left">
-                <a href="/pdc/clients/update/{{ item.idClient }}" class="button is-small is-rounded is-warning">
-                  <span class="icon">
-                    <i class="far fa-edit"></i>
-                  </span>
-                </a>
-                <a data-id="{{ item.idClient }}" class="button is-small is-rounded is-danger mydelete">
+                <a data-id="{{ item.idClient }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete client">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+                <a href="/pdc/clients/update/{{ item.idClient }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update client">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
                   </span>
                 </a>
                 &nbsp;
@@ -120,14 +120,14 @@
       <td>
         <nav class="level">
           <div class="level-left">
-                <a href="/pdc/collaborateurs/update/{{ item.trigrammeC }}" class="button is-small is-rounded is-warning">
-                  <span class="icon">
-                    <i class="far fa-edit"></i>
-                  </span>
-                </a>
-                <a data-id="{{ item.trigrammeC }}" class="button is-small is-rounded is-danger mydelete">
+                <a data-id="{{ item.trigrammeC }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete collab">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
+                  </span>
+                </a>
+                <a href="/pdc/collaborateurs/update/{{ item.trigrammeC }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update collab">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
                   </span>
                 </a>
                 &nbsp;
@@ -152,21 +152,22 @@
       <td>
         <nav class="level">
           <div class="level-left">
-                <a data-id="{{ item.idCom }}" class="button is-small is-rounded is-success myupdate">
-                  <span class="icon">
-                    <i class="fas fa-chevron-circle-down"></i>
-                  </span>
-                </a>
-                <a href="/pdc/projets/tache_probable_update/{{ item.idCom }}" class="button is-small is-rounded is-warning">
-                  <span class="icon">
-                    <i class="far fa-edit"></i>
-                  </span>
-                </a>
-                <a data-id="{{ item.idCom }}" class="button is-small is-rounded is-danger mydelete">
+                <a data-id="{{ item.idCom }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete command">
                   <span class="icon">
                     <i class="far fa-trash-alt"></i>
                   </span>
                 </a>
+                <a href="/pdc/projets/tache_probable_update/{{ item.idCom }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a data-id="{{ item.idCom }}" class="button is-small is-rounded is-success myupdate tooltip is-tooltip-right" data-tooltip="Order in">
+                  <span class="icon">
+                    <i class="fas fa-chevron-circle-down"></i>
+                  </span>
+                </a>
+
                 &nbsp;
                 {{ item }}, charges : {{ item.charges }},
                 chargesRAF : {{ item.chargesRAF }}, Probabilité : {{ item.odds }}
