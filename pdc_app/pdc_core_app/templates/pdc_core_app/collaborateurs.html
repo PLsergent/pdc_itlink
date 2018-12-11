@@ -170,11 +170,7 @@
           </nav>
         </td>
       {% for rp in sku %}
-        {% if forloop.counter0 >= 4 %}
-          <td>{{ rp|floatformat:"0" }}</td>
-        {% else %}
         <td>{{ rp }}</td>
-        {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}

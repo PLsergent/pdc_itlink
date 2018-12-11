@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import formset_factory
 from django.forms import BaseFormSet
-from .models import Projet, Client, Collaborateur, Equipe, Commande
-from .models import RepartitionProjet, RDate, Pourcentage
+from .models import Projet, Client, Collaborateur, Equipe, Commande, Activite
+from .models import RepartitionProjet, RDate, Pourcentage, RepartitionActivite
 
 
 class DatePrctForm(forms.ModelForm):
@@ -25,6 +25,18 @@ class AffectationCollabProjetForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['commande'].queryset = Commande.objects.all()
+        self.fields['collaborateur'].queryset = Collaborateur.objects.all()
+
+
+class AffectationCollabActForm(forms.ModelForm):
+
+    class Meta:
+        model = RepartitionActivite
+        fields = ('activite', 'collaborateur')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['activite'].queryset = Activite.objects.all()
         self.fields['collaborateur'].queryset = Collaborateur.objects.all()
 
 

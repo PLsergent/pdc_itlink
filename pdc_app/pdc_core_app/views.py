@@ -19,6 +19,7 @@ from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
 from .forms import AffectationCollabProjetForm, DateFormSet
+from .forms import AffectationCollabActForm
 
 
 def get_month(number_month):
@@ -54,7 +55,7 @@ def get_repartition(type):
                          rp.commande.projet.RT.trigrammeC,
                          rp.commande.etablie))
         elif type == 'A':
-            list.extend((rp.collaborateur.equipe.nomE,
+            list.extend((rp.idRA, rp.collaborateur.equipe.nomE,
                          rp.collaborateur.trigrammeC,
                          rp.activite))
         else:
@@ -143,7 +144,7 @@ def get_repartition_wo_inf(type, collab):
                     if rp.commande.etablie is False:
                         listP.append(pourc_collab)
                         prct = (pourc_collab/100)*(rp.commande.odds/100)
-                        listPP.append(prct*100)
+                        listPP.append(int(prct*100))
                         listSP.append(0)
                     elif rp.commande.etablie is True:
                         listP.append(pourc_collab)
@@ -224,7 +225,7 @@ def collaborateurs(request):
     # De même pour les activité, on fait une liste des pourcentages par
     # activité et on les stocks dans la liste pourcentagesA
         autres = get_repartition_wo_inf('A', collab)
-        pourcentageCM = cas_majorant + autres
+        pourcentagesCM = cas_majorant + autres
         pourcentagesPP = probable_pondere + autres
         pourcentagesSP = sans_probable + autres
     # Maintenant on a donc une liste de liste contenant les pourcentages par
@@ -232,7 +233,7 @@ def collaborateurs(request):
     # de même rang pour avoir la somme des pourcentages par mois.
         for i in range(0, len(list_month)):
             somme = 0
-            for p in pourcentageCM:
+            for p in pourcentagesCM:
                 somme += p[i]
             list.append(somme)
         for i in range(0, len(list_month)):
@@ -819,4 +820,155 @@ class DeleteAffectation(DeleteView):
     def get_object(self, *args, **kwargs):
         return get_object_or_404(RepartitionProjet,
                                  idRP=self.kwargs['idRP'],
+                                 )
+
+
+class AffectationAutres(SuccessMessageMixin, CreateView):
+    form_class = AffectationCollabActForm
+    template_name = 'pdc_core_app/assign.html'
+    model = RepartitionActivite
+    success_url = reverse_lazy('autres')
+    success_message = "Affectation réalisée avec succès."
+
+    def get_context_data(self, **args):
+        context = super(CreateView, self).get_context_data(**args)
+        context['page_title'] = 'Nouvelle activité'
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        date_prct_form = DateFormSet()
+        return self.render_to_response(self.get_context_data(
+                    form=form,
+                    date_prct_form=date_prct_form)
+                    )
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        date_prct_form = DateFormSet(self.request.POST)
+
+        if form.is_valid() and date_prct_form.is_valid():
+            return self.form_valid(form, date_prct_form)
+        else:
+            return self.form_invalid(form, date_prct_form)
+
+    def form_valid(self, form, date_prct_form):
+        exist = RepartitionActivite.objects.filter(
+                    activite=form.cleaned_data['activite'],
+                    collaborateur=form.cleaned_data['collaborateur']
+                    )
+        if exist:
+            form.add_error('collaborateur', 'This assignment already exist')
+            return self.form_invalid(form, date_prct_form)
+
+        affectation = form.save()
+
+        for date_form in date_prct_form:
+            date_form.save(commit=False)
+            month = date_form.cleaned_data['month']
+            prct = date_form.cleaned_data['pourcentage'].pourcentage
+            pourcentage = Pourcentage.objects.get(pourcentage=prct)
+            exist = RDate.objects.filter(
+                        month=month,
+                        pourcentage=pourcentage
+                        )
+            if exist:
+                obj = RDate.objects.get(
+                            month=month,
+                            pourcentage=pourcentage
+                            )
+            else:
+                obj = date_form.save()
+            affectation.list_R.add(obj)
+        return super(AffectationAutres, self).form_valid(form)
+
+    def form_invalid(self, form, date_prct_form):
+
+        return self.render_to_response(self.get_context_data(
+                                    form=form,
+                                    date_prct_form=date_prct_form)
+                                    )
+
+
+class UpdateAffectationAutres(SuccessMessageMixin, UpdateView):
+    form_class = AffectationCollabActForm
+    formset_class = DateFormSet
+    template_name = 'pdc_core_app/assign_update.html'
+    model = RepartitionActivite
+    success_url = reverse_lazy('autres')
+    success_message = "Affectation modifiée avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification affectation activité'
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        date_prct_form = DateFormSet(
+            initial=[{'month': x.month,
+                      'pourcentage': x.pourcentage}
+                     for x in self.object.list_R.all()])
+        return self.render_to_response(self.get_context_data(
+            date_prct_form=date_prct_form,
+        ))
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        date_prct_form = DateFormSet(self.request.POST)
+
+        if form.is_valid() and date_prct_form.is_valid():
+            return self.form_valid(form, date_prct_form)
+        else:
+            return self.form_invalid(form, date_prct_form)
+
+    def form_valid(self, form, date_prct_form):
+        affectation = form.save()
+        self.object = self.get_object()
+        RepartitionActivite.objects.get(idRA=self.object.idRA).delete()
+
+        for date_form in date_prct_form:
+            date_form.save(commit=False)
+            month = date_form.cleaned_data['month']
+            prct = date_form.cleaned_data['pourcentage'].pourcentage
+            pourcentage = Pourcentage.objects.get(pourcentage=prct)
+            exist = RDate.objects.filter(
+                        month=month,
+                        pourcentage=pourcentage
+                        )
+            if exist:
+                obj = RDate.objects.get(
+                            month=month,
+                            pourcentage=pourcentage
+                            )
+            else:
+                obj = date_form.save()
+            affectation.list_R.add(obj)
+        return super(UpdateAffectationAutres, self).form_valid(form)
+
+    def form_invalid(self, form, date_prct_form):
+
+        return self.render_to_response(self.get_context_data(
+                                    form=form,
+                                    date_prct_form=date_prct_form)
+                                    )
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(RepartitionActivite, idRA=self.kwargs['idRA'])
+
+
+class DeleteAffectationAutres(DeleteView):
+    model = RepartitionProjet
+    success_url = reverse_lazy('projets')
+    template_name = 'pdc_core_app/del.html'
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(RepartitionActivite,
+                                 idRA=self.kwargs['idRA'],
                                  )

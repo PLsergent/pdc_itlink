@@ -9,7 +9,7 @@
   <div class="level-left">
     <div class="columns">
       <div class="column">
-       <a class="button is-danger is-medium">
+       <a href="/pdc/autres/assign" class="button is-danger is-medium">
          <span>Nouvelle activité</span>
          <span class="icon">
            <i class="fas fa-folder-plus"></i>
@@ -22,6 +22,7 @@
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
+      <th>Edit/Delete</th>
       <th>Equipe</th>
       <th>Collab</th>
       <th>Activité</th>
@@ -38,7 +39,26 @@
     {% for sku in all %}
     <tr>
       {% for rp in sku %}
+        {% if rp == sku.0 %}
+        <td>
+          <nav class="level">
+            <div class="level-left">
+                  <a data-id="{{ rp }}" class="button is-small is-rounded is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete assignment">
+                    <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+                  <a href="/pdc/autres/assign/update/{{ rp }}" class="button is-small is-rounded is-info tooltip is-tooltip-right" data-tooltip="Change assignment">
+                    <span class="icon">
+                      <i class="fas fa-redo"></i>
+                    </span>
+                  </a>
+              </div>
+          </nav>
+        </td>
+        {% else %}
         <td>{{ rp }}</td>
+        {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}

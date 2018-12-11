@@ -53,5 +53,13 @@ urlpatterns = [
          name='DeleteCommande'),
 
     path('autres/', views.autres, name='autres'),
+    path('autres/assign', views.AffectationAutres.as_view(),
+         name='AffectationAutres'),
+    path('autres/assign/update/<int:idRA>',
+         views.UpdateAffectationAutres.as_view(),
+         name='UpdateAffectationAutres'),
+    path('autres/assign/delete/<int:idRA>',
+         views.DeleteAffectationAutres.as_view(),
+         name='DeleteAffectationAutres'),
     path('data/', views.data, name='data')
 ]

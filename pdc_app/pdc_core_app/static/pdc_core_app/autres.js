@@ -4,7 +4,7 @@ $(document).ready( function () {
       scrollCollapse: true,
       paging:         false,
       fixedColumns: {
-        leftColumns: 3
+        leftColumns: 4
       }
     }
     );
@@ -26,5 +26,50 @@ $(document).ready( function () {
         else {
             $(this.node()).removeClass( 'has-background-success' );
         }
-    } );
-} );
+    });
+
+    var getCookie = function (name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        };
+
+    $('.mydelete').on('click', function(){
+      var $this = $(this)
+      var id = $(this).data('id');
+      var row = table.cell($(this)).index().row;
+      var idRow = table.rows().eq(0).indexOf(row);
+      $.confirm({
+        title: 'Deletion pop-up',
+        content: 'Do you want to proceed ?',
+        buttons: {
+            confirm: function () {
+              $.ajax({
+                  url: "http://127.0.0.1:8000/pdc/autres/assign/delete/"+id,
+                  type: 'POST',
+                  beforeSend: function(xhr) {
+                      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                  },
+                  success: function(response){
+                      $this.closest('tr').fadeOut(500);
+                      $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
+                  }
+              });
+            },
+            cancel: function () {
+                return;
+            }
+        }
+      });
+    });
+});
