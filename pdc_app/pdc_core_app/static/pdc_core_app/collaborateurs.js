@@ -32,6 +32,7 @@ $(document).ready( function () {
 
     var table = tableSP;
     var tableP = fntableSP;
+    var table_id = "#myTable"
 
     $('#myTable_wrapper').wrap('<div id="hide" style="display:block"/>');
     $('#myTable2_wrapper').wrap('<div id="hide2" style="display:none"/>');
@@ -47,6 +48,7 @@ $(document).ready( function () {
       }else{
         table = tableSP;
         tableP = fntableSP;
+        table_id = "#myTable"
         $('#hide').css( 'display', 'block' );
         $('#switch_probablep').prop('checked', false);
         $('#hide2').css( 'display', 'none' );
@@ -61,6 +63,7 @@ $(document).ready( function () {
       }else{
         table = tablePP;
         tableP = fntablePP;
+        table_id = "#myTable2"
         $('#hide2').css( 'display', 'block' );
         $('#switch_woprobable').prop('checked', false);
         $('#hide').css( 'display', 'none' );
@@ -75,6 +78,7 @@ $(document).ready( function () {
       }else{
         table = tableCM;
         tableP = fntableCM;
+        table_id = "#myTable3"
         $('#hide3').css( 'display', 'block' );
         $('#switch_probablep').prop('checked', false);
         $('#hide2').css( 'display', 'none' );
@@ -82,7 +86,7 @@ $(document).ready( function () {
         $('#hide').css( 'display', 'none' );
       }
     });
-    
+
     table.cells().every( function () {
         if ( this.data() > 100 ){
           $(this.node()).addClass( 'has-background-danger' );
@@ -204,8 +208,12 @@ $(document).ready( function () {
                       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                   },
                   success: function(response){
-                      $this.closest('tr').fadeOut(500);
+                      $("#hide .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#hide2 .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#hide3 .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#myTable2 > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#myTable3 > tbody > tr:eq("+idRow+")").fadeOut(500);
                   }
               });
             },
