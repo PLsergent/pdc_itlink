@@ -135,6 +135,14 @@ $(document).ready( function () {
                   success: function(response){
                       $this.fadeOut(200);
                       $this.closest('tr').children('td:eq(9)').replaceWith('<td>True</td>');
+                      var proj = $this.closest('tr').children('td:eq(5)').text()
+                      var ref = $this.closest('tr').children('td:eq(6)').text()
+                      table.rows().data().each(function(value, index) {
+                        if ( value[5] == proj && value[6] == ref){
+                          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+") > td:eq(1) a.myupdate").fadeOut(200);
+                          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+") > td:eq(9)").replaceWith('<td>True</td>');
+                        }
+                    });
                   }
               });
             },
