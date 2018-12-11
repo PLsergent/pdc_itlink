@@ -104,11 +104,12 @@ class UpdateCommandeForm(forms.ModelForm):
     class Meta:
         model = Commande
         fields = ('projet', 'ref', 'charges',
-                  'chargesRAF', 'equipe', 'commentaire')
+                  'chargesRAF', 'odds', 'equipe', 'commentaire')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['chargesRAF'].label = "Charges reste à faire"
+        self.fields['odds'].label = "Probabilité"
         self.fields['projet'].queryset = Projet.objects.all()
         self.fields['equipe'].queryset = Equipe.objects.all()
 

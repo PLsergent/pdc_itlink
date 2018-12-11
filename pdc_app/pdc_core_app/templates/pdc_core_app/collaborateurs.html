@@ -61,7 +61,127 @@
   </div>
 </nav>
 
-<table id='myTable' class = "stripe hover table is-fullwidth">
+<hr>
+
+<nav>
+  <div class="level-left">
+    <div class="column">
+      <div class="columns">
+        <div class="column is-narrow">
+        <div class="field is-flex">
+          <input id="switch_woprobable" type="checkbox" name="switch_woprobable" class="switch is-link" checked="checked">
+          <label for="switch_woprobable">Sans probable</label>
+        </div></div>
+        <div class="column is-narrow">
+        <div class="field is-flex">
+          <input id="switch_probablep" type="checkbox" name="switch_probablep" class="switch is-warning">
+          <label for="switch_probablep">Probable pondéré</label>
+        </div></div>
+        <div class="column is-narrow">
+        <div class="field is-flex">
+          <input id="switch_maj" type="checkbox" name="switch_maj" class="switch is-danger">
+          <label for="switch_maj">Cas majorant</label>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<table id='myTable' class = "stripe hover table is-fullwidth mytable">
+  <thead>
+    <tr>
+      <th>Edit/Delete</th>
+      <th>Equipe</th>
+      <th>Collab</th>
+      <th>RdE</th>
+      {% for month in list_month_display %}
+        {% if month.0 > 9 %}
+        <th>{{ month.0 }}-{{ month.1 }}</th>
+        {% else %}
+        <th>0{{ month.0 }}-{{ month.1 }}</th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for sku in allSP %}
+    <tr>
+        <td>
+          <nav class="level">
+            <div class="level-left">
+                  <a href="/pdc/collaborateurs/update/{{ sku.1 }}" class="button is-small is-rounded is-warning">
+                    <span class="icon">
+                      <i class="far fa-edit"></i>
+                    </span>
+                  </a>
+                  <a data-id="{{ sku.1 }}" class="button is-small is-rounded is-danger mydelete">
+                    <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+            </div>
+          </nav>
+        </td>
+      {% for rp in sku %}
+        {% if forloop.counter0 >= 4 %}
+          <td>{{ rp|floatformat:"0" }}</td>
+        {% else %}
+        <td>{{ rp }}</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<table id='myTable2' class = "stripe hover table is-fullwidth mytable">
+  <thead>
+    <tr>
+      <th>Edit/Delete</th>
+      <th>Equipe</th>
+      <th>Collab</th>
+      <th>RdE</th>
+      {% for month in list_month_display %}
+        {% if month.0 > 9 %}
+        <th>{{ month.0 }}-{{ month.1 }}</th>
+        {% else %}
+        <th>0{{ month.0 }}-{{ month.1 }}</th>
+        {% endif %}
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for sku in allPP %}
+    <tr>
+        <td>
+          <nav class="level">
+            <div class="level-left">
+                  <a href="/pdc/collaborateurs/update/{{ sku.1 }}" class="button is-small is-rounded is-warning">
+                    <span class="icon">
+                      <i class="far fa-edit"></i>
+                    </span>
+                  </a>
+                  <a data-id="{{ sku.1 }}" class="button is-small is-rounded is-danger mydelete">
+                    <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                    </span>
+                  </a>
+            </div>
+          </nav>
+        </td>
+      {% for rp in sku %}
+        {% if forloop.counter0 >= 4 %}
+          <td>{{ rp|floatformat:"0" }}</td>
+        {% else %}
+        <td>{{ rp }}</td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<table id='myTable3' class = "stripe hover table is-fullwidth mytable">
   <thead>
     <tr>
       <th>Edit/Delete</th>
@@ -97,11 +217,16 @@
           </nav>
         </td>
       {% for rp in sku %}
+        {% if forloop.counter0 >= 4 %}
+          <td>{{ rp|floatformat:"0" }}</td>
+        {% else %}
         <td>{{ rp }}</td>
+        {% endif %}
       {% endfor %}
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
 
 {% endblock %}
