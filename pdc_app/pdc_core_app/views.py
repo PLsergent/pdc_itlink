@@ -460,7 +460,11 @@ class UpdateProjet(SuccessMessageMixin, UpdateView):
         )
 
     def form_valid(self, form):
-        exist = Projet.objects.filter(nomP=form.cleaned_data['nomP'])
+        exist = Projet.objects.filter(
+                            nomP=form.cleaned_data['nomP']
+                            ).exclude(
+                            idProjet=self.object.idProjet
+                            )
         if exist:
             form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)
@@ -489,7 +493,11 @@ class UpdateClient(SuccessMessageMixin, UpdateView):
         )
 
     def form_valid(self, form):
-        exist = Client.objects.filter(nomCl=form.cleaned_data['nomCl'])
+        exist = Client.objects.filter(
+                            nomCl=form.cleaned_data['nomCl']
+                            ).exclude(
+                            idClient=self.object.idClient
+                            )
         if exist:
             form.add_error('nomCl', 'This name already exist')
             return self.form_invalid(form)
@@ -519,7 +527,9 @@ class UpdateCollab(SuccessMessageMixin, UpdateView):
 
     def form_valid(self, form):
         exist_name = Collaborateur.objects.filter(
-                    nomC=form.cleaned_data['nomC'])
+                    nomC=form.cleaned_data['nomC']).exclude(
+                                            trigrammeC=self.object.trigrammeC
+                                            )
         if exist_name:
             form.add_error('nomC', 'This name already exist')
             return self.form_invalid(form)
@@ -553,7 +563,7 @@ class UpdateCommande(SuccessMessageMixin, UpdateView):
         exist = Commande.objects.filter(
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
-            etablie=True)
+            etablie=True).exclude(idCom=self.object.idCom)
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
@@ -589,7 +599,7 @@ class UpdateTacheProbable(SuccessMessageMixin, UpdateView):
         exist = Commande.objects.filter(
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
-            etablie=False)
+            etablie=False).exclude(idCom=self.object.idCom)
         exist_cmd = Commande.objects.filter(
             projet=form.cleaned_data['projet'],
             ref=form.cleaned_data['ref'],
