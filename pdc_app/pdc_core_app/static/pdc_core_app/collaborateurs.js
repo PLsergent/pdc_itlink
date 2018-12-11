@@ -49,7 +49,7 @@ $(document).ready( function () {
         table = tableSP;
         tableP = fntableSP;
         table_id = "#myTable"
-        $('#hide').css( 'display', 'block' );
+        $('#hide').fadeIn().css( 'display', 'block' );
         $('#switch_probablep').prop('checked', false);
         $('#hide2').css( 'display', 'none' );
         $('#switch_maj').prop('checked', false);
@@ -64,7 +64,7 @@ $(document).ready( function () {
         table = tablePP;
         tableP = fntablePP;
         table_id = "#myTable2"
-        $('#hide2').css( 'display', 'block' );
+        $('#hide2').fadeIn().css( 'display', 'block' );
         $('#switch_woprobable').prop('checked', false);
         $('#hide').css( 'display', 'none' );
         $('#switch_maj').prop('checked', false);
@@ -79,14 +79,14 @@ $(document).ready( function () {
         table = tableCM;
         tableP = fntableCM;
         table_id = "#myTable3"
-        $('#hide3').css( 'display', 'block' );
+        $('#hide3').fadeIn().css( 'display', 'block' );
         $('#switch_probablep').prop('checked', false);
         $('#hide2').css( 'display', 'none' );
         $('#switch_woprobable').prop('checked', false);
         $('#hide').css( 'display', 'none' );
       }
     });
-
+// inital color cell
     table.cells().every( function () {
         if ( this.data() > 100 ){
           $(this.node()).addClass( 'has-background-danger' );
