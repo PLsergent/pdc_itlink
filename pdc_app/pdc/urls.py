@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('pdc/', include('pdc_core_app.urls')),
+    path('pdc/', include('pdc_core_app.urls'), name='pdc'),
     path('admin/', admin.site.urls),
 ]

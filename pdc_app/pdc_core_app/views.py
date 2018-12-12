@@ -22,6 +22,12 @@ from .forms import AffectationCollabProjetForm, DateFormSet
 from .forms import AffectationCollabActForm
 
 
+def login(request):
+    page_title = 'Login page'
+    return render(request, 'pdc_core_app/login.html',
+                  {'page_title': page_title})
+
+
 def get_month(number_month):
     lmd = []
     lm = []

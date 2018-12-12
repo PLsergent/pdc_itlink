@@ -1,0 +1,24 @@
+{% extends "../pdc_core_app/base.html" %}
+{% load bulma_tags %}
+
+{% block content %}
+<section class="hero has-text-centered">
+      <div class="hero-body">
+        <div class="container">
+          {% if user.is_authenticated %}
+              <h1 class="title">Login as, {{ user.username }}</h1>
+          	{% else %}
+              <form method="post">
+                {% csrf_token %}
+                {{ form|bulma }}
+                <br>
+                <a class="button is-medium is-primary" type="submit">Login</a>
+              </form>
+              <hr>
+              <a class="button is-large is-link is-outlined" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+          	{% endif %}
+        </div>
+      </div>
+</section>
+
+{% endblock %}

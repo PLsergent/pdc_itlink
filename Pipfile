@@ -11,6 +11,8 @@ django-multiforloop = "*"
 django-vanilla-views = "*"
 black = "*"
 workdays = "*"
+social-auth-app-django = "*"
+django-bulma = "*"
 
 [dev-packages]
 
