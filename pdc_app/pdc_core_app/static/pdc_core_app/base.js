@@ -3,6 +3,12 @@ $(document).on('click', '#notif', function() {
     return false;
 });
 
+$(document).on('click', '.delete', function() {
+    $("#notif").addClass('is-hidden');
+    return false;
+});
+
+
 setTimeout(function() {
     $('#notif').fadeOut('slow');
 }, 4000);

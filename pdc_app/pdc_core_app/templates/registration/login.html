@@ -1,8 +1,11 @@
 {% extends "../pdc_core_app/base.html" %}
 
-
 {% load bulma_tags %}
 {% block content %}
+
+{% load static %}
+<script src="{% static "registration/login.js" %}"></script>
+
 <br>
 <div class="content is-medium">
   {% if user.is_authenticated %}
@@ -21,7 +24,7 @@
               <td>{{ user.first_name }} {{ user.last_name }}</td>
             </tr>
           {% endif %}
-          {% if user.email != ''%}
+          {% if user.email %}
             <tr>
               <td>Email</td>
               <td>{{ user.email }}</td>
@@ -40,8 +43,12 @@
             <td>{{ user.is_superuser }}</td>
           </tr>
           <tr>
-            <td>Permissions</td>
-            <td>{{ user.user_permissions }}</td>
+            <td>Staff</td>
+            <td>{{ user.is_staff }}</td>
+          </tr>
+          <tr>
+            <td>Group</td>
+            <td>{{ user.groups.all.0 }}</td>
           </tr>
         </tbody>
       </table>
@@ -55,7 +62,12 @@
       <button class="button is-medium is-primary" type="submit">Login</button>
     </form>
     <hr>
-    <a class="button is-large is-link is-outlined" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+    <a href="{% url 'social:begin' 'google-oauth2' %}" class="button is-large is-warning">
+    <span class="icon">
+      <i class="fab fa-google"></i>
+    </span>
+    <span>Login Google</span>
+  </a>
   {% endif %}
 </div>
 {% endblock %}

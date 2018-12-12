@@ -159,6 +159,7 @@
       {% for rp in sku %}
       {% url 'UpdateAffectationProjetDateSet' rp as update_aff_url %}
       {% url 'UpdateCommande' rp as update_command_url %}
+      {% url 'UpdateTacheProbable' rp as update_tache_p_url %}
       {% if rp == sku.0 %}
       <td>
         <nav class="level">
@@ -186,12 +187,18 @@
                     <i class="fas fa-chevron-circle-down"></i>
                   </span>
                 </a>
-                {% endif %}
+                <a href="{{ update_tache_p_url }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
+                  <span class="icon">
+                    <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                {% else %}
                 <a href="{{ update_command_url }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
                   <span class="icon">
                     <i class="far fa-edit"></i>
                   </span>
                 </a>
+                {% endif %}
           </div>
         </nav>
       </td>
