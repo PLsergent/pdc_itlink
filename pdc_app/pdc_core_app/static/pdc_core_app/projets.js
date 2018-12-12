@@ -117,7 +117,8 @@ $(document).ready( function () {
             }
             return cookieValue;
         };
-
+    var base_url = new URL("/", "http://127.0.0.1:8000");
+    var url_command_fromtask = new URL('pdc/commandes/fromtask/', base_url);
     $('.myupdate').on('click', function(){
       var $this = $(this);
       var id = $(this).data('id');
@@ -127,7 +128,7 @@ $(document).ready( function () {
         buttons: {
             confirm: function () {
               $.ajax({
-                  url: "http://127.0.0.1:8000/pdc/commandes/fromtask/"+id,
+                  url: url_command_fromtask + id,
                   type: 'POST',
                   beforeSend: function(xhr) {
                       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));

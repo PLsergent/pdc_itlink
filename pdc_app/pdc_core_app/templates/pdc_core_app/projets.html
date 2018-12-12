@@ -157,6 +157,8 @@
     {% for sku in all %}
     <tr>
       {% for rp in sku %}
+      {% url 'UpdateAffectationProjetDateSet' rp as update_aff_url %}
+      {% url 'UpdateCommande' rp as update_command_url %}
       {% if rp == sku.0 %}
       <td>
         <nav class="level">
@@ -166,7 +168,7 @@
                     <i class="far fa-trash-alt"></i>
                   </span>
                 </a>
-                <a href="/pdc/collaborateurs/assign/update/{{ rp }}" class="button is-small is-rounded is-info tooltip is-tooltip-right" data-tooltip="Change assignment">
+                <a href="{{ update_aff_url }}" class="button is-small is-rounded is-info tooltip is-tooltip-right" data-tooltip="Change assignment">
                   <span class="icon">
                     <i class="fas fa-redo"></i>
                   </span>
@@ -185,7 +187,7 @@
                   </span>
                 </a>
                 {% endif %}
-                <a href="/pdc/commandes/update/{{ rp }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
+                <a href="{{ update_command_url }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
                   <span class="icon">
                     <i class="far fa-edit"></i>
                   </span>
