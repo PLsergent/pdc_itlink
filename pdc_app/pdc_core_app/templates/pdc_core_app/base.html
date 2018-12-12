@@ -91,6 +91,20 @@
             <i class="fas fa-plus"></i>
           </span>
         </a>
+        {% if user.is_authenticated %}
+          {% if request.path == "/pdc/accounts/login/" %}
+            <a href="{% url 'login' %}" class='navbar-item is-active'>{{ user.username }}</a>
+          {% else %}
+            <a href="{% url 'login' %}" class='navbar-item'>{{ user.username }}</a>
+          {% endif %}
+            <a href="{% url 'logout' %}" class='navbar-item'>Logout</a>
+        {% else %}
+          {% if request.path == "/pdc/accounts/login/" %}
+            <a href="{% url 'login' %}" class='navbar-item is-active'>Login</a>
+          {% else %}
+            <a href="{% url 'login' %}" class='navbar-item'>Login</a>
+          {% endif %}
+        {% endif %}
       </div>
     </nav>
 
@@ -100,6 +114,20 @@
         <h3 class="title is-3">{{ page_title }}</h3>
       </div>
     </div>
+    {% elif request.path == '/pdc/accounts/login/' %}
+      {% if user.is_authenticated %}
+        <div class="container is-fluid">
+          <div class="notification">
+            <h3 class="title is-3">Account</h3>
+          </div>
+        </div>
+      {% else %}
+      <div class="container is-fluid">
+        <div class="notification">
+          <h3 class="title is-3">Login</h3>
+        </div>
+      </div>
+      {% endif %}
     {% endif %}
     {% if messages %}
       {% for message in messages %}

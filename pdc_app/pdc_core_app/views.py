@@ -10,6 +10,7 @@ from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client, RDate
@@ -20,12 +21,6 @@ from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
 from .forms import AffectationCollabProjetForm, DateFormSet
 from .forms import AffectationCollabActForm
-
-
-def login(request):
-    page_title = 'Login page'
-    return render(request, 'pdc_core_app/login.html',
-                  {'page_title': page_title})
 
 
 def get_month(number_month):
@@ -178,10 +173,12 @@ def get_repartition_wo_inf(type, collab):
         return pourcentages
 
 
+@login_required()
 def index(request):
     return render(request, 'pdc_core_app/index.html')
 
 
+@login_required()
 def projets(request):
     page_title = 'Affectations projets'
     list_month_display = []
@@ -194,6 +191,7 @@ def projets(request):
                    'all': all})
 
 
+@login_required()
 def collaborateurs(request):
     page_title = 'Collaborateurs'
     list_month_display = []
@@ -262,6 +260,7 @@ def collaborateurs(request):
                    'all': all, 'allPP': allPP, 'allSP': allSP})
 
 
+@login_required()
 def commandes(request):
     page_title = 'Commandes'
     all = []
@@ -282,6 +281,7 @@ def commandes(request):
                    'all': all})
 
 
+@login_required()
 def autres(request):
     page_title = 'Autres'
     list_month_display = []
@@ -294,6 +294,7 @@ def autres(request):
                    'all': all})
 
 
+@login_required()
 def data(request):
     page_title = 'Données'
     projets = Projet.objects.all()

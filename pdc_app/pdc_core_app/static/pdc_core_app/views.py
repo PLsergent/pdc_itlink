@@ -146,6 +146,12 @@ def index(request):
     return render(request, 'pdc_core_app/index.html')
 
 
+def login(request):
+    page_title = 'Login'
+    return render(request, 'registration/login.html',
+                  {'page_title': page_title})
+
+
 def projets(request):
     page_title = 'Affectations projets'
     list_month_display = []

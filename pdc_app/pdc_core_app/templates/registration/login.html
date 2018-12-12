@@ -1,24 +1,61 @@
 {% extends "../pdc_core_app/base.html" %}
+
+
 {% load bulma_tags %}
-
 {% block content %}
-<section class="hero has-text-centered">
-      <div class="hero-body">
-        <div class="container">
-          {% if user.is_authenticated %}
-              <h1 class="title">Login as, {{ user.username }}</h1>
-          	{% else %}
-              <form method="post">
-                {% csrf_token %}
-                {{ form|bulma }}
-                <br>
-                <a class="button is-medium is-primary" type="submit">Login</a>
-              </form>
-              <hr>
-              <a class="button is-large is-link is-outlined" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
-          	{% endif %}
-        </div>
-      </div>
-</section>
-
+<br>
+<div class="content is-medium">
+  {% if user.is_authenticated %}
+    <h1 class="title is-4">Login as, {{ user.username }}</h1>
+      <table class='table is-striped'>
+        <thead>
+          <tr>
+            <th>Info</th>
+            <th>{{ user.username }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if user.first_name or user.last_name %}
+            <tr>
+              <td>Complete name</td>
+              <td>{{ user.first_name }} {{ user.last_name }}</td>
+            </tr>
+          {% endif %}
+          {% if user.email != ''%}
+            <tr>
+              <td>Email</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          {% endif %}
+          <tr>
+            <td>Last login</td>
+            <td>{{ user.last_login }}</td>
+          </tr>
+          <tr>
+            <td>Date joined</td>
+            <td>{{ user.date_joined }}</td>
+          </tr>
+          <tr>
+            <td>Superuser</td>
+            <td>{{ user.is_superuser }}</td>
+          </tr>
+          <tr>
+            <td>Permissions</td>
+            <td>{{ user.user_permissions }}</td>
+          </tr>
+        </tbody>
+      </table>
+    <hr>
+    <a class="button is-medium is-danger" href="{% url 'logout' %}">Logout</a>
+  {% else %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form|bulma }}
+      <br>
+      <button class="button is-medium is-primary" type="submit">Login</button>
+    </form>
+    <hr>
+    <a class="button is-large is-link is-outlined" href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
+  {% endif %}
+</div>
 {% endblock %}
