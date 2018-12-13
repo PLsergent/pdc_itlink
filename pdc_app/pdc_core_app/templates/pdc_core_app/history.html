@@ -1,0 +1,20 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+<table>
+  <thead>
+    <tr>
+      <th>Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ver in version_list %}
+    <tr>
+      <td>{{ ver }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -66,5 +66,8 @@ urlpatterns = [
     path('autres/assign/delete/<int:idRA>',
          views.DeleteAffectationAutres.as_view(),
          name='DeleteAffectationAutres'),
-    path('data/', views.data, name='data')
+
+    path('data/', views.data, name='data'),
+
+    path('history/', views.history, name='history')
 ]

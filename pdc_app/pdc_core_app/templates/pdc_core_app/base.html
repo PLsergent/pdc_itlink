@@ -54,11 +54,13 @@
           {% else %}
           <a href='/pdc/autres' class='navbar-item'>Autres</a>
           {% endif %}
-          {% if page_title == 'Données' %}
-          <a href='/pdc/data' class='navbar-item is-active'>Données</a>
-          {% else %}
-          <a href='/pdc/data' class='navbar-item'>Données</a>
-          {% endif %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Données</a>
+            <div class='navbar-dropdown'>
+              <a href="{% url 'data' %}" class="navbar-item">Liste données</a>
+              <a href="{% url 'history' %}" class="navbar-item">Historique</a>
+            </div>
+        </div>
       </div>
       <div class="navbar-end">
           <a href='/pdc/projets/add' class='button is-link tooltip is-tooltip-left' data-tooltip="Nouveau projet">

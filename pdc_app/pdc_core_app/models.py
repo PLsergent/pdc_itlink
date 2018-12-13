@@ -2,6 +2,7 @@ from django.db import models
 from month.models import MonthField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime as dt
+import reversion
 
 
 class Equipe(models.Model):
@@ -17,6 +18,7 @@ class Equipe(models.Model):
         return f'{self.get_nomE_display()}'
 
 
+@reversion.register
 class Collaborateur(models.Model):
     trigrammeC = models.CharField(max_length=3, primary_key=True)
     nomC = models.CharField(max_length=50)
@@ -33,6 +35,7 @@ class Collaborateur(models.Model):
         return f'{self.trigrammeC}, {self.nomC}, {self.get_role_display()}'
 
 
+@reversion.register
 class Responsable_E(models.Model):
     idRespE = models.AutoField(primary_key=True)
     RdE = models.OneToOneField(Collaborateur, on_delete=models.CASCADE)
@@ -42,6 +45,7 @@ class Responsable_E(models.Model):
         return f'{self.RdE.trigrammeC}'
 
 
+@reversion.register
 class Client(models.Model):
     idClient = models.AutoField(primary_key=True)
     nomCl = models.CharField(max_length=50)
@@ -50,6 +54,7 @@ class Client(models.Model):
         return f'{self.nomCl}'
 
 
+@reversion.register
 class Projet(models.Model):
     idProjet = models.AutoField(primary_key=True)
     nomP = models.CharField(max_length=50)
@@ -63,6 +68,7 @@ class Projet(models.Model):
         return f'{self.nomP}, {self.client.nomCl}'
 
 
+@reversion.register
 class Commande(models.Model):
     idCom = models.AutoField(primary_key=True)
     ref = models.CharField(blank=True, max_length=100)
@@ -130,6 +136,7 @@ class RDate(models.Model):
         return f'{self.month}, {self.pourcentage.pourcentage}'
 
 
+@reversion.register
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
     activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
@@ -141,6 +148,7 @@ class RepartitionActivite(models.Model):
             f'{self.collaborateur.nomC}'
 
 
+@reversion.register
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
     commande = models.ForeignKey(Commande, on_delete=models.CASCADE)

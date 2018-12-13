@@ -4,6 +4,9 @@ from workdays import networkdays
 import calendar
 from vanilla import DeleteView
 import month
+from reversion.models import Version
+from reversion.views import RevisionMixin
+
 
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, UpdateView
@@ -312,7 +315,17 @@ def data(request):
                    'commandes': commandes})
 
 
-class AjoutProjet(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+@login_required()
+def history(request):
+    page_title = "Historique"
+    version_list = Version.objects.all()
+    return render(request, 'pdc_core_app/history.html',
+                  {'page_title': page_title,
+                   'version_list': version_list})
+
+
+class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
+                  CreateView):
     model = Projet
     form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
