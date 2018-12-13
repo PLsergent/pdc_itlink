@@ -3,6 +3,14 @@ from django.forms import formset_factory
 from django.forms import BaseFormSet
 from .models import Projet, Client, Collaborateur, Equipe, Commande, Activite
 from .models import RepartitionProjet, RDate, Pourcentage, RepartitionActivite
+from django.contrib.auth.models import User
+
+
+class UpdateUserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        exclude = ['last_login', 'date_joined', 'password']
 
 
 class DatePrctForm(forms.ModelForm):

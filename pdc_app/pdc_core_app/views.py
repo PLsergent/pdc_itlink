@@ -12,6 +12,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client, RDate
@@ -21,7 +22,7 @@ from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
 from .forms import UpdateCommandeForm, PassCommandFromTaskForm
 from .forms import AffectationCollabProjetForm, DateFormSet
-from .forms import AffectationCollabActForm
+from .forms import AffectationCollabActForm, UpdateUserForm
 
 
 def get_month(number_month):
@@ -1025,3 +1026,19 @@ class DeleteAffectationAutres(PermissionRequiredMixin, DeleteView):
         return get_object_or_404(RepartitionActivite,
                                  idRA=self.kwargs['idRA'],
                                  )
+
+
+class UpdateUser(UpdateView):
+    model = User
+    form_class = UpdateUserForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('projets')
+    success_message = "Utilisateur modifiée avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification utilisateur'
+        return context
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(User, id=self.kwargs['id'])

@@ -6,6 +6,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
+    path('user/update/<int:id>', views.UpdateUser.as_view(),
+         name='UpdateUser'),
 
     path('projets/', views.projets, name='projets'),
     path('projets/add/', views.AjoutProjet.as_view(),
