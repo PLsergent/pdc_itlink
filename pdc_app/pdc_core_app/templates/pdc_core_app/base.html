@@ -63,50 +63,79 @@
         </div>
       </div>
       <div class="navbar-end">
-          <a href='/pdc/projets/add' class='button is-link tooltip is-tooltip-left' data-tooltip="Nouveau projet">
-          <span class="icon">
-            <i class="fas fa-plus"></i>
-          </span>
+        <div class="navbar-item">
+          <div class="buttons">
+            <a href='/pdc/projets/add' class='button is-link tooltip is-tooltip-left' data-tooltip="Nouveau projet">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+            </a>
+            <a href='/pdc/clients/add' class='button is-warning tooltip is-tooltip-left' data-tooltip="Nouveau client">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
           </a>
-          <a href='/pdc/clients/add' class='button is-warning tooltip is-tooltip-left' data-tooltip="Nouveau client">
-          <span class="icon">
-            <i class="fas fa-plus"></i>
-          </span>
-        </a>
-        <a href='/pdc/collaborateurs/add' class='button is-black tooltip is-tooltip-left' data-tooltip="Nouveau collaborateur">
-          <span class="icon">
-            <i class="fas fa-plus"></i>
-          </span>
-        </a>
-        <a href='/pdc/commandes/add' class='button is-success tooltip is-tooltip-left' data-tooltip="Passer commande">
-          <span class="icon">
-            <i class="fas fa-plus"></i>
-          </span>
-        </a>
-        <a href='/pdc/projets/tache_probable_add' class='button has-background-grey-light tooltip is-tooltip-left' data-tooltip="Nouvelle tâche probable">
-          <span class="icon">
-            <i class="fas fa-plus"></i>
-          </span>
-        </a>
-        <a href='/pdc/collaborateurs/assign' class='button is-danger tooltip is-tooltip-left' data-tooltip="Nouvelle affectation">
-          <span class="icon">
-            <i class="fas fa-plus"></i>
-          </span>
-        </a>
-        {% if user.is_authenticated %}
-          {% if request.path == "/pdc/accounts/login/" %}
-            <a href="{% url 'login' %}" class='navbar-item is-active'>{{ user.username }}</a>
+          <a href='/pdc/collaborateurs/add' class='button is-black tooltip is-tooltip-left' data-tooltip="Nouveau collaborateur">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+          </a>
+          <a href='/pdc/commandes/add' class='button is-success tooltip is-tooltip-left' data-tooltip="Passer commande">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+          </a>
+          <a href='/pdc/projets/tache_probable_add' class='button has-background-grey-light tooltip is-tooltip-left' data-tooltip="Nouvelle tâche probable">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+          </a>
+          <a href='/pdc/collaborateurs/assign' class='button is-danger tooltip is-tooltip-left' data-tooltip="Nouvelle affectation">
+            <span class="icon">
+              <i class="fas fa-plus"></i>
+            </span>
+          </a>
+          {% if user.is_authenticated %}
+            {% if request.path == "/pdc/accounts/login/" %}
+              <a href="{% url 'login' %}" class='button is-active'>
+                <span class="icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span>{{ user.username }}</span>
+              </a>
+            {% else %}
+              <a href="{% url 'login' %}" class='button'>
+                <span class="icon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <span>{{ user.username }}</span>
+              </a>
+            {% endif %}
+              <a href="{% url 'logout' %}" class='button is-danger'>
+                <span>Logout</span>
+                <span class="icon">
+                  <i class="fas fa-sign-out-alt"></i>
+                </span>
+              </a>
           {% else %}
-            <a href="{% url 'login' %}" class='navbar-item'>{{ user.username }}</a>
+            {% if request.path == "/pdc/accounts/login/" %}
+              <a href="{% url 'login' %}" class='button is-active'>
+                <span class="icon">
+                  <i class="fas fa-sign-in-alt"></i>
+                </span>
+                <span>Login</span>
+              </a>
+            {% else %}
+            <a href="{% url 'login' %}" class='button'>
+              <span class="icon">
+                <i class="fas fa-sign-in-alt"></i>
+              </span>
+              <span>Login</span>
+            </a>
+            {% endif %}
           {% endif %}
-            <a href="{% url 'logout' %}" class='navbar-item'>Logout</a>
-        {% else %}
-          {% if request.path == "/pdc/accounts/login/" %}
-            <a href="{% url 'login' %}" class='navbar-item is-active'>Login</a>
-          {% else %}
-            <a href="{% url 'login' %}" class='navbar-item'>Login</a>
-          {% endif %}
-        {% endif %}
+        </div>
+        </div>
       </div>
     </nav>
 
