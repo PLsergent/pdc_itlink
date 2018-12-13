@@ -1032,7 +1032,7 @@ class UpdateUser(UpdateView):
     model = User
     form_class = UpdateUserForm
     template_name = 'pdc_core_app/add.html'
-    success_url = reverse_lazy('projets')
+    success_url = reverse_lazy('login')
     success_message = "Utilisateur modifiée avec succès."
 
     def get_context_data(self, **args):
