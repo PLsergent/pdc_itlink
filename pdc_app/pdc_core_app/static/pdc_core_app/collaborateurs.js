@@ -214,6 +214,17 @@ $(document).ready( function () {
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $("#myTable2 > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $("#myTable3 > tbody > tr:eq("+idRow+")").fadeOut(500);
+                  },
+                  error: function(xhr, text, code){
+                    if(text == 'error' && code == 'Forbidden'){
+                      $('.modal').addClass("is-active");
+                      $(document).on('click', '.modal-background', function(){
+                          $('.modal').removeClass("is-active");
+                      });
+                      $(document).on('click', '#modaldelete', function(){
+                          $('.modal').removeClass("is-active");
+                      });
+                    }
                   }
               });
             },

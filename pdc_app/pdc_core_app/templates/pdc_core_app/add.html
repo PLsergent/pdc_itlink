@@ -13,6 +13,7 @@
       {{ form|bulma }}
     </table>
     <button class="button is-link is-medium" type="submit">Save</button>
+    <button onclick="window.history.back();" class="button is-medium is-danger" type="button">Cancel</button>
     {% if page_title == 'Modification commande' %}
       <a href="/pdc/commandes/delete/{{ id }}" class="button is-danger mydelete tooltip is-tooltip-right" data-tooltip="Delete">
         <span class="icon">

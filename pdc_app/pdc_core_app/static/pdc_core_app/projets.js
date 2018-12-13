@@ -12,7 +12,7 @@ $(document).ready( function () {
   });
 
     var table = new $.fn.dataTable.Api( '#myTable' );
-
+// ====== hide/show columns ======
     $('a.toggle').on( 'click', function (e) {
        e.preventDefault();
        var column = table.column( $(this).attr('data-column') );
@@ -62,7 +62,7 @@ $(document).ready( function () {
        }
     }
    } );
-
+// ====== color cells ======
     table.cells().every( function () {
         var data = this.data()
         if (!isNaN(data) && data.toString().indexOf('.') != -1){}else{
@@ -81,7 +81,7 @@ $(document).ready( function () {
 
         }
     } );
-
+// ====== column filter ======
     $('#switchAll').prop('checked', true);
     $('#switchE').prop('checked', false);
     $('#switchP').prop('checked', false);
@@ -101,7 +101,7 @@ $(document).ready( function () {
       $('#switchE').prop('checked', false);
       $('#switchP').prop('checked', false);
     });
-
+// ====== Cookie for token csrft ======
     var getCookie = function (name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -117,6 +117,7 @@ $(document).ready( function () {
             }
             return cookieValue;
         };
+// ====== Pass command from task ======
     var base_url = new URL("/", "http://127.0.0.1:8000");
     var url_command_fromtask = new URL('pdc/commandes/fromtask/', base_url);
     $('.myupdate').on('click', function(){
@@ -153,7 +154,7 @@ $(document).ready( function () {
         }
       });
     });
-
+// ====== Delete element ======
     $('.mydelete').on('click', function(){
       var $this = $(this)
       var id = $(this).data('id');
@@ -174,16 +175,28 @@ $(document).ready( function () {
                       $this.closest('tr').fadeOut(500);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
+                  },
+                  error: function(xhr, text, code){
+                    if(text == 'error' && code == 'Forbidden'){
+                      $('.modal').addClass("is-active");
+                      $(document).on('click', '.modal-background', function(){
+                          $('.modal').removeClass("is-active");
+                      });
+                      $(document).on('click', '#modaldelete', function(){
+                          $('.modal').removeClass("is-active");
+                      });
+                    }
                   }
               });
             },
             cancel: function () {
+                $(".modal").addClass("is-active");
                 return;
             }
         }
       });
     });
-
+// ====== % in tooltip ======
     $('.tooltip').hover(function(){
 
       if ($(this).attr('data-tooltip') == ""){
@@ -198,6 +211,7 @@ $(document).ready( function () {
         $(this).attr('data-tooltip', collab + ":" + total);
       }
     });
+// ====== Row color alternation ======
     var value = ""
     var projet = ""
     var color = color1
