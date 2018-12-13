@@ -2,16 +2,28 @@
 
 {% block content %}
 
-<table>
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
   <thead>
     <tr>
-      <th>Info</th>
+      <th>Date</th>
+      <th>User</th>
+      <th>Content type</th>
+      <th>__str__</th>
+      <th>Comment</th>
     </tr>
   </thead>
   <tbody>
     {% for ver in version_list %}
     <tr>
-      <td>{{ ver }}</td>
+      <td>{{ ver.revision.date_created }}</td>
+      {% if ver.revision.user %}
+        <td>{{ ver.revision.user.username }}</td>
+      {% else %}
+        <td>Unknown</td>
+      {% endif %}
+      <td>{{ ver.content_type }}</td>
+      <td>{{ ver.object_repr }}</td>
+      <td>{{ ver.revision.get_comment }}</td>
     </tr>
     {% endfor %}
   </tbody>

@@ -4,6 +4,7 @@ from workdays import networkdays
 import calendar
 from vanilla import DeleteView
 import month
+import reversion
 from reversion.models import Version
 from reversion.views import RevisionMixin
 
@@ -13,7 +14,6 @@ from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
@@ -333,6 +333,11 @@ class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     success_message = "Le projet %(projet) aa été créé avec succès."
     permission_required = ('pdc_core_app.add_projet')
 
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création projet")
+        return super().post(request)
+
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
         context['page_title'] = 'Ajout projet'
@@ -353,13 +358,19 @@ class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
         return super(AjoutProjet, self).form_valid(form)
 
 
-class AjoutClient(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+class AjoutClient(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
+                  CreateView):
     model = Client
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
     success_message = "Le client %(client) aa été créé avec succès."
     permission_required = ('pdc_core_app.add_client')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création client")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -380,13 +391,19 @@ class AjoutClient(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AjoutClient, self).form_valid(form)
 
 
-class AjoutCollab(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+class AjoutCollab(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
+                  CreateView):
     model = Collaborateur
     form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
     success_message = "Le collaborateur %(collab) aa été créé avec succès."
     permission_required = ('pdc_core_app.add_collaborateur')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création collaborateur")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -408,14 +425,20 @@ class AjoutCollab(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AjoutCollab, self).form_valid(form)
 
 
-class PasserCommande(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
+class PasserCommande(RevisionMixin, PermissionRequiredMixin,
+                     SuccessMessageMixin, CreateView):
     model = Commande
     form_class = PasserCommandeForm
     template_name = 'pdc_core_app/add.html'
-    success_url = reverse_lazy('commandes')
+    success_url = reverse_lazy('projets')
     success_message = "La commande pour le projet %(proj) " + \
                       "aa été passée avec succès."
     permission_required = ('pdc_core_app.add_commande')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création commande")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -439,8 +462,8 @@ class PasserCommande(PermissionRequiredMixin, SuccessMessageMixin, CreateView):
         return super(PasserCommande, self).form_valid(form)
 
 
-class NouvelleTacheProbable(PermissionRequiredMixin, SuccessMessageMixin,
-                            CreateView):
+class NouvelleTacheProbable(RevisionMixin, PermissionRequiredMixin,
+                            SuccessMessageMixin, CreateView):
     model = Commande
     form_class = NouvelleTacheProbableForm
     template_name = 'pdc_core_app/add.html'
@@ -448,6 +471,11 @@ class NouvelleTacheProbable(PermissionRequiredMixin, SuccessMessageMixin,
     success_message = "La tâche probable pour le projet %(proj) " + \
                       "aa été ajouté avec succès."
     permission_required = ('pdc_core_app.add_commande')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création tâche probable")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(CreateView, self).get_context_data(**args)
@@ -469,13 +497,19 @@ class NouvelleTacheProbable(PermissionRequiredMixin, SuccessMessageMixin,
         return super(NouvelleTacheProbable, self).form_valid(form)
 
 
-class UpdateProjet(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
+                   UpdateView):
     model = Projet
     form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
     success_message = "Le projet %(projet) aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_projet')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. projet")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -504,13 +538,19 @@ class UpdateProjet(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
 
 
-class UpdateClient(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateClient(RevisionMixin, PermissionRequiredMixin,
+                   SuccessMessageMixin, UpdateView):
     model = Client
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
     success_message = "Le client %(client) aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_client')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. client")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -539,13 +579,19 @@ class UpdateClient(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(Client, idClient=self.kwargs['idClient'])
 
 
-class UpdateCollab(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateCollab(RevisionMixin, PermissionRequiredMixin,
+                   SuccessMessageMixin, UpdateView):
     model = Collaborateur
     form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
     success_message = "Le collaborateur %(collab) aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_collaborateur')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. collaborateur")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -574,7 +620,8 @@ class UpdateCollab(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
                                  trigrammeC=self.kwargs['pk'])
 
 
-class UpdateCommande(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
+class UpdateCommande(RevisionMixin, PermissionRequiredMixin,
+                     SuccessMessageMixin, UpdateView):
     model = Commande
     form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
@@ -582,6 +629,11 @@ class UpdateCommande(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
     success_message = "La commande pour le projet %(cmd) aa été modifié " + \
                       "avec succès."
     permission_required = ('pdc_core_app.change_commande')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. commande")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -612,8 +664,8 @@ class UpdateCommande(PermissionRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
 
 
-class UpdateTacheProbable(PermissionRequiredMixin, SuccessMessageMixin,
-                          UpdateView):
+class UpdateTacheProbable(RevisionMixin, PermissionRequiredMixin,
+                          SuccessMessageMixin, UpdateView):
     model = Commande
     form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
@@ -621,6 +673,11 @@ class UpdateTacheProbable(PermissionRequiredMixin, SuccessMessageMixin,
     success_message = "La tâche probable pour le projet %(proj) " + \
                       "aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_commande')
+
+    def post(self, request):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. tâche probable")
+        return super().post(request)
 
     def get_context_data(self, **args):
         context = super(UpdateView, self).get_context_data(**args)
@@ -655,7 +712,7 @@ class UpdateTacheProbable(PermissionRequiredMixin, SuccessMessageMixin,
         return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
 
 
-class DeleteProjet(PermissionRequiredMixin, DeleteView):
+class DeleteProjet(RevisionMixin, PermissionRequiredMixin, DeleteView):
     model = Projet
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
@@ -665,7 +722,7 @@ class DeleteProjet(PermissionRequiredMixin, DeleteView):
         return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
 
 
-class DeleteClient(PermissionRequiredMixin, DeleteView):
+class DeleteClient(RevisionMixin, PermissionRequiredMixin, DeleteView):
     model = Client
     success_url = reverse_lazy('data')
     template_name = 'pdc_core_app/del.html'
@@ -675,7 +732,7 @@ class DeleteClient(PermissionRequiredMixin, DeleteView):
         return get_object_or_404(Client, idClient=self.kwargs['idClient'])
 
 
-class DeleteCollab(PermissionRequiredMixin, DeleteView):
+class DeleteCollab(RevisionMixin, PermissionRequiredMixin, DeleteView):
     model = Collaborateur
     success_url = reverse_lazy('collaborateurs')
     template_name = 'pdc_core_app/del.html'
@@ -686,7 +743,7 @@ class DeleteCollab(PermissionRequiredMixin, DeleteView):
                                  trigrammeC=self.kwargs['pk'])
 
 
-class DeleteTacheProbable(PermissionRequiredMixin, DeleteView):
+class DeleteTacheProbable(RevisionMixin, PermissionRequiredMixin, DeleteView):
     model = Commande
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
@@ -698,7 +755,7 @@ class DeleteTacheProbable(PermissionRequiredMixin, DeleteView):
                                  etablie=False)
 
 
-class DeleteCommande(PermissionRequiredMixin, DeleteView):
+class DeleteCommande(RevisionMixin, PermissionRequiredMixin, DeleteView):
     model = Commande
     success_url = reverse_lazy('commandes')
     template_name = 'pdc_core_app/del.html'
@@ -710,7 +767,7 @@ class DeleteCommande(PermissionRequiredMixin, DeleteView):
                                  etablie=True)
 
 
-class PassCommandFromTask(PermissionRequiredMixin, UpdateView):
+class PassCommandFromTask(RevisionMixin, PermissionRequiredMixin, UpdateView):
     model = Commande
     form_class = PassCommandFromTaskForm
     template_name = 'pdc_core_app/add.html'
@@ -720,15 +777,17 @@ class PassCommandFromTask(PermissionRequiredMixin, UpdateView):
         return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
 
     def post(self, request, idCom):
+        reversion.set_user(request.user)
+        reversion.set_comment("Crétion command à partir d'une tâche prob.")
         cmd = self.object = self.get_object()
         cmd.etablie = True
         cmd.odds = 100
         cmd.save()
-        return HttpResponse('Successfully Updated!')
+        return super().post(request)
 
 
-class AffectationProjetDateSet(PermissionRequiredMixin, SuccessMessageMixin,
-                               CreateView):
+class AffectationProjetDateSet(RevisionMixin, PermissionRequiredMixin,
+                               SuccessMessageMixin, CreateView):
     form_class = AffectationCollabProjetForm
     template_name = 'pdc_core_app/assign.html'
     model = RepartitionProjet
@@ -752,6 +811,9 @@ class AffectationProjetDateSet(PermissionRequiredMixin, SuccessMessageMixin,
                     )
 
     def post(self, request, *args, **kwargs):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création affectation projet")
+
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -761,6 +823,7 @@ class AffectationProjetDateSet(PermissionRequiredMixin, SuccessMessageMixin,
             return self.form_valid(form, date_prct_form)
         else:
             return self.form_invalid(form, date_prct_form)
+        return super().post(request)
 
     def form_valid(self, form, date_prct_form):
         exist = RepartitionProjet.objects.filter(
@@ -800,7 +863,7 @@ class AffectationProjetDateSet(PermissionRequiredMixin, SuccessMessageMixin,
                                     )
 
 
-class UpdateAffectationProjetDateSet(PermissionRequiredMixin,
+class UpdateAffectationProjetDateSet(RevisionMixin, PermissionRequiredMixin,
                                      SuccessMessageMixin, UpdateView):
     form_class = AffectationCollabProjetForm
     formset_class = DateFormSet
@@ -827,6 +890,9 @@ class UpdateAffectationProjetDateSet(PermissionRequiredMixin,
         ))
 
     def post(self, request, *args, **kwargs):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. affectation projet")
+
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -836,6 +902,7 @@ class UpdateAffectationProjetDateSet(PermissionRequiredMixin,
             return self.form_valid(form, date_prct_form)
         else:
             return self.form_invalid(form, date_prct_form)
+        return super().post(request)
 
     def form_valid(self, form, date_prct_form):
         affectation = form.save()
@@ -872,7 +939,7 @@ class UpdateAffectationProjetDateSet(PermissionRequiredMixin,
         return get_object_or_404(RepartitionProjet, idRP=self.kwargs['idRP'])
 
 
-class DeleteAffectation(PermissionRequiredMixin, DeleteView):
+class DeleteAffectation(RevisionMixin, PermissionRequiredMixin, DeleteView):
     model = RepartitionProjet
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
@@ -884,8 +951,8 @@ class DeleteAffectation(PermissionRequiredMixin, DeleteView):
                                  )
 
 
-class AffectationAutres(PermissionRequiredMixin, SuccessMessageMixin,
-                        CreateView):
+class AffectationAutres(RevisionMixin, PermissionRequiredMixin,
+                        SuccessMessageMixin, CreateView):
     form_class = AffectationCollabActForm
     template_name = 'pdc_core_app/assign.html'
     model = RepartitionActivite
@@ -909,6 +976,9 @@ class AffectationAutres(PermissionRequiredMixin, SuccessMessageMixin,
                     )
 
     def post(self, request, *args, **kwargs):
+        reversion.set_user(request.user)
+        reversion.set_comment("Création affectation autres")
+
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -957,8 +1027,8 @@ class AffectationAutres(PermissionRequiredMixin, SuccessMessageMixin,
                                     )
 
 
-class UpdateAffectationAutres(PermissionRequiredMixin, SuccessMessageMixin,
-                              UpdateView):
+class UpdateAffectationAutres(RevisionMixin, PermissionRequiredMixin,
+                              SuccessMessageMixin, UpdateView):
     form_class = AffectationCollabActForm
     formset_class = DateFormSet
     template_name = 'pdc_core_app/assign_update.html'
@@ -984,6 +1054,9 @@ class UpdateAffectationAutres(PermissionRequiredMixin, SuccessMessageMixin,
         ))
 
     def post(self, request, *args, **kwargs):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. affectation autres")
+
         self.object = None
         form_class = self.get_form_class()
         form = self.get_form(form_class)
@@ -1029,7 +1102,8 @@ class UpdateAffectationAutres(PermissionRequiredMixin, SuccessMessageMixin,
         return get_object_or_404(RepartitionActivite, idRA=self.kwargs['idRA'])
 
 
-class DeleteAffectationAutres(PermissionRequiredMixin, DeleteView):
+class DeleteAffectationAutres(RevisionMixin, PermissionRequiredMixin,
+                              DeleteView):
     model = RepartitionProjet
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
