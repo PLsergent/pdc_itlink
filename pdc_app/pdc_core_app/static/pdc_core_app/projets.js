@@ -125,6 +125,7 @@ $(document).on('click', '.undo', function() {
 // ====== Pass command from task ======
     var base_url = new URL("/", "http://127.0.0.1:8000");
     var url_command_fromtask = new URL('pdc/commandes/fromtask/', base_url);
+    var url_command_undo = new URL('pdc/history/revert_projet/Commande/', base_url);
     $('.myupdate').on('click', function(){
       var $this = $(this);
       var id = $(this).data('id');
@@ -149,7 +150,12 @@ $(document).on('click', '.undo', function() {
                           $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+") > td:eq(1) a.myupdate").fadeOut(200);
                           $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+") > td:eq(9)").replaceWith('<td>True</td>');
                         }
-                    });
+                      });
+                      $("#undo").removeClass("is-hidden");
+                      $("#undo a").attr("href", url_command_undo + id);
+                      setTimeout(function() {
+                          $('#undo').addClass("is-hidden");
+                      }, 4000);
                   }
               });
             },
@@ -181,7 +187,7 @@ $(document).on('click', '.undo', function() {
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $("#undo").removeClass("is-hidden");
-                      $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert/RepartitionProjet/"+id);
+                      $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_projet/RepartitionProjet/"+id);
                       setTimeout(function() {
                           $('#undo').addClass("is-hidden");
                       }, 4000);

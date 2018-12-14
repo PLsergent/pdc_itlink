@@ -328,12 +328,20 @@ def history(request):
 
 
 @login_required()
-def revert(request, model, id):
+def revert_projet(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
-    Revision.objects.filter(
-        version__content_type=ContentType.objects.get_for_model(Model)
-        ).filter(version__object_id=id).order_by("-date_created")[0].revert()
-    return HttpResponseRedirect(reverse_lazy('projets'))
+    if Model == Commande:
+        Revision.objects.filter(
+            version__content_type=ContentType.objects.get_for_model(Model)
+            ).filter(version__object_id=id
+                     ).order_by("-date_created")[1].revert()
+        return HttpResponseRedirect(reverse_lazy('projets'))
+    else:
+        Revision.objects.filter(
+            version__content_type=ContentType.objects.get_for_model(Model)
+            ).filter(version__object_id=id
+                     ).order_by("-date_created")[0].revert()
+        return HttpResponseRedirect(reverse_lazy('projets'))
 
 
 class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,

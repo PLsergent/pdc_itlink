@@ -124,7 +124,7 @@ class UpdateCommandeForm(forms.ModelForm):
     class Meta:
         model = Commande
         fields = ('projet', 'ref', 'charges',
-                  'chargesRAF', 'odds', 'equipe', 'commentaire')
+                  'chargesRAF', 'etablie', 'odds', 'equipe', 'commentaire')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
