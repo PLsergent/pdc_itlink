@@ -54,7 +54,7 @@ class Client(models.Model):
         return f'{self.nomCl}'
 
 
-@reversion.register
+@reversion.register(follow=["RdP", "RT", "client"])
 class Projet(models.Model):
     idProjet = models.AutoField(primary_key=True)
     nomP = models.CharField(max_length=50)
@@ -68,7 +68,7 @@ class Projet(models.Model):
         return f'{self.nomP}, {self.client.nomCl}'
 
 
-@reversion.register
+@reversion.register(follow=["projet"])
 class Commande(models.Model):
     idCom = models.AutoField(primary_key=True)
     ref = models.CharField(blank=True, max_length=100)
@@ -136,7 +136,7 @@ class RDate(models.Model):
         return f'{self.month}, {self.pourcentage.pourcentage}'
 
 
-@reversion.register
+@reversion.register(follow=["activite", "collaborateur"])
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
     activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
@@ -148,7 +148,7 @@ class RepartitionActivite(models.Model):
             f'{self.collaborateur.nomC}'
 
 
-@reversion.register
+@reversion.register(follow=["commande", "collaborateur"])
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
     commande = models.ForeignKey(Commande, on_delete=models.CASCADE)

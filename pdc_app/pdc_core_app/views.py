@@ -344,6 +344,16 @@ def revert_projet(request, model, id):
         return HttpResponseRedirect(reverse_lazy('projets'))
 
 
+@login_required()
+def revert_command(request, model, id):
+    Model = apps.get_model('pdc_core_app', model)
+    Revision.objects.filter(
+        version__content_type=ContentType.objects.get_for_model(Model)
+        ).filter(version__object_id=id
+                 ).order_by("-date_created")[0].revert()
+    return HttpResponseRedirect(reverse_lazy('commandes'))
+
+
 class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
                   CreateView):
     model = Projet
