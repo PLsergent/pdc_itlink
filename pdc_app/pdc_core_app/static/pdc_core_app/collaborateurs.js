@@ -175,6 +175,12 @@ $(document).ready( function () {
       }
     });
 
+    // ====== Notification =======
+    $(document).on('click', '.undo', function() {
+        $("#undo").addClass('is-hidden');
+        return false;
+    });
+
     var getCookie = function (name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -214,6 +220,11 @@ $(document).ready( function () {
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $("#myTable2 > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $("#myTable3 > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#undo").removeClass("is-hidden");
+                      $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_collab/Collaborateur/"+id);
+                      setTimeout(function() {
+                          $('#undo').addClass("is-hidden");
+                      }, 4000);
                   },
                   error: function(xhr, text, code){
                     if(text == 'error' && code == 'Forbidden'){

@@ -35,7 +35,7 @@ class Collaborateur(models.Model):
         return f'{self.trigrammeC}, {self.nomC}, {self.get_role_display()}'
 
 
-@reversion.register
+@reversion.register(follow=["RdE"])
 class Responsable_E(models.Model):
     idRespE = models.AutoField(primary_key=True)
     RdE = models.OneToOneField(Collaborateur, on_delete=models.CASCADE)

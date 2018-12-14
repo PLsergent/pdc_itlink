@@ -73,5 +73,7 @@ urlpatterns = [
     path('history/revert_projet/<str:model>/<int:id>',
          views.revert_projet, name='revert_projet'),
     path('history/revert_command/<str:model>/<int:id>',
-         views.revert_command, name='revert_command')
+         views.revert_command, name='revert_command'),
+    path('history/revert_collab/<str:model>/<str:id>',
+         views.revert_collab, name='revert_collab')
 ]
