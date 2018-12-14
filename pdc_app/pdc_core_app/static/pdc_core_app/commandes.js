@@ -45,7 +45,7 @@ $(document).on('click', '.undo', function() {
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_command/Commande/"+id);
                       setTimeout(function() {
                           $('#undo').addClass("is-hidden");
-                      }, 4000);
+                      }, 6000);
                   },
                   error: function(xhr, text, code){
                     if(text == 'error' && code == 'Forbidden'){

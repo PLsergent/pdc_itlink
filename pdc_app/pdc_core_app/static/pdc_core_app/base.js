@@ -11,4 +11,4 @@ $(document).on('click', '.notifdel', function() {
 
 setTimeout(function() {
     $('#notif').fadeOut('slow');
-}, 4000);
+}, 6000);

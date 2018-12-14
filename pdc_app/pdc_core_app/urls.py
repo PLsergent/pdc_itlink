@@ -75,5 +75,11 @@ urlpatterns = [
     path('history/revert_command/<str:model>/<int:id>',
          views.revert_command, name='revert_command'),
     path('history/revert_collab/<str:model>/<str:id>',
-         views.revert_collab, name='revert_collab')
+         views.revert_collab, name='revert_collab'),
+    path('history/revert_autres/<str:model>/<int:id>',
+         views.revert_autres, name='revert_autres'),
+    path('history/revert_data/<str:model>/<int:id>',
+         views.revert_data, name='revert_data'),
+    path('history/revert_data_bis/<str:model>/<int:id>',
+         views.revert_data_bis, name='revert_data_bis')
 ]
