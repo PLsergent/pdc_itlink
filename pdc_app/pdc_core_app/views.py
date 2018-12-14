@@ -5,7 +5,7 @@ import calendar
 from vanilla import DeleteView
 import month
 import reversion
-from reversion.models import Version
+from reversion.models import Version, Revision, ContentType
 from reversion.views import RevisionMixin
 
 
@@ -16,6 +16,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.apps import apps
+
 
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client, RDate
@@ -324,6 +327,15 @@ def history(request):
                    'version_list': version_list})
 
 
+@login_required()
+def revert(request, model, id):
+    Model = apps.get_model('pdc_core_app', model)
+    Revision.objects.filter(
+        version__content_type=ContentType.objects.get_for_model(Model)
+        ).filter(version__object_id=id).order_by("-date_created")[0].revert()
+    return HttpResponseRedirect(reverse_lazy('projets'))
+
+
 class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
                   CreateView):
     model = Projet
@@ -630,7 +642,7 @@ class UpdateCommande(RevisionMixin, PermissionRequiredMixin,
                       "avec succès."
     permission_required = ('pdc_core_app.change_commande')
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         reversion.set_user(request.user)
         reversion.set_comment("Modif. commande")
         return super().post(request)

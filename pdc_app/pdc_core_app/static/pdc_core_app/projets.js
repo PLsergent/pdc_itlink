@@ -62,6 +62,11 @@ $(document).ready( function () {
        }
     }
    } );
+// ====== Notification =======
+$(document).on('click', '.undo', function() {
+    $("#undo").addClass('is-hidden');
+    return false;
+});
 // ====== color cells ======
     table.cells().every( function () {
         var data = this.data()
@@ -175,6 +180,11 @@ $(document).ready( function () {
                       $this.closest('tr').fadeOut(500);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#undo").removeClass("is-hidden");
+                      $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert/RepartitionProjet/"+id);
+                      setTimeout(function() {
+                          $('#undo').addClass("is-hidden");
+                      }, 4000);
                   },
                   error: function(xhr, text, code){
                     if(text == 'error' && code == 'Forbidden'){
@@ -190,7 +200,6 @@ $(document).ready( function () {
               });
             },
             cancel: function () {
-                $(".modal").addClass("is-active");
                 return;
             }
         }

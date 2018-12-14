@@ -10,6 +10,7 @@
       <th>Content type</th>
       <th>__str__</th>
       <th>Comment</th>
+      <th>id</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
       <td>{{ ver.content_type }}</td>
       <td>{{ ver.object_repr }}</td>
       <td>{{ ver.revision.get_comment }}</td>
+      <td>{{ ver.object_id }}</td>
     </tr>
     {% endfor %}
   </tbody>

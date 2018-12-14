@@ -69,5 +69,6 @@ urlpatterns = [
 
     path('data/', views.data, name='data'),
 
-    path('history/', views.history, name='history')
+    path('history/', views.history, name='history'),
+    path('history/revert/<str:model>/<int:id>', views.revert, name='revert')
 ]

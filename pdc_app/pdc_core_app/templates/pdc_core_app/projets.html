@@ -143,7 +143,6 @@
     </a>
   </div>
 </nav>
-
 <table id='myTable' class = "stripe hover table is-fullwidth">
   <thead>
     <tr>
@@ -176,6 +175,10 @@
       {% url 'UpdateCommande' rp as update_command_url %}
       {% url 'UpdateTacheProbable' rp as update_tache_p_url %}
       {% if rp == sku.0 %}
+      <div id="undo" class="notification is-light is-hidden">
+        <button class="delete undo"></button>
+        <a href="" class="button is-danger undobutton">Undo the deletion</a>
+      </div>
       <td>
         <nav class="level">
           <div class="level-left">

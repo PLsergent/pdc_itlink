@@ -3,7 +3,7 @@ $(document).on('click', '#notif', function() {
     return false;
 });
 
-$(document).on('click', '.delete', function() {
+$(document).on('click', '.notifdel', function() {
     $("#notif").addClass('is-hidden');
     return false;
 });
