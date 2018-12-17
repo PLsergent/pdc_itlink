@@ -1,6 +1,9 @@
 from django.db import models
 from month.models import MonthField
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+
 from datetime import datetime as dt
 import reversion
 
@@ -159,3 +162,32 @@ class RepartitionProjet(models.Model):
         return f'{self.commande.projet.nomP}, ' + \
             f'{self.commande.ref}, ' + \
             f'{self.collaborateur.nomC}'
+
+
+class History(models.Model):
+    date = models.DateTimeField(
+        db_index=True,
+        verbose_name=("date created"),
+        help_text="The date and time this revision was created.",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        verbose_name=("user"),
+        help_text="The user who created this revision.",
+    )
+    model = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        help_text="Content type of the model under version control.",
+    )
+    object_repr = models.TextField(
+        help_text="A string representation of the object.",
+    )
+    comment = models.TextField(
+        blank=True,
+        verbose_name=("comment"),
+        help_text="A text comment on this revision.",
+    )
