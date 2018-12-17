@@ -63,7 +63,7 @@ $(document).ready( function () {
                   success: function(response){
                       $this.closest('tr').fadeOut(500);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#undo").removeClass("is-hidden");
+                      $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_autres/RepartitionActivite/"+id);
                       setTimeout(function() {
                           $('#undo').addClass("is-hidden");

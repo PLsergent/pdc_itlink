@@ -151,7 +151,7 @@ $(document).on('click', '.undo', function() {
                           $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+") > td:eq(9)").replaceWith('<td>True</td>');
                         }
                       });
-                      $("#undo").removeClass("is-hidden");
+                      $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", url_command_undo + id);
                       setTimeout(function() {
                           $('#undo').addClass("is-hidden");
@@ -186,7 +186,7 @@ $(document).on('click', '.undo', function() {
                       $this.closest('tr').fadeOut(500);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#undo").removeClass("is-hidden");
+                      $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_projet/RepartitionProjet/"+id);
                       setTimeout(function() {
                           $('#undo').addClass("is-hidden");
