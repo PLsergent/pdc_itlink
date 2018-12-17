@@ -57,8 +57,9 @@ class AjoutProjetForm(forms.ModelForm):
         model = Projet
         fields = ('nomP', 'RdP', 'RT', 'client')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.user = user
         self.fields['nomP'].label = "Nom projet"
         self.fields['client'].queryset = Client.objects.all()
         self.fields['RdP'].queryset = Collaborateur.objects.filter(role='RdP')

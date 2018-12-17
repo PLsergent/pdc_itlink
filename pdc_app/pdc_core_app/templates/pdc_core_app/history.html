@@ -10,22 +10,20 @@
       <th>Content type</th>
       <th>__str__</th>
       <th>Comment</th>
-      <th>id</th>
     </tr>
   </thead>
   <tbody>
     {% for ver in version_list %}
     <tr>
-      <td>{{ ver.revision.date_created }}</td>
-      {% if ver.revision.user %}
-        <td>{{ ver.revision.user.username }}</td>
+      <td>{{ ver.date }}</td>
+      {% if ver.user %}
+        <td>{{ ver.user.username }}</td>
       {% else %}
         <td>Unknown</td>
       {% endif %}
-      <td>{{ ver.content_type }}</td>
+      <td>{{ ver.model }}</td>
       <td>{{ ver.object_repr }}</td>
-      <td>{{ ver.revision.get_comment }}</td>
-      <td>{{ ver.object_id }}</td>
+      <td>{{ ver.comment }}</td>
     </tr>
     {% endfor %}
   </tbody>

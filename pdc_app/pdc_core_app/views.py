@@ -5,7 +5,7 @@ import calendar
 from vanilla import DeleteView
 import month
 import reversion
-from reversion.models import Version, Revision, ContentType
+from reversion.models import Revision, ContentType
 from reversion.views import RevisionMixin
 
 
@@ -18,11 +18,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.apps import apps
+from django.contrib.contenttypes.models import ContentType as ModelType
 
 
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client, RDate
-from .models import Pourcentage
+from .models import Pourcentage, History
 
 from .forms import AjoutClientForm, AjoutCollabForm, PasserCommandeForm
 from .forms import AjoutProjetForm, NouvelleTacheProbableForm
@@ -321,7 +322,7 @@ def data(request):
 @login_required()
 def history(request):
     page_title = "Historique"
-    version_list = Version.objects.all()
+    version_list = History.objects.all()
     return render(request, 'pdc_core_app/history.html',
                   {'page_title': page_title,
                    'version_list': version_list})
@@ -410,6 +411,11 @@ class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     success_message = "Le projet %(projet) aa été créé avec succès."
     permission_required = ('pdc_core_app.add_projet')
 
+    def get_form_kwargs(self):
+        kwargs = super(AjoutProjet, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def post(self, request):
         reversion.set_user(request.user)
         reversion.set_comment("Création projet")
@@ -432,6 +438,19 @@ class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
         if exist:
             form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='projet')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Création projet'
+                    )
+        history.save()
         return super(AjoutProjet, self).form_valid(form)
 
 
