@@ -322,7 +322,7 @@ def data(request):
 @login_required()
 def history(request):
     page_title = "Historique"
-    version_list = History.objects.all()
+    version_list = History.objects.all().order_by('-date')
     return render(request, 'pdc_core_app/history.html',
                   {'page_title': page_title,
                    'version_list': version_list})
