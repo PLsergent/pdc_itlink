@@ -105,6 +105,7 @@ class Commande(models.Model):
         super(Commande, self).save(*args, **kwargs)
 
 
+@reversion.register()
 class Activite(models.Model):
     idAct = models.AutoField(primary_key=True)
     ACTIVITE = (

@@ -411,11 +411,6 @@ class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     success_message = "Le projet %(projet) aa été créé avec succès."
     permission_required = ('pdc_core_app.add_projet')
 
-    def get_form_kwargs(self):
-        kwargs = super(AjoutProjet, self).get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
     def post(self, request):
         reversion.set_user(request.user)
         reversion.set_comment("Création projet")
@@ -484,6 +479,19 @@ class AjoutClient(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
         if exist:
             form.add_error('nomCl', 'This name already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='client')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Création client'
+                    )
+        history.save()
         return super(AjoutClient, self).form_valid(form)
 
 
@@ -518,6 +526,19 @@ class AjoutCollab(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
         if exist_name:
             form.add_error('nomC', 'This name already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='collaborateur')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Création collaborateur'
+                    )
+        history.save()
         return super(AjoutCollab, self).form_valid(form)
 
 
@@ -555,6 +576,19 @@ class PasserCommande(RevisionMixin, PermissionRequiredMixin,
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
 
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Création commande'
+                    )
+        history.save()
+
         return super(PasserCommande, self).form_valid(form)
 
 
@@ -590,6 +624,19 @@ class NouvelleTacheProbable(RevisionMixin, PermissionRequiredMixin,
         if exist:
             form.add_error('ref', 'This ref already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Création tâche probable'
+                    )
+        history.save()
         return super(NouvelleTacheProbable, self).form_valid(form)
 
 
@@ -628,6 +675,19 @@ class UpdateProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
         if exist:
             form.add_error('nomP', 'This name already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='projet')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='MAJ projet'
+                    )
+        history.save()
         return super(UpdateProjet, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -669,6 +729,19 @@ class UpdateClient(RevisionMixin, PermissionRequiredMixin,
         if exist:
             form.add_error('nomCl', 'This name already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='client')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='MAJ client'
+                    )
+        history.save()
         return super(UpdateClient, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -709,6 +782,19 @@ class UpdateCollab(RevisionMixin, PermissionRequiredMixin,
         if exist_name:
             form.add_error('nomC', 'This name already exist')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='collaborateur')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='MAJ collaborateur'
+                    )
+        history.save()
         return super(UpdateCollab, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -754,6 +840,19 @@ class UpdateCommande(RevisionMixin, PermissionRequiredMixin,
         if form.cleaned_data['chargesRAF'] > form.cleaned_data['charges']:
             form.add_error('chargesRAF', 'ChargesRAF cannot exceed Charges')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='MAJ commande'
+                    )
+        history.save()
         return super(UpdateCommande, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -802,6 +901,19 @@ class UpdateTacheProbable(RevisionMixin, PermissionRequiredMixin,
         if form.cleaned_data['chargesRAF'] > form.cleaned_data['charges']:
             form.add_error('chargesRAF', 'ChargesRAF cannot exceed Charges')
             return self.form_invalid(form)
+
+        form_obj = form.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='MAJ tâche probable'
+                    )
+        history.save()
         return super(UpdateTacheProbable, self).form_valid(form)
 
     def get_object(self, *args, **kwargs):
@@ -814,6 +926,26 @@ class DeleteProjet(RevisionMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_projet')
 
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='projet')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression projet'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
+
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
 
@@ -824,6 +956,26 @@ class DeleteClient(RevisionMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_client')
 
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='client')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression client'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
+
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Client, idClient=self.kwargs['idClient'])
 
@@ -833,6 +985,26 @@ class DeleteCollab(RevisionMixin, PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('collaborateurs')
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_collaborateur')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='collaborateur')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression collaborateur'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Collaborateur,
@@ -845,6 +1017,26 @@ class DeleteTacheProbable(RevisionMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_commande')
 
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression tâche probable'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
+
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Commande,
                                  idCom=self.kwargs['idCom'],
@@ -856,6 +1048,26 @@ class DeleteCommande(RevisionMixin, PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('commandes')
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_commande')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression commande'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Commande,
@@ -879,6 +1091,17 @@ class PassCommandFromTask(RevisionMixin, PermissionRequiredMixin, UpdateView):
         cmd.etablie = True
         cmd.odds = 100
         cmd.save()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='commande')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=cmd,
+                    comment='Commande passée à partir d\'une tâche probable'
+                    )
+        history.save()
         return super().post(request)
 
 
@@ -949,6 +1172,17 @@ class AffectationProjetDateSet(RevisionMixin, PermissionRequiredMixin,
             else:
                 obj = date_form.save()
             affectation.list_R.add(obj)
+
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='repartitionprojet')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=affectation,
+                        comment='Création affectation projet'
+                        )
+            history.save()
         return super(AffectationProjetDateSet, self).form_valid(form)
 
     def form_invalid(self, form, date_prct_form):
@@ -1022,6 +1256,17 @@ class UpdateAffectationProjetDateSet(RevisionMixin, PermissionRequiredMixin,
             else:
                 obj = date_form.save()
             affectation.list_R.add(obj)
+
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='repartitionprojet')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=affectation,
+                        comment='MAJ affectation projet'
+                        )
+            history.save()
         return super(UpdateAffectationProjetDateSet, self).form_valid(form)
 
     def form_invalid(self, form, date_prct_form):
@@ -1040,6 +1285,26 @@ class DeleteAffectation(RevisionMixin, PermissionRequiredMixin, DeleteView):
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_repartitionprojet')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='repartitionprojet')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression affectation projet'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(RepartitionProjet,
@@ -1113,6 +1378,17 @@ class AffectationAutres(RevisionMixin, PermissionRequiredMixin,
             else:
                 obj = date_form.save()
             affectation.list_R.add(obj)
+
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='repartitionactivite')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=affectation,
+                        comment='Création affectation autres'
+                        )
+            history.save()
         return super(AffectationAutres, self).form_valid(form)
 
     def form_invalid(self, form, date_prct_form):
@@ -1185,6 +1461,17 @@ class UpdateAffectationAutres(RevisionMixin, PermissionRequiredMixin,
             else:
                 obj = date_form.save()
             affectation.list_R.add(obj)
+
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='repartitionactivite')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=affectation,
+                        comment='MAJ affectation autres'
+                        )
+            history.save()
         return super(UpdateAffectationAutres, self).form_valid(form)
 
     def form_invalid(self, form, date_prct_form):
@@ -1204,6 +1491,26 @@ class DeleteAffectationAutres(RevisionMixin, PermissionRequiredMixin,
     success_url = reverse_lazy('projets')
     template_name = 'pdc_core_app/del.html'
     permission_required = ('pdc_core_app.delete_repartitionactivite')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, *args, **kwargs):
+        form_obj = self.get_object()
+
+        model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                           model='repartitionactivite')
+        history = History(
+                    date=datet.now(),
+                    user=self.request.user,
+                    model=model_type,
+                    object_repr=form_obj,
+                    comment='Suppression affectation autres'
+                    )
+        history.save()
+        return self.delete(*args, **kwargs)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(RepartitionActivite,
