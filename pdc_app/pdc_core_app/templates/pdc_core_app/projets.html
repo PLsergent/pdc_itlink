@@ -200,14 +200,14 @@
         <nav class="level">
           <div class="level-left">
                 {% if sku.9 is False %}
-                <a data-id="{{ rp }}" class="button is-small is-rounded is-success myupdate tooltip is-tooltip-right" data-tooltip="Order in">
-                  <span class="icon">
-                    <i class="fas fa-chevron-circle-down"></i>
-                  </span>
-                </a>
                 <a href="{{ update_tache_p_url }}" class="button is-small is-rounded is-warning tooltip is-tooltip-right" data-tooltip="Update command">
                   <span class="icon">
                     <i class="far fa-edit"></i>
+                  </span>
+                </a>
+                <a data-id="{{ rp }}" class="button is-small is-rounded is-success myupdate tooltip is-tooltip-right" data-tooltip="Order in">
+                  <span class="icon">
+                    <i class="fas fa-chevron-circle-down"></i>
                   </span>
                 </a>
                 {% else %}

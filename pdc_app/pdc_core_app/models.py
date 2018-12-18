@@ -32,13 +32,13 @@ class Collaborateur(models.Model):
         ('Stg', 'Stagiaire')
     )
     role = models.CharField(max_length=3, choices=ROLE)
-    equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
+    equipe = models.ForeignKey(Equipe, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.trigrammeC}, {self.nomC}, {self.get_role_display()}'
 
 
-@reversion.register(follow=["RdE"])
+@reversion.register
 class Responsable_E(models.Model):
     idRespE = models.AutoField(primary_key=True)
     RdE = models.OneToOneField(Collaborateur, on_delete=models.CASCADE)
@@ -57,21 +57,21 @@ class Client(models.Model):
         return f'{self.nomCl}'
 
 
-@reversion.register(follow=["RdP", "RT", "client"])
+@reversion.register
 class Projet(models.Model):
     idProjet = models.AutoField(primary_key=True)
     nomP = models.CharField(max_length=50)
-    RdP = models.ForeignKey(Collaborateur, on_delete=models.CASCADE,
+    RdP = models.ForeignKey(Collaborateur, on_delete=models.PROTECT,
                             related_name="respP")
-    RT = models.ForeignKey(Collaborateur, on_delete=models.CASCADE,
+    RT = models.ForeignKey(Collaborateur, on_delete=models.PROTECT,
                            related_name="respT")
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.nomP}, {self.client.nomCl}'
 
 
-@reversion.register(follow=["projet"])
+@reversion.register
 class Commande(models.Model):
     idCom = models.AutoField(primary_key=True)
     ref = models.CharField(blank=True, max_length=100)
@@ -86,12 +86,16 @@ class Commande(models.Model):
     odds = models.PositiveIntegerField(default=100)
     commentaire = models.CharField(max_length=200, blank=True)
     equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
-    projet = models.ForeignKey(Projet, on_delete=models.CASCADE)
+    projet = models.ForeignKey(Projet, on_delete=models.PROTECT)
 
     def __str__(self):
+        if self.etablie:
+            etat = "Commandé"
+        else:
+            etat = "Probable"
         return f'{self.projet.nomP}, ' + \
             f'{self.projet.client.nomCl}, ' + \
-            f'{self.ref}'
+            f'{self.ref}, {etat}'
 
     def save(self, *args, **kwargs):
         if not self.chargesRAF:
@@ -105,7 +109,7 @@ class Commande(models.Model):
         super(Commande, self).save(*args, **kwargs)
 
 
-@reversion.register()
+@reversion.register
 class Activite(models.Model):
     idAct = models.AutoField(primary_key=True)
     ACTIVITE = (
@@ -140,7 +144,7 @@ class RDate(models.Model):
         return f'{self.month}, {self.pourcentage.pourcentage}'
 
 
-@reversion.register(follow=["activite", "collaborateur"])
+@reversion.register
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
     activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
@@ -152,7 +156,7 @@ class RepartitionActivite(models.Model):
             f'{self.collaborateur.nomC}'
 
 
-@reversion.register(follow=["commande", "collaborateur"])
+@reversion.register
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
     commande = models.ForeignKey(Commande, on_delete=models.CASCADE)
@@ -181,7 +185,7 @@ class History(models.Model):
     )
     model = models.ForeignKey(
         ContentType,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         help_text="Content type of the model under version control.",
     )
     object_repr = models.TextField(

@@ -328,77 +328,75 @@ def history(request):
                    'version_list': version_list})
 
 
+def revision_query(content_model, pk):
+    revision = Revision.objects.filter(
+        version__content_type=ContentType.objects.get_for_model(content_model)
+        ).filter(version__object_id=pk
+                 ).order_by("-date_created")
+    return revision
+
+
 @login_required()
 def revert_projet(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
     if Model == Commande:
-        Revision.objects.filter(
-            version__content_type=ContentType.objects.get_for_model(Model)
-            ).filter(version__object_id=id
-                     ).order_by("-date_created")[1].revert()
-        return HttpResponseRedirect(reverse_lazy('projets'))
+        revision = revision_query(Model, id)
+        for rev in revision:
+            if rev.get_comment() == "Création commande à" + \
+                                    " partir d'une tâche prob.":
+                if rev == revision[len(revision)-1]:
+                    rev.revert()
+            else:
+                rev.revert()
+                return HttpResponseRedirect(reverse_lazy('projets'))
     else:
-        Revision.objects.filter(
-            version__content_type=ContentType.objects.get_for_model(Model)
-            ).filter(version__object_id=id
-                     ).order_by("-date_created")[0].revert()
+        rev = revision_query(Model, id)
+        rev[0].revert()
         return HttpResponseRedirect(reverse_lazy('projets'))
 
 
 @login_required()
 def revert_command(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
-    Revision.objects.filter(
-        version__content_type=ContentType.objects.get_for_model(Model)
-        ).filter(version__object_id=id
-                 ).order_by("-date_created")[0].revert()
+    rev = revision_query(Model, id)
+    rev[0].revert()
     return HttpResponseRedirect(reverse_lazy('commandes'))
 
 
 @login_required()
 def revert_collab(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
-    Revision.objects.filter(
-        version__content_type=ContentType.objects.get_for_model(Model)
-        ).filter(version__object_id=id
-                 ).order_by("-date_created")[0].revert()
+    rev = revision_query(Model, id)
+    rev[0].revert()
     return HttpResponseRedirect(reverse_lazy('collaborateurs'))
 
 
 @login_required()
 def revert_autres(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
-    Revision.objects.filter(
-        version__content_type=ContentType.objects.get_for_model(Model)
-        ).filter(version__object_id=id
-                 ).order_by("-date_created")[0].revert()
+    rev = revision_query(Model, id)
+    rev[0].revert()
     return HttpResponseRedirect(reverse_lazy('autres'))
 
 
 @login_required()
 def revert_data_bis(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
-    if Model == Commande:
-        Revision.objects.filter(
-            version__content_type=ContentType.objects.get_for_model(Model)
-            ).filter(version__object_id=id
-                     ).order_by("-date_created")[1].revert()
-        return HttpResponseRedirect(reverse_lazy('data'))
-    else:
-        Revision.objects.filter(
-            version__content_type=ContentType.objects.get_for_model(Model)
-            ).filter(version__object_id=id
-                     ).order_by("-date_created")[0].revert()
-        return HttpResponseRedirect(reverse_lazy('data'))
+    revision = revision_query(Model, id)
+    for rev in revision:
+        if rev.get_comment() == "Création commande à partir d'une tâche prob.":
+            if rev == revision[len(revision)-1]:
+                rev.revert()
+        else:
+            rev.revert()
+            return HttpResponseRedirect(reverse_lazy('data'))
 
 
 @login_required()
 def revert_data(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
-    Revision.objects.filter(
-        version__content_type=ContentType.objects.get_for_model(Model)
-        ).filter(version__object_id=id
-                 ).order_by("-date_created")[0].revert()
+    rev = revision_query(Model, id)
+    rev[0].revert()
     return HttpResponseRedirect(reverse_lazy('data'))
 
 
@@ -649,7 +647,7 @@ class UpdateProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     success_message = "Le projet %(projet) aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_projet')
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         reversion.set_user(request.user)
         reversion.set_comment("Modif. projet")
         return super().post(request)
@@ -703,7 +701,7 @@ class UpdateClient(RevisionMixin, PermissionRequiredMixin,
     success_message = "Le client %(client) aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_client')
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         reversion.set_user(request.user)
         reversion.set_comment("Modif. client")
         return super().post(request)
@@ -757,7 +755,7 @@ class UpdateCollab(RevisionMixin, PermissionRequiredMixin,
     success_message = "Le collaborateur %(collab) aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_collaborateur')
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         reversion.set_user(request.user)
         reversion.set_comment("Modif. collaborateur")
         return super().post(request)
@@ -869,7 +867,7 @@ class UpdateTacheProbable(RevisionMixin, PermissionRequiredMixin,
                       "aa été modifié avec succès."
     permission_required = ('pdc_core_app.change_commande')
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         reversion.set_user(request.user)
         reversion.set_comment("Modif. tâche probable")
         return super().post(request)
@@ -1084,9 +1082,9 @@ class PassCommandFromTask(RevisionMixin, PermissionRequiredMixin, UpdateView):
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Commande, idCom=self.kwargs['idCom'])
 
-    def post(self, request, idCom):
+    def post(self, request, *args, **kwargs):
         reversion.set_user(request.user)
-        reversion.set_comment("Crétion command à partir d'une tâche prob.")
+        reversion.set_comment("Création commande à partir d'une tâche prob.")
         cmd = self.object = self.get_object()
         cmd.etablie = True
         cmd.odds = 100
