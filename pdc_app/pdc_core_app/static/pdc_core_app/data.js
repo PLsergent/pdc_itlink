@@ -41,8 +41,18 @@ var getCookie = function (name) {
         }
         return cookieValue;
     };
-
+// ===== Notfication ======
+    $(document).on('click', '.undo', function() {
+        $("#undo").addClass('is-hidden');
+        return false;
+    });
 $(document).ready(function() {
+
+  // ===== Notfication ======
+      $(document).on('click', '.undo', function() {
+          $("#undo").addClass('is-hidden');
+          return false;
+      });
 
   $('#myTable .mydelete').on('click', function(){
     var $this = $(this)

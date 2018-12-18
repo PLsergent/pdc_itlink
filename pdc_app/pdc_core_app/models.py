@@ -41,7 +41,7 @@ class Collaborateur(models.Model):
 @reversion.register
 class Responsable_E(models.Model):
     idRespE = models.AutoField(primary_key=True)
-    RdE = models.OneToOneField(Collaborateur, on_delete=models.CASCADE)
+    RdE = models.OneToOneField(Collaborateur, on_delete=models.PROTECT)
     equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -147,7 +147,7 @@ class RDate(models.Model):
 @reversion.register
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
-    activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
+    activite = models.ForeignKey(Activite, on_delete=models.PROTECT)
     collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
     list_R = models.ManyToManyField(RDate)
 
@@ -159,7 +159,7 @@ class RepartitionActivite(models.Model):
 @reversion.register
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
-    commande = models.ForeignKey(Commande, on_delete=models.CASCADE)
+    commande = models.ForeignKey(Commande, on_delete=models.PROTECT)
     collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
     list_R = models.ManyToManyField(RDate)
 

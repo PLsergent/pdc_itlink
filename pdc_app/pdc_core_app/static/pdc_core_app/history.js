@@ -9,9 +9,12 @@ $(document).ready(function() {
     }else if(cell.text().startsWith("Création")){
       cell.prepend('<i class="fas fa-plus-square"></i>');
       cell.addClass("has-background-success");
-    }else{
+    }else if(cell.text().startsWith("Suppression")){
       cell.prepend('<i class="fas fa-trash-alt"></i>');
       cell.addClass("has-background-danger");
+    }else{
+      cell.prepend('<i class="fas fa-recycle"></i>');
+      cell.addClass("has-background-info");
     }
   });
 
@@ -21,8 +24,10 @@ $(document).ready(function() {
       $(this).addClass("has-background-warning");
     }else if(cell.text().startsWith("Création")){
       $(this).addClass("has-background-success");
-    }else{
+    }else if(cell.text().startsWith("Suppression")){
       $(this).addClass("has-background-danger");
+    }else{
+      $(this).addClass("has-background-info");
     }
   }, function(){
     var cell = $(this).children('td:eq(4)')
@@ -30,8 +35,10 @@ $(document).ready(function() {
       $(this).removeClass("has-background-warning");
     }else if(cell.text().startsWith("Création")){
       $(this).removeClass("has-background-success");
-    }else{
+    }else if(cell.text().startsWith("Suppression")){
       $(this).removeClass("has-background-danger");
+    }else{
+      $(this).removeClass("has-background-info");
     }
   });
 });

@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.apps import apps
 from django.contrib.contenttypes.models import ContentType as ModelType
-
+from django.db.models.deletion import ProtectedError
 
 from .models import RepartitionProjet, RepartitionActivite, Commande
 from .models import Collaborateur, Responsable_E, Projet, Client, RDate
@@ -331,9 +331,21 @@ def history(request):
 def revision_query(content_model, pk):
     revision = Revision.objects.filter(
         version__content_type=ContentType.objects.get_for_model(content_model)
-        ).filter(version__object_id=pk
-                 ).order_by("-date_created")
+        ).filter(version__object_id=pk).order_by("-date_created")
     return revision
+
+
+def revert_history(user, str):
+    model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                       model='history')
+    history = History(
+                date=datet.now(),
+                user=user,
+                model=model_type,
+                object_repr=str,
+                comment='Undo last action'
+                )
+    history.save()
 
 
 @login_required()
@@ -344,14 +356,16 @@ def revert_projet(request, model, id):
         for rev in revision:
             if rev.get_comment() == "Création commande à" + \
                                     " partir d'une tâche prob.":
-                if rev == revision[len(revision)-1]:
-                    rev.revert()
+                pass
             else:
                 rev.revert()
+                revert_history(request.user, rev)
                 return HttpResponseRedirect(reverse_lazy('projets'))
     else:
-        rev = revision_query(Model, id)
-        rev[0].revert()
+        revision = revision_query(Model, id)
+        rev = revision[0]
+        rev.revert()
+        revert_history(request.user, rev)
         return HttpResponseRedirect(reverse_lazy('projets'))
 
 
@@ -360,6 +374,7 @@ def revert_command(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
     rev = revision_query(Model, id)
     rev[0].revert()
+    revert_history(request.user, rev[0])
     return HttpResponseRedirect(reverse_lazy('commandes'))
 
 
@@ -368,6 +383,7 @@ def revert_collab(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
     rev = revision_query(Model, id)
     rev[0].revert()
+    revert_history(request.user, rev[0])
     return HttpResponseRedirect(reverse_lazy('collaborateurs'))
 
 
@@ -376,6 +392,7 @@ def revert_autres(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
     rev = revision_query(Model, id)
     rev[0].revert()
+    revert_history(request.user, rev[0])
     return HttpResponseRedirect(reverse_lazy('autres'))
 
 
@@ -385,10 +402,10 @@ def revert_data_bis(request, model, id):
     revision = revision_query(Model, id)
     for rev in revision:
         if rev.get_comment() == "Création commande à partir d'une tâche prob.":
-            if rev == revision[len(revision)-1]:
-                rev.revert()
+            pass
         else:
             rev.revert()
+            revert_history(request.user, rev)
             return HttpResponseRedirect(reverse_lazy('data'))
 
 
@@ -397,7 +414,12 @@ def revert_data(request, model, id):
     Model = apps.get_model('pdc_core_app', model)
     rev = revision_query(Model, id)
     rev[0].revert()
+    revert_history(request.user, rev[0])
     return HttpResponseRedirect(reverse_lazy('data'))
+
+
+def protected_error(request):
+    return render(request, '500.html')
 
 
 class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
@@ -930,19 +952,23 @@ class DeleteProjet(RevisionMixin, PermissionRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
     def post(self, *args, **kwargs):
-        form_obj = self.get_object()
+        try:
+            return self.delete(*args, **kwargs)
+        except ProtectedError:
+            return HttpResponseRedirect(reverse_lazy('protected_error'))
+        else:
+            form_obj = self.get_object()
 
-        model_type = ModelType.objects.get(app_label='pdc_core_app',
-                                           model='projet')
-        history = History(
-                    date=datet.now(),
-                    user=self.request.user,
-                    model=model_type,
-                    object_repr=form_obj,
-                    comment='Suppression projet'
-                    )
-        history.save()
-        return self.delete(*args, **kwargs)
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='projet')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=form_obj,
+                        comment='Suppression projet'
+                        )
+            history.save()
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Projet, idProjet=self.kwargs['idProjet'])
@@ -1097,7 +1123,7 @@ class PassCommandFromTask(RevisionMixin, PermissionRequiredMixin, UpdateView):
                     user=self.request.user,
                     model=model_type,
                     object_repr=cmd,
-                    comment='Commande passée à partir d\'une tâche probable'
+                    comment='Création commande à partir d\'une tâche probable'
                     )
         history.save()
         return super().post(request)

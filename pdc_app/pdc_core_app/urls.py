@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('protectedErr/', views.protected_error, name='protected_error'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('auth/', include('social_django.urls', namespace='social')),
     path('user/update/<int:id>', views.UpdateUser.as_view(),
