@@ -229,11 +229,25 @@ $(document).ready( function () {
                   error: function(xhr, text, code){
                     if(text == 'error' && code == 'Forbidden'){
                       $('.modal').addClass("is-active");
+                      $('.modal-card-body').append('403 Forbidden error');
                       $(document).on('click', '.modal-background', function(){
                           $('.modal').removeClass("is-active");
+                          $('.modal-card-body').empty();
                       });
                       $(document).on('click', '#modaldelete', function(){
                           $('.modal').removeClass("is-active");
+                          $('.modal-card-body').empty();
+                      });
+                    }else{
+                      $('.modal').addClass("is-active");
+                      $('.modal-card-body').append('500 protected error, this object is link to protected data.');
+                      $(document).on('click', '.modal-background', function(){
+                          $('.modal').removeClass("is-active");
+                          $('.modal-card-body').empty();
+                      });
+                      $(document).on('click', '#modaldelete', function(){
+                          $('.modal').removeClass("is-active");
+                          $('.modal-card-body').empty();
                       });
                     }
                   }

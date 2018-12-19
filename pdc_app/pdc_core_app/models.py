@@ -68,7 +68,7 @@ class Projet(models.Model):
     client = models.ForeignKey(Client, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f'{self.nomP}, {self.client.nomCl}'
+        return f'{self.nomP}, {self.client.nomCl}, RdP: {self.RdP.trigrammeC}'
 
 
 @reversion.register
