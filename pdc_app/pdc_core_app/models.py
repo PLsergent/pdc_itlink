@@ -42,7 +42,7 @@ class Collaborateur(models.Model):
 class Responsable_E(models.Model):
     idRespE = models.AutoField(primary_key=True)
     RdE = models.OneToOneField(Collaborateur, on_delete=models.PROTECT)
-    equipe = models.OneToOneField(Equipe, on_delete=models.CASCADE)
+    equipe = models.OneToOneField(Equipe, on_delete=models.PROTECT)
 
     def __str__(self):
         return f'{self.RdE.trigrammeC}'
@@ -85,7 +85,7 @@ class Commande(models.Model):
     etablie = models.BooleanField(default=False)
     odds = models.PositiveIntegerField(default=100)
     commentaire = models.CharField(max_length=200, blank=True)
-    equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE)
+    equipe = models.ForeignKey(Equipe, on_delete=models.PROTECT)
     projet = models.ForeignKey(Projet, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -147,8 +147,8 @@ class RDate(models.Model):
 @reversion.register
 class RepartitionActivite(models.Model):
     idRA = models.AutoField(primary_key=True)
-    activite = models.ForeignKey(Activite, on_delete=models.PROTECT)
-    collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
+    activite = models.ForeignKey(Activite, on_delete=models.CASCADE)
+    collaborateur = models.ForeignKey(Collaborateur, on_delete=models.PROTECT)
     list_R = models.ManyToManyField(RDate)
 
     def __str__(self):
@@ -159,8 +159,8 @@ class RepartitionActivite(models.Model):
 @reversion.register
 class RepartitionProjet(models.Model):
     idRP = models.AutoField(primary_key=True)
-    commande = models.ForeignKey(Commande, on_delete=models.PROTECT)
-    collaborateur = models.ForeignKey(Collaborateur, on_delete=models.CASCADE)
+    commande = models.ForeignKey(Commande, on_delete=models.CASCADE)
+    collaborateur = models.ForeignKey(Collaborateur, on_delete=models.PROTECT)
     list_R = models.ManyToManyField(RDate)
 
     def __str__(self):

@@ -419,7 +419,7 @@ def revert_data(request, model, id):
 
 
 def protected_error(request):
-    return render(request, '500.html')
+    return render(request, '500.html', status=500)
 
 
 class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
