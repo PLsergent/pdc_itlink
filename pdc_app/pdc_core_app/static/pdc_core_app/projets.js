@@ -186,6 +186,23 @@ $(document).on('click', '.undo', function() {
                       $this.closest('tr').fadeOut(500);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
                       $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $.ajax({
+                        url: "http://127.0.0.1:8000/pdc/charge_update/"+id,
+                        type: 'GET',
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                        },
+                        success: function(response){
+                          var proj = $this.closest('tr').children('td:eq(5)').text()
+                          var ref = $this.closest('tr').children('td:eq(6)').text()
+                          table.rows().data().each(function(value, index) {
+                            if ( value[5] == proj && value[6] == ref){
+                              last = value.length - 1
+                              $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+") > td:eq(1)").replaceWith(response);
+                            }
+                          });
+                        }
+                      })
                       $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_projet/RepartitionProjet/"+id);
                       setTimeout(function() {

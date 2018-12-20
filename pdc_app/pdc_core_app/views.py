@@ -5,7 +5,7 @@ import calendar
 from vanilla import DeleteView
 import month
 import reversion
-from reversion.models import Revision, ContentType
+from reversion.models import Revision, ContentType, Version
 from reversion.views import RevisionMixin
 
 
@@ -121,6 +121,15 @@ def assigned_charges(cmd):
         days_list.append(networkdays(start_date, end_date))
     days = sum(days_list)
     return "%.1f" % (sum_rp * days / len(list_month_display))
+
+
+def assigned_charges_update(request, id):
+    v = Version.objects.get_for_object_reference(RepartitionProjet, id)[0]
+    cmd_id = v.field_dict['commande_id']
+    cmd = Commande.objects.get(idCom=cmd_id)
+    charges = assigned_charges(cmd)
+    return render(request, 'pdc_core_app/charge_update.html',
+                  {"charges": charges})
 
 
 # get_repartition_without_information, used in collaborateurs()
