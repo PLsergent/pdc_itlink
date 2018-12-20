@@ -337,6 +337,11 @@ def history(request):
                    'version_list': version_list})
 
 
+def clean_history(request):
+    History.objects.all().delete()
+    return HttpResponseRedirect(reverse_lazy('history'))
+
+
 def revision_query(content_model, pk):
     revision = Revision.objects.filter(
         version__content_type=ContentType.objects.get_for_model(content_model)

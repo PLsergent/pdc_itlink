@@ -83,6 +83,7 @@ urlpatterns = [
          views.revert_data, name='revert_data'),
     path('history/revert_data_bis/<str:model>/<int:id>',
          views.revert_data_bis, name='revert_data_bis'),
+    path('history/delete/', views.clean_history, name="clean_history"),
 
     path('charge_update/<int:id>', views.assigned_charges_update,
          name="assigned_charges_update")

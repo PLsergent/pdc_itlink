@@ -8,36 +8,140 @@
      <p class="subtitle">Web Application Python/Django</p>
    </article>
  </div>
- <div class="tile is-parent">
-   <a href='/pdc/projets' class="tile is-child box">
-     <p class="subtitle is-3">Projets</p>
-     <p class="subtitle">Accéder à la liste des projets et aux répartitions.</p>
-   </a>
- </div>
- <div class="tile is-parent">
-   <a href='/pdc/collaborateurs' class="tile is-child box">
-     <p class="subtitle is-3">Collaborateurs</p>
-     <p class="subtitle">Accéder à la liste des collaborateurs et à leurs charges
-     de travail.</p>
-   </a>
- </div>
- <div class="tile is-parent">
-   <a href='/pdc/commandes' class="tile is-child box">
-     <p class="subtitle is-3">Commandes</p>
-     <p class="subtitle">Accéder à la liste des commandes passées.</p>
-   </a>
- </div>
- <div class="tile is-parent">
-   <a href='/pdc/autres' class="tile is-child box">
-     <p class="subtitle is-3">Autres</p>
-     <p class="subtitle">Accéder à la répartition des activités.</p>
-   </a>
- </div>
- <div class="tile is-parent">
-   <a href='/pdc/data' class="tile is-child box">
-     <p class="subtitle is-3">Données</p>
-     <p class="subtitle">Accéder aux restes des données.</p>
-   </a>
- </div>
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-multiline">
+      <div class="column is-full">
+        <a href="/pdc/accounts/login/" class="button is-large is-primary">
+          <span class="icon">
+            <i class="fab fa-google"></i>
+          </span>
+          <span>Login</span>
+        </a>
+        <a href="{% url 'social:begin' 'google-oauth2' %}" class="button is-large is-warning">
+          <span class="icon">
+            <i class="fab fa-google"></i>
+          </span>
+          <span>Login Google</span>
+        </a>
+      </div>
+      <div class="column is-one-third">
+        <a href="/pdc/projets">
+        <article class="notification media has-background-white">
+          <figure class="media-left">
+            <span class="icon">
+              <i class="has-text-warning fa fa-columns fa-lg"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <h1 class="title is-size-4">Projets</h1>
+              <p class="is-size-5 subtitle">
+                Gérer la répartition des charges au sein d'un projet
+              </p>
+            </div>
+          </div>
+        </article>
+      </a>
+      </div>
+      <div class="column is-one-third">
+        <a href="/pdc/collaborateurs">
+        <article class="notification has-background-white media">
+          <figure class="media-left">
+            <span class="icon has-text-info">
+              <i class="fas fa-users"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <h1 class="title is-size-4">Collaborateurs</h1>
+              <p class="is-size-5 subtitle">
+                Accéder aux % d'occupation de chaque collaborateur
+              </p>
+            </div>
+          </div>
+        </article>
+      </a>
+      </div>
+      <div class="column is-one-third">
+        <a href="/pdc/commandes">
+        <article class="notification has-background-white media">
+          <figure class="media-left">
+            <span class="icon has-text-danger">
+              <i class="fas fa-dolly"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <h1 class="title is-size-4">Commandes</h1>
+              <p class="is-size-5 subtitle">
+                Accéder à la liste des commandes en cours
+              </p>
+            </div>
+          </div>
+        </article>
+      </a>
+      </div>
+      <div class="column is-one-third">
+        <a href="/pdc/autres">
+        <article class="notification has-background-white media">
+          <figure class="media-left">
+            <span class="icon has-text-grey">
+              <i class="fa fa-lg fa-cogs"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <h1 class="title is-size-4">Autres</h1>
+              <p class="is-size-5 subtitle">
+                Gérer la répartition des activités autres
+              </p>
+            </div>
+          </div>
+        </article>
+      </a>
+      </div>
+      <div class="column is-one-third">
+        <a href="/pdc/data">
+        <article class="notification has-background-white media">
+          <figure class="media-left">
+            <span class="icon has-text-primary">
+              <i class="fas fa-list-ul"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <h1 class="title is-size-4">Liste données</h1>
+              <p class="is-size-5 subtitle">
+                Accéder à la liste des données supplémentaires
+              </p>
+            </div>
+          </div>
+        </article>
+      </a>
+      </div>
+      <div class="column is-one-third">
+        <a href="/pdc/history">
+        <article class="notification has-background-white media">
+          <figure class="media-left">
+            <span class="icon has-text-danger">
+              <i class="fa fa-lg fa-cubes"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <h1 class="title is-size-4">Historique</h1>
+              <p class="is-size-5 subtitle">
+                Accéder à l'historique des actions réalisées sur le site
+              </p>
+            </div>
+          </div>
+        </article>
+      </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

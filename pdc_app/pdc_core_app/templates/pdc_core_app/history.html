@@ -4,7 +4,12 @@
 
 {% load static %}
 <script src="{% static "pdc_core_app/history.js" %}"></script>
-
+<a href="/pdc/history/delete" class="button is-link is-medium">
+  <span>Clean history</span>
+  <span class="icon">
+    <i class="fas fa-broom"></i>
+  </span>
+</a>
 
 <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
   <thead>
