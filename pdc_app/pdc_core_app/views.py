@@ -1224,7 +1224,6 @@ class AffectationProjetDateSet(RevisionMixin, PermissionRequiredMixin,
         return super(AffectationProjetDateSet, self).form_valid(form)
 
     def form_invalid(self, form, date_prct_form):
-
         return self.render_to_response(self.get_context_data(
                                     form=form,
                                     date_prct_form=date_prct_form)

@@ -13,6 +13,7 @@ workdays = "*"
 social-auth-app-django = "*"
 django-bulma = "*"
 django-reversion = "*"
+gunicorn = "*"
 
 [dev-packages]
 
