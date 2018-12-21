@@ -10,6 +10,7 @@ $(document).ready( function () {
     );
     var table = new $.fn.dataTable.Api( '#myTable' );
 
+// Color cells
     table.cells().every( function () {
         if ( this.data() > 100 ){
           $(this.node()).addClass( 'has-background-danger' );
@@ -44,6 +45,7 @@ $(document).ready( function () {
             return cookieValue;
         };
 
+// Delete button
     $('.mydelete').on('click', function(){
       var $this = $(this)
       var id = $(this).data('id');

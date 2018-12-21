@@ -1,15 +1,21 @@
 $(document).ready(function() {
+  // Ajout des éléments au premier form du form set
   $('#id_form-TOTAL_FORMS').val(1);
   $("#assign").find('tr:eq(1)').append('<hr>')
   $("#assign").find('tr:eq(2)').append($('#deletebutton').html())
   $("#assign").find('tr:eq(3)').append('<hr>')
 
+  // Défini la valeur par défaut du premier form set en prenant le mois et l'année en cours
   var today = new Date();
   var month = today.getMonth()+1;
   var year = today.getFullYear();
   $("#id_form-0-month_0").val(month);
   $('#id_form-0-month_1').val(year)
 
+// Lorsque l'on click sur le bouton + on ajoute un form au form set en utilisant
+// le empty_form défini en haut du template
+// Le nv form correspond au mois suivant
+// Gère les ids et incrémente TOTAL FORM
   $("#new").on('click', function(){
     var index = $("#id_form-TOTAL_FORMS").val();
     var line = (parseInt(index) + 1) * 2;
@@ -29,6 +35,9 @@ $(document).ready(function() {
     $("#id_form-"+index+"-month_1").val(year);
   });
 
+  // Lorsque l'on supprime un form du form set
+  // Si il s'agit du dernier élémént du form set on supprime simplement
+  // Sinon on met à jour les ids de tous les éléments suivant
   $("#assign").on('click','.mydelete', function(){
     var index = $("#id_form-TOTAL_FORMS").val();
     var elt = $(this).closest('tr');

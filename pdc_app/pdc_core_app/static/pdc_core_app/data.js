@@ -54,6 +54,7 @@ $(document).ready(function() {
           return false;
       });
 
+// Delete button for every table
   $('#myTable .mydelete').on('click', function(){
     var $this = $(this)
     var id = $(this).data('id');
@@ -278,6 +279,7 @@ $(document).ready(function() {
   });
   });
 
+// Pass command from task
   $('.myupdate').on('click', function(){
     var $this = $(this)
     var id = $(this).data('id');

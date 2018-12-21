@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+//color for actions cells
   var count = 0;
   $('table > tbody > tr').each(function(){
     var cell = $(this).children('td:eq(4)')
@@ -18,6 +20,7 @@ $(document).ready(function() {
     }
   });
 
+// Highlight row when hover
   $('table > tbody > tr').hover(function(){
     var cell = $(this).children('td:eq(4)')
     if (cell.text().startsWith("MAJ")){

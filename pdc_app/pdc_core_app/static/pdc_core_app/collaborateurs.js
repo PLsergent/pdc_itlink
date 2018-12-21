@@ -42,6 +42,7 @@ $(document).ready( function () {
     $('#switch_probablep').prop('checked', false);
     $('#switch_maj').prop('checked', false);
 
+// Switch table
     $("#switch_woprobable").on('change', function(){
       if (!$('#switch_woprobable').prop('checked') && !$('#switch_probablep').prop('checked') && !$('#switch_maj').prop('checked')){
         $('#switch_woprobable').prop('checked', true);
@@ -125,6 +126,7 @@ $(document).ready( function () {
       } );
     });
 
+// Hide Show columns
     $('#switchAll').prop('checked', true);
     $('#switchW').prop('checked', false);
     $('#switchPQ').prop('checked', false);
@@ -197,6 +199,7 @@ $(document).ready( function () {
             return cookieValue;
         };
 
+// Delete button
     $('.mydelete').on('click', function(){
       var $this = $(this)
       var id = $(this).data('id');

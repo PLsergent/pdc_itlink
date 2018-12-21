@@ -1,4 +1,6 @@
 $(document).ready(function() {
+  // Ajout du bouton delete à la fin de chaque ligne 'month value' donc une ligne
+  // sur deux. Sinon ajout un <hr> à la suite
   $("#assign").find('tr:eq(1)').append('<hr>')
   var number = 0;
   var index = 0;
@@ -14,7 +16,8 @@ $(document).ready(function() {
     }
     number ++;
   });
-
+  // Défini la valeur du form par défaut dans le form set pour correspondre au
+  // mois en cours
   index -= 1;
   var today = new Date();
   var month = today.getMonth()+1;
@@ -22,6 +25,9 @@ $(document).ready(function() {
   $("#id_form-"+index+"-month_0").val(month);
   $("#id_form-"+index+"-month_1").val(year)
 
+// Lorsque l'on click sur le bouton + on ajoute un form au formset
+// On défini le mois et l'année du nv form comme étant celui d'après à celui qui précède
+// Gère l'incrémentation des ids et de TOTAL FORMS
   $("#new").on('click', function(){
     var index = $("#id_form-TOTAL_FORMS").val();
     var line = (parseInt(index) + 1) * 2;
@@ -41,6 +47,9 @@ $(document).ready(function() {
     $("#id_form-"+index+"-month_1").val(year);
   });
 
+// Lorsque l'on supprime un form du form set
+// Si il s'agit du dernier élémént du form set on supprime simplement
+// Sinon on met à jour les ids de tous les éléments suivant
   $("#assign").on('click','.mydelete', function(){
     var index = $("#id_form-TOTAL_FORMS").val();
     var elt = $(this).closest('tr');

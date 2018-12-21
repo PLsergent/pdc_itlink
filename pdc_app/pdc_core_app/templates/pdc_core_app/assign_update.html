@@ -1,3 +1,5 @@
+<!-- Template for UpdateView of UpdateAffectation forms -->
+
 {% extends './base.html' %}
 
 {% block content %}
@@ -6,9 +8,11 @@
 <script src="{% static "pdc_core_app/assign_update.js" %}"></script>
 
 <br>
+<!-- table hidden used to add new form to the form set -->
 <table style="display: none" id="template">
   {{ date_prct_form.empty_form }}
 </table>
+<!-- =================================================== -->
 <div id="deletebutton" style="display: none">
   <a class='button is-danger tooltip mydelete' data-tooltip='Delete month' id='0'>
     <span class='icon'>
@@ -16,6 +20,7 @@
     </span>
   </a>
 </div>
+<!-- =================================================== -->
   <form method="post" novalidate>
     {% csrf_token %}
     <table id="assign">

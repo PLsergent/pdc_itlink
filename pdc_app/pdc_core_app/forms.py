@@ -6,13 +6,7 @@ from .models import RepartitionProjet, RDate, Pourcentage, RepartitionActivite
 from django.contrib.auth.models import User
 
 
-class UpdateUserForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        exclude = ['last_login', 'date_joined', 'password']
-
-
+# =============================== FORMSET ====================================
 class DatePrctForm(forms.ModelForm):
 
     class Meta:
@@ -51,6 +45,7 @@ class AffectationCollabActForm(forms.ModelForm):
 DateFormSet = formset_factory(DatePrctForm, formset=BaseFormSet)
 
 
+# =============================================================================
 class AjoutProjetForm(forms.ModelForm):
 
     class Meta:
@@ -121,6 +116,7 @@ class NouvelleTacheProbableForm(forms.ModelForm):
         self.fields['date_commande'].label = "Date"
 
 
+# =============================================================================
 class UpdateCommandeForm(forms.ModelForm):
 
     class Meta:
@@ -142,3 +138,10 @@ class PassCommandFromTaskForm(forms.ModelForm):
         model = Commande
         fields = ('projet', 'ref', 'charges',
                   'date_commande', 'etablie', 'equipe', 'commentaire')
+
+
+class UpdateUserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        exclude = ['last_login', 'date_joined', 'password']

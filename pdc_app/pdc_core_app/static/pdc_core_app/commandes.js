@@ -25,6 +25,7 @@ $(document).on('click', '.undo', function() {
             return cookieValue;
         };
 
+// Delete button 
     $('.mydelete').on('click', function(){
       var $this = $(this)
       var id = $(this).data('id');
