@@ -213,7 +213,6 @@ def revert_history(user, str):
 
 
 # ====================== View rendering ======================
-@login_required()
 def index(request):
     return render(request, 'pdc_core_app/index.html')
 
@@ -1399,19 +1398,23 @@ class DeleteClient(RevisionMixin, PermissionRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
     def post(self, *args, **kwargs):
-        form_obj = self.get_object()
+        try:
+            return self.delete(*args, **kwargs)
+        except ProtectedError:
+            return HttpResponseRedirect(reverse_lazy('protected_error'))
+        else:
+            form_obj = self.get_object()
 
-        model_type = ModelType.objects.get(app_label='pdc_core_app',
-                                           model='client')
-        history = History(
-                    date=datet.now(),
-                    user=self.request.user,
-                    model=model_type,
-                    object_repr=form_obj,
-                    comment='Suppression client'
-                    )
-        history.save()
-        return self.delete(*args, **kwargs)
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='client')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=form_obj,
+                        comment='Suppression client'
+                        )
+            history.save()
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Client, idClient=self.kwargs['idClient'])
@@ -1429,19 +1432,23 @@ class DeleteCollab(RevisionMixin, PermissionRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
     def post(self, *args, **kwargs):
-        form_obj = self.get_object()
+        try:
+            return self.delete(*args, **kwargs)
+        except ProtectedError:
+            return HttpResponseRedirect(reverse_lazy('protected_error'))
+        else:
+            form_obj = self.get_object()
 
-        model_type = ModelType.objects.get(app_label='pdc_core_app',
-                                           model='collaborateur')
-        history = History(
-                    date=datet.now(),
-                    user=self.request.user,
-                    model=model_type,
-                    object_repr=form_obj,
-                    comment='Suppression collaborateur'
-                    )
-        history.save()
-        return self.delete(*args, **kwargs)
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='collaborateur')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=form_obj,
+                        comment='Suppression collaborateur'
+                        )
+            history.save()
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(Collaborateur,

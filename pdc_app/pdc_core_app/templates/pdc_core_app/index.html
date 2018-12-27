@@ -17,16 +17,22 @@
       <div class="column is-full">
         <a href="/pdc/accounts/login/" class="button is-large is-primary">
           <span class="icon">
-            <i class="fab fa-google"></i>
+            <i class="fas fa-user-circle"></i>
           </span>
-          <span>Login</span>
+          {% if user.is_authenticated %}
+            <span>Account</span>
+          {% else %}
+            <span>Login</span>
+          {% endif %}
         </a>
-        <a href="{% url 'social:begin' 'google-oauth2' %}" class="button is-large is-warning">
-          <span class="icon">
-            <i class="fab fa-google"></i>
-          </span>
-          <span>Login Google</span>
-        </a>
+        {% if not user.is_authenticated %}
+          <a href="{% url 'social:begin' 'google-oauth2' %}" class="button is-large is-warning">
+            <span class="icon">
+              <i class="fab fa-google"></i>
+            </span>
+            <span>Login Google</span>
+          </a>
+        {% endif %}
       </div>
       <div class="column is-one-third">
         <a href="/pdc/projets">
