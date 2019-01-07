@@ -276,20 +276,18 @@ def collaborateurs(request):
     # projet et par activité. Ainsi on peut faire la somme de tous les éléments
     # de même rang pour avoir la somme des pourcentages par mois dans les 3 cas
         for i in range(0, len(list_month)):
-            somme = 0
-            for p in pourcentagesCM:
-                somme += p[i]
-            list.append(somme)
-        for i in range(0, len(list_month)):
-            somme = 0
-            for p in pourcentagesPP:
-                somme += p[i]
-            listPP.append(somme)
-        for i in range(0, len(list_month)):
-            somme = 0
-            for p in pourcentagesSP:
-                somme += p[i]
-            listSP.append(somme)
+            sommeCM, sommePP, sommeSP = 0, 0, 0
+            for pcm, ppp, psp in zip(
+                                    pourcentagesCM,
+                                    pourcentagesPP,
+                                    pourcentagesSP
+                                    ):
+                sommeCM += pcm[i]
+                sommePP += ppp[i]
+                sommeSP += psp[i]
+            list.append(sommeCM)
+            listPP.append(sommePP)
+            listSP.append(sommeSP)
         # On ajoute les 3 listes : list, listPP et listSP aux listes générales
         # Chaque liste constituera une ligne du tableau
         all.append(list)
