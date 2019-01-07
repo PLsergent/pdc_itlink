@@ -235,8 +235,8 @@ def collaborateurs(request):
     page_title = 'Collaborateurs'
     list_month_display = []
     list_month = []
-    # Liste finale (all) contenant des listes, chaque liste contenant les
-    # informations relative à un collaborateur
+    # Listes finales (all, allPP et all SP) contenant des listes,
+    # informations relative à un collaborateur chaque liste contenant les
     all = []  # cas majorant
     allPP = []  # probable pondéré
     allSP = []  # sans probable
@@ -246,11 +246,12 @@ def collaborateurs(request):
 
     # Pour chaque collaborateur
     for collab in collaborateurs:
-        # La list qui contient les informations relative à un seul collab
-        # incluant les pourcentages qui sont ajoutés plus bas
-        list = []
-        listPP = []
-        listSP = []
+        # list, listPP et listSP contiennent les informations relatives
+        # à un seul collab incluant les pourcentages qui sont ajoutés plus bas
+        # en fonction du cas où on est
+        list = []  # Cas Majorant
+        listPP = []  # Probable pondéré
+        listSP = []  # Sans probable
         rde = Responsable_E.objects.filter(equipe=collab.equipe)
         if rde:
             list.extend((collab.equipe.nomE, collab.trigrammeC, rde[0]))
@@ -260,20 +261,20 @@ def collaborateurs(request):
             list.extend((collab.equipe.nomE, collab.trigrammeC, 'XXX'))
             listPP.extend((collab.equipe.nomE, collab.trigrammeC, 'XXX'))
             listSP.extend((collab.equipe.nomE, collab.trigrammeC, 'XXX'))
-    # Dans la liste pourcentagesP on va stocker des listes, chaque liste
-    # correspond aux pourcentages par mois d'un projet
+    # Maintenant on récupère les répartitions relative au collaborateur
+    # avec les trois cas
         cas_majorant, probable_pondere, sans_probable = get_repartition_wo_inf(
                                                                     'P', collab
                                                                     )
-    # De même pour les activité, on fait une liste des pourcentages par
-    # activité et on les stocks dans la liste pourcentagesA
+    # On récupère également les pourcentages des activités autres
+    # que l'ajoute aux répartitions pour avoir 3 listes contenant tous les %
         autres = get_repartition_wo_inf('A', collab)
         pourcentagesCM = cas_majorant + autres
         pourcentagesPP = probable_pondere + autres
         pourcentagesSP = sans_probable + autres
-    # Maintenant on a donc une liste de liste contenant les pourcentages par
+    # Maintenant on a donc 3 listes de liste contenant les pourcentages par
     # projet et par activité. Ainsi on peut faire la somme de tous les éléments
-    # de même rang pour avoir la somme des pourcentages par mois.
+    # de même rang pour avoir la somme des pourcentages par mois dans les 3 cas
         for i in range(0, len(list_month)):
             somme = 0
             for p in pourcentagesCM:
@@ -289,6 +290,8 @@ def collaborateurs(request):
             for p in pourcentagesSP:
                 somme += p[i]
             listSP.append(somme)
+        # On ajoute les 3 listes : list, listPP et listSP aux listes générales
+        # Chaque liste constituera une ligne du tableau
         all.append(list)
         allPP.append(listPP)
         allSP.append(listSP)
