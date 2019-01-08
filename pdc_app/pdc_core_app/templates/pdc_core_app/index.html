@@ -4,17 +4,20 @@
 
 {% block content %}
 
+
+<script src="https://unpkg.com/scrollreveal@4"></script>
+
 <div class="tile is-parent">
    <article class="tile is-child notification is-info">
-     <p class="title is-2">PDC IT Link</p>
-     <p class="subtitle">Web Application Python/Django</p>
+     <p class="title is-2 first">PDC IT Link</p>
+     <p class="subtitle second">Web Application Python/Django</p>
    </article>
  </div>
 
 <section class="section">
   <div class="container">
     <div class="columns is-multiline">
-      <div class="column is-full">
+      <div class="column is-full third">
         <a href="/pdc/accounts/login/" class="button is-large is-primary">
           <span class="icon">
             <i class="fas fa-user-circle"></i>
@@ -34,7 +37,7 @@
           </a>
         {% endif %}
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third fourth">
         <a href="/pdc/projets">
         <article class="notification media has-background-white">
           <figure class="media-left">
@@ -53,7 +56,7 @@
         </article>
       </a>
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third fifth">
         <a href="/pdc/collaborateurs">
         <article class="notification has-background-white media">
           <figure class="media-left">
@@ -72,7 +75,7 @@
         </article>
       </a>
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third sixth">
         <a href="/pdc/commandes">
         <article class="notification has-background-white media">
           <figure class="media-left">
@@ -91,7 +94,7 @@
         </article>
       </a>
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third seventh">
         <a href="/pdc/autres">
         <article class="notification has-background-white media">
           <figure class="media-left">
@@ -110,7 +113,7 @@
         </article>
       </a>
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third eighth">
         <a href="/pdc/data">
         <article class="notification has-background-white media">
           <figure class="media-left">
@@ -129,7 +132,7 @@
         </article>
       </a>
       </div>
-      <div class="column is-one-third">
+      <div class="column is-one-third ninth">
         <a href="/pdc/history">
         <article class="notification has-background-white media">
           <figure class="media-left">
@@ -151,5 +154,8 @@
     </div>
   </div>
 </section>
+
+{% load static  %}
+<script src="{% static "pdc_core_app/index.js" %}"></script>
 
 {% endblock %}
