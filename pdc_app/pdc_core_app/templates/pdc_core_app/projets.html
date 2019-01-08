@@ -223,7 +223,7 @@
       </td>
       {% else %}
         {% if forloop.counter0 >= 9 and forloop.counter0 < sku|length|add:"-2" %}
-          <td class="tooltip is-tooltip-right" data-tooltip="">{{ rp }}</td>
+          <td class="tooltip is-tooltip-right tooltip_data" data-tooltip="">{{ rp }}</td>
         {% else %}
           <td>{{ rp }}</td>
           {% endif %}

@@ -25,7 +25,7 @@ $(document).on('click', '.undo', function() {
             return cookieValue;
         };
 
-// Delete button 
+// Delete button
     $('.mydelete').on('click', function(){
       var $this = $(this)
       var id = $(this).data('id');
@@ -42,7 +42,7 @@ $(document).on('click', '.undo', function() {
                       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                   },
                   success: function(response){
-                      $this.closest('tr').fadeOut(500);
+                      $this.closest('tr').fadeOut(250);
                       $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_command/Commande/"+id);
                       setTimeout(function() {

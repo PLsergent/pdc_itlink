@@ -70,7 +70,7 @@ $(document).ready(function() {
                   xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
               },
               success: function(response){
-                  $this.parent().fadeOut(500);
+                  $this.parent().fadeOut(250);
                   $("#undo").fadeIn().removeClass("is-hidden");
                   $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_data/Projet/"+id);
                   setTimeout(function() {
@@ -126,7 +126,7 @@ $(document).ready(function() {
                   xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
               },
               success: function(response){
-                  $this.parent().fadeOut(500);
+                  $this.parent().fadeOut(250);
                   $("#undo").fadeIn().removeClass("is-hidden");
                   $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_data/Client/"+id);
                   setTimeout(function() {
@@ -182,7 +182,7 @@ $(document).ready(function() {
                   xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
               },
               success: function(response){
-                  $this.parent().fadeOut(500);
+                  $this.parent().fadeOut(250);
                   $("#undo").fadeIn().removeClass("is-hidden");
                   $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_collab/Collaborateur/"+id);
                   setTimeout(function() {
@@ -238,7 +238,7 @@ $(document).ready(function() {
                   xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
               },
               success: function(response){
-                  $this.parent().fadeOut(500);
+                  $this.parent().fadeOut(250);
                   $("#undo").fadeIn().removeClass("is-hidden");
                   $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_data/Commande/"+id);
                   setTimeout(function() {
@@ -295,7 +295,7 @@ $(document).ready(function() {
                     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                 },
                 success: function(response){
-                    $this.closest('tr').fadeOut(500);
+                    $this.closest('tr').fadeOut(250);
                     $("#undo").fadeIn().removeClass("is-hidden");
                     $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_data_bis/Commande/"+id);
                     setTimeout(function() {

@@ -1,3 +1,50 @@
+// ------------------------ FUNCTIONS -------------------------------------------
+
+function tooltip(table){
+    $('.tooltip_data').hover(function(){
+      var total = 0
+      var colIndex = table.cell($(this)).index().column
+      var collab = $(this).closest('tr').children('td:eq(3)').text();
+      table.rows( { filter: 'applied' } ).data().each(function(value, index) {
+        if ( value[3] == collab ){
+          total += parseInt(value[colIndex])
+        }
+    });
+      $(this).attr('data-tooltip', collab + ":" + total);
+  });
+  }
+//------------------------------------------------------------------------------------
+  function color_alt(){
+      var value = ""
+      var projet = ""
+      var color = color1
+      var color1 = ""
+      var color2 = "has-background-grey-lighter"
+      var rows = $('#myTable > tbody > tr').each(function(index){
+        value_update = $(this).children('td:eq(6)').text()
+        projet_udpdate = $(this).children('td:eq(5)').text()
+        if (value != value_update || projet != projet_udpdate){
+          value = value_update
+          projet = projet_udpdate
+          if (color == color1){
+            color = color2
+          }else{
+            color = color1
+          }
+          $(this).addClass(color)
+          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+          $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+
+        }else{
+          $(this).addClass(color)
+          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+          $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+        }
+
+      });
+  }
+
+// ---------------------------------Document ready ----------------------------
 $(document).ready( function () {
     var tableP = $('#myTable').dataTable({
       sScrollX:     "100%",
@@ -170,7 +217,6 @@ $(document).on('click', '.undo', function() {
       var $this = $(this)
       var id = $(this).data('id');
       var row = table.cell($(this)).index().row;
-      var idRow = table.rows().eq(0).indexOf(row);
       $.confirm({
         title: 'Deletion pop-up',
         content: 'Do you want to proceed ?',
@@ -183,9 +229,9 @@ $(document).on('click', '.undo', function() {
                       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                   },
                   success: function(response){
-                      $this.closest('tr').fadeOut(500);
-                      $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
+                    // On supprime la ligne dans le datatables plutôt que de faire le fadeOut()
+                    // afin que les données des tooltips se mettent bien à jour
+                      table.row(row).remove().draw();
                       $.ajax({
                         url: "http://127.0.0.1:8000/pdc/charge_update/"+id,
                         type: 'GET',
@@ -208,6 +254,8 @@ $(document).on('click', '.undo', function() {
                       setTimeout(function() {
                           $('#undo').addClass("is-hidden");
                       }, 6000);
+                      tooltip(table);
+                      color_alt();
                   },
                   error: function(xhr, text, code){
                     if(text == 'error' && code == 'Forbidden'){
@@ -232,46 +280,11 @@ $(document).on('click', '.undo', function() {
       });
     });
 // ====== % in tooltip ======
-    $('.tooltip').hover(function(){
 
-      if ($(this).attr('data-tooltip') == ""){
-        var total = 0
-        var colIndex = table.cell($(this)).index().column
-        var collab = $(this).closest('tr').children('td:eq(3)').text();
-        table.rows( { filter: 'applied' } ).data().each(function(value, index) {
-          if ( value[3] == collab ){
-            total += parseInt(value[colIndex])
-          }
-      });
-        $(this).attr('data-tooltip', collab + ":" + total);
-      }
-    });
+tooltip(table);
+
 // ====== Row color alternation ======
-    var value = ""
-    var projet = ""
-    var color = color1
-    var color1 = ""
-    var color2 = "has-background-grey-lighter"
-    var rows = $('#myTable > tbody > tr').each(function(index){
-      value_update = $(this).children('td:eq(6)').text()
-      projet_udpdate = $(this).children('td:eq(5)').text()
-      if (value != value_update || projet != projet_udpdate){
-        value = value_update
-        projet = projet_udpdate
-        if (color == color1){
-          color = color2
-        }else{
-          color = color1
-        }
-        $(this).addClass(color)
-        $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
-        $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
 
-      }else{
-        $(this).addClass(color)
-        $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
-        $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
-      }
+color_alt();
 
-    });
 });

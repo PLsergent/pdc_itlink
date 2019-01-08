@@ -217,12 +217,12 @@ $(document).ready( function () {
                       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                   },
                   success: function(response){
-                      $("#hide .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#hide2 .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#hide3 .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#myTable2 > tbody > tr:eq("+idRow+")").fadeOut(500);
-                      $("#myTable3 > tbody > tr:eq("+idRow+")").fadeOut(500);
+                      $("#hide .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(250);
+                      $("#hide2 .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(250);
+                      $("#hide3 .DTFC_LeftBodyLiner > table > tbody > tr:eq("+idRow+")").fadeOut(250);
+                      $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(250);
+                      $("#myTable2 > tbody > tr:eq("+idRow+")").fadeOut(250);
+                      $("#myTable3 > tbody > tr:eq("+idRow+")").fadeOut(250);
                       $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_collab/Collaborateur/"+id);
                       setTimeout(function() {
