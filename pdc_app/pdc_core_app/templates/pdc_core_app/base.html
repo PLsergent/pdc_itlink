@@ -23,9 +23,9 @@
     <script src="{% static "pdc_core_app/base.js" %}"></script>
 
       {% if page_title %}
-      <title>{{ page_title }}</title>
+      <title>{{ page_title }} - PDC</title>
       {% else %}
-      <title>PDC IT Link</title>
+      <title>Outil PDC</title>
       {% endif %}
   </head>
   <body>
@@ -186,12 +186,23 @@
    </div>
   </body>
 <!-- ============================================================== -->
+{% load static %}
   <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      <strong>PDC IT Link</strong> by <a href="https://github.com/PLsergent">Pierre-Louis Sergent</a>.
+      <strong>Outil PDC</strong> by <a href="https://github.com/PLsergent">Pierre-Louis Sergent</a>.
       All rights reserved <a href="https://www.itlink.fr/">IT Link</a>
     </p>
+    <div class="columns is-mobile is-centered">
+      <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+          <figure class="image is-128x128">
+              <img src="{% static "image/logo.png" %}" alt="logo">
+          </figure>
+        </p>
+      </div>
+    </div>
+
   </div>
 </footer>
 </html>
