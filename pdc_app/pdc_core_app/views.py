@@ -852,108 +852,6 @@ class AffectationAutres(RevisionMixin, PermissionRequiredMixin,
                                     )
 
 
-class UpdateAffectationAutres(RevisionMixin, PermissionRequiredMixin,
-                              SuccessMessageMixin, UpdateView):
-    form_class = AffectationCollabActForm
-    formset_class = DateFormSet
-    template_name = 'pdc_core_app/assign_update.html'
-    model = RepartitionActivite
-    success_url = reverse_lazy('autres')
-    success_message = "Affectation modifiée avec succès."
-    permission_required = ('pdc_core_app.change_repartitionactivite')
-
-    def get_context_data(self, **args):
-        context = super(UpdateView, self).get_context_data(**args)
-        context['page_title'] = 'Modification affectation activité'
-        context['id'] = self.object.idRA
-        return context
-
-    def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        date_prct_form = DateFormSet(
-            initial=[{'month': x.month,
-                      'pourcentage': x.pourcentage}
-                     for x in self.object.list_R.all()])
-        return self.render_to_response(self.get_context_data(
-            date_prct_form=date_prct_form,
-        ))
-
-    def post(self, request, *args, **kwargs):
-        reversion.set_user(request.user)
-        reversion.set_comment("Modif. affectation autres")
-
-        self.object = None
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        date_prct_form = DateFormSet(self.request.POST)
-
-        if form.is_valid() and date_prct_form.is_valid():
-            return self.form_valid(form, date_prct_form)
-        else:
-            return self.form_invalid(form, date_prct_form)
-
-    def form_valid(self, form, date_prct_form):
-        affectation = form.save()
-        self.object = self.get_object()
-        RepartitionActivite.objects.get(idRA=self.object.idRA).delete()
-
-        for date_form in date_prct_form:
-            date_form.save(commit=False)
-            month = date_form.cleaned_data['month']
-            prct = date_form.cleaned_data['pourcentage'].pourcentage
-            pourcentage = Pourcentage.objects.get(pourcentage=prct)
-            exist = RDate.objects.filter(
-                        month=month,
-                        pourcentage=pourcentage
-                        )
-            if exist:
-                obj = RDate.objects.get(
-                            month=month,
-                            pourcentage=pourcentage
-                            )
-            else:
-                obj = date_form.save()
-            affectation.list_R.add(obj)
-
-            model_type = ModelType.objects.get(app_label='pdc_core_app',
-                                               model='repartitionactivite')
-            history = History(
-                        date=datet.now(),
-                        user=self.request.user,
-                        model=model_type,
-                        object_repr=affectation,
-                        comment='MAJ affectation autres'
-                        )
-            history.save()
-        return super(UpdateAffectationAutres, self).form_valid(form)
-
-    def form_invalid(self, form, date_prct_form):
-
-        return self.render_to_response(self.get_context_data(
-                                    form=form,
-                                    date_prct_form=date_prct_form)
-                                    )
-
-    def get_object(self, *args, **kwargs):
-        return get_object_or_404(RepartitionActivite, idRA=self.kwargs['idRA'])
-
-
-class UpdateUser(UpdateView):
-    model = User
-    form_class = UpdateUserForm
-    template_name = 'pdc_core_app/add.html'
-    success_url = reverse_lazy('login')
-    success_message = "Utilisateur modifiée avec succès."
-
-    def get_context_data(self, **args):
-        context = super(UpdateView, self).get_context_data(**args)
-        context['page_title'] = 'Modification utilisateur'
-        return context
-
-    def get_object(self, *args, **kwargs):
-        return get_object_or_404(User, id=self.kwargs['id'])
-
-
 # ======================= UPDATE VIEWS =======================
 class UpdateProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
                    UpdateView):
@@ -1350,6 +1248,109 @@ class UpdateAffectationProjetDateSet(RevisionMixin, PermissionRequiredMixin,
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(RepartitionProjet, idRP=self.kwargs['idRP'])
+
+
+class UpdateAffectationAutres(RevisionMixin, PermissionRequiredMixin,
+                              SuccessMessageMixin, UpdateView):
+    form_class = AffectationCollabActForm
+    formset_class = DateFormSet
+    template_name = 'pdc_core_app/assign_update.html'
+    model = RepartitionActivite
+    success_url = reverse_lazy('autres')
+    success_message = "Affectation modifiée avec succès."
+    permission_required = ('pdc_core_app.change_repartitionactivite')
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification affectation activité'
+        context['id'] = self.kwargs['idRA']
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        date_prct_form = DateFormSet(
+            initial=[{'month': x.month,
+                      'pourcentage': x.pourcentage}
+                     for x in self.object.list_R.all()])
+        return self.render_to_response(self.get_context_data(
+            date_prct_form=date_prct_form,
+        ))
+
+    def post(self, request, *args, **kwargs):
+        reversion.set_user(request.user)
+        reversion.set_comment("Modif. affectation autres")
+
+        self.object = None
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        date_prct_form = DateFormSet(self.request.POST)
+
+        if form.is_valid() and date_prct_form.is_valid():
+            return self.form_valid(form, date_prct_form)
+        else:
+            return self.form_invalid(form, date_prct_form)
+        return super().post(request)
+
+    def form_valid(self, form, date_prct_form):
+        affectation = form.save()
+        self.object = self.get_object()
+        RepartitionActivite.objects.get(idRA=self.object.idRA).delete()
+
+        for date_form in date_prct_form:
+            date_form.save(commit=False)
+            month = date_form.cleaned_data['month']
+            prct = date_form.cleaned_data['pourcentage'].pourcentage
+            pourcentage = Pourcentage.objects.get(pourcentage=prct)
+            exist = RDate.objects.filter(
+                        month=month,
+                        pourcentage=pourcentage
+                        )
+            if exist:
+                obj = RDate.objects.get(
+                            month=month,
+                            pourcentage=pourcentage
+                            )
+            else:
+                obj = date_form.save()
+            affectation.list_R.add(obj)
+
+            model_type = ModelType.objects.get(app_label='pdc_core_app',
+                                               model='repartitionactivite')
+            history = History(
+                        date=datet.now(),
+                        user=self.request.user,
+                        model=model_type,
+                        object_repr=affectation,
+                        comment='MAJ affectation autres'
+                        )
+            history.save()
+        return super(UpdateAffectationAutres, self).form_valid(form)
+
+    def form_invalid(self, form, date_prct_form):
+
+        return self.render_to_response(self.get_context_data(
+                                    form=form,
+                                    date_prct_form=date_prct_form)
+                                    )
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(RepartitionActivite, idRA=self.kwargs['idRA'])
+
+
+class UpdateUser(UpdateView):
+    model = User
+    form_class = UpdateUserForm
+    template_name = 'pdc_core_app/add.html'
+    success_url = reverse_lazy('login')
+    success_message = "Utilisateur modifiée avec succès."
+
+    def get_context_data(self, **args):
+        context = super(UpdateView, self).get_context_data(**args)
+        context['page_title'] = 'Modification utilisateur'
+        return context
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(User, id=self.kwargs['id'])
 
 
 # ========================== DELETE VIEWS ==========================
