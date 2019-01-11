@@ -63,7 +63,7 @@ $(document).ready( function () {
                       xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                   },
                   success: function(response){
-                      $this.closest('tr').fadeOut(500);
+                      $this.closest('tr').fadeOut(250);
                       $("#myTable > tbody > tr:eq("+idRow+")").fadeOut(250);
                       $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_autres/RepartitionActivite/"+id);
