@@ -139,19 +139,33 @@ $(document).on('click', '.undo', function() {
     $('#switchP').prop('checked', false);
 
     $('#switchE').on('change', function filter(){
-      tableP.fnFilter('True', 9);
-      $('#switchP').prop('checked', false);
-      $('#switchAll').prop('checked', false);
+      if (!$('#switchE').prop('checked')){
+        tableP.fnFilter('True|False', 9, true);
+        $('#switchAll').prop('checked', true);
+      }else{
+        tableP.fnFilter('True', 9);
+        $('#switchP').prop('checked', false);
+        $('#switchAll').prop('checked', false);
+      }
     });
     $('#switchP').on('change', function filter(){
-      tableP.fnFilter('False', 9);
-      $('#switchE').prop('checked', false);
-      $('#switchAll').prop('checked', false);
+      if (!$('#switchP').prop('checked')){
+        tableP.fnFilter('True|False', 9, true);
+        $('#switchAll').prop('checked', true);
+      }else{
+        tableP.fnFilter('False', 9);
+        $('#switchE').prop('checked', false);
+        $('#switchAll').prop('checked', false);
+      }
     });
     $('#switchAll').on('change', function filter(){
-      tableP.fnFilter('True|False', 9, true);
-      $('#switchE').prop('checked', false);
-      $('#switchP').prop('checked', false);
+      if (!$('#switchAll').prop('checked')){
+        tableP.fnFilter('XXX', 9);
+      }else{
+        tableP.fnFilter('True|False', 9, true);
+        $('#switchE').prop('checked', false);
+        $('#switchP').prop('checked', false);
+      }
     });
 // ====== Cookie for token csrft ======
     var getCookie = function (name) {
