@@ -46,7 +46,7 @@ Outil plan de charges\\
 \chapter{Introduction}
   \section{Objet du document}
 
-Ce document aura pour but de présenter les spécifications pour l’application web
+Ce document a pour but de présenter les spécifications pour l’application web
 de plan de charges. Cette application web viendra améliorer l’outil Excel
 proposé par Aurélien Cavalan. Il a pour vocation de permettre une gestion de
 l'ensemble des projets de l’activité data de It-link Rennes et ainsi fournir
@@ -56,11 +56,11 @@ Cet outil s’inscrit dans le processus de production.
 
   \section{Référents}
 
-Ce projet réalisé dans le cadre de mon stage sera encadré par le responsable
-d’équipe Python/web qui est également mon maître de stage : Alexandre Galodé, et
-sera le référent technique.\\\\
+Ce projet réalisé dans le cadre de mon stage est encadré par le responsable
+d’équipe Python/web qui est également mon maître de stage : Alexandre Galodé. Il
+en sera le référent technique.\\\\
 L’outil Excel sur lequel je vais me baser a été réalisé par Aurélien Cavalan. De
-par son statut d’assistant de responsable d’activité, c’est lui qui est amené le
+par son statut d'adjoint du responsable d’activité, c’est lui qui est amené le
 plus souvent à manipuler l’outil. La rédaction du cahier des charges et la
 réalisation du projet s’effectuera donc en collaboration avec ce dernier.
 
@@ -89,13 +89,13 @@ L’outil PDC, comme expliqué dans l’introduction, est un fichier Excel qui p
 d’anticiper les charges à venir, concernant des projets établis ou probables, et
 de les répartir entre les différents collaborateurs. Il permet de voir
 rapidement les personnes qui travaillent sur tel ou tel projet, à hauteur d’un
-certain pourcentage. Il permet également d’avoir une vision globale sur les
-charges attribuées à chacun des collaborateurs, afin de ne pas surcharger
+certain pourcentage de temps. Il permet également d’avoir une vision globale sur les
+charges attribuées à chacun des collaborateurs, afin de ne pas surcharger, ni sous-charger
 quelqu’un au moment de la répartition des charges.
 
 \subsection{Feuille Consolidé}
 
-La feuille "Consolidé" affiche par mois, le pourcentage de charge attribuée à chaque
+La feuille "Consolidé" affiche par mois, le pourcentage d'occupation attribué à chaque
 collaborateur. Le pourcentage est calculé en regardant les feuilles "
 Projets", "Probable" et "Autres". Mais aussi en fonction des options
 sélectionnées, à savoir : Sans probable, Probable pondéré et Cas majorant. Elle
@@ -161,9 +161,9 @@ satisfait de cette répartition).
 
 \subsection{Feuille Autres}
 
-La feuille "Autres" affiche le plan de charges pour chaque collaborateur en
-fonction d’activités qui ne sont pas en lien avec le développement.
-Par exemple : absence, alternance, congés, etc…
+La feuille "Autres" affiche, pour chaque collaborateur le taux d'occupation
+associé à des activités qui ne sont pas en lien avec des projets. Par exemple :
+absence, alternance, congés, etc…
 
 \subsection{Feuille Commandes}
 
@@ -299,7 +299,7 @@ le champ "Commandé" vaut 1 sinon il vaut 0.
       \item{Nom projet}
     \end{itemize}
 
-    \item{FOB.1.2 - Boutons unique : }
+    \item{FOB.1.2 - Boutons principaux : }
 
     \begin{itemize}[label=-]
       \item{Ajout projet} > \hyperref[sec:1.1]{\emph{formulaire 1.1}}
@@ -322,7 +322,7 @@ le champ "Commandé" vaut 1 sinon il vaut 0.
   \item{\textbf{FOB.2 - Affichage vue Collaborateurs}}\\
 Affichage sous forme de tableau, même colonnes que pour l’outil Excel dans la
 feuille "Consolidé". Contient la charge (en \%) de chaque collaborateur par mois
-(utilisation des données présentent dans les vues "Projets" et "Autres"). Deuxième
+(utilisation des données présentes dans les vues "Projets" et "Autres"). Deuxième
 tableau qui affiche la moyenne de répartition pour chaque équipe par mois.
 
   \begin{itemize}[label=\textbullet]
@@ -333,7 +333,7 @@ tableau qui affiche la moyenne de répartition pour chaque équipe par mois.
       \item{Collaborateur}
     \end{itemize}
 
-    \item{FOB.2.2 - Boutons unique :}
+    \item{FOB.2.2 - Boutons principaux :}
 
     \begin{itemize}[label=-]
       \item{Ajout collaborateur} > \hyperref[sec:2.1]{\emph{formulaire 2.1}}
@@ -352,8 +352,8 @@ tableau qui affiche la moyenne de répartition pour chaque équipe par mois.
 Affichage sous forme de tableau, même colonnes que pour l’outil Excel dans la
 feuille "Commandes" + nouvelle colonne "Client". Contient toutes les commandes
 passées avec notamment la charge en nombre de jours commandée. Attention, si
-une commande est saisie ou supprimée depuis cette page, la vue "Projets" sera
-mise à jour.
+une commande est saisie ou supprimée depuis cette page, les vues "Projets" et
+"Collaborateurs" seront impactées.
 
 \begin{itemize}[label=\textbullet]
     \item{FOB.3.1 - Filtre avec barre de recherche pour les colonnes :}
@@ -364,7 +364,7 @@ mise à jour.
       \item{Projet}
     \end{itemize}
 
-    \item{FOB.3.2 - Boutons unique :}
+    \item{FOB.3.2 - Boutons principaux :}
 
     \begin{itemize}[label=-]
       \item{Nouvelle commande} > \hyperref[sec:3.1]{\emph{formulaire 3.1}}
@@ -499,11 +499,11 @@ d’affichage. Notamment dans la vue "Projets", afin d'afficher seulement les
 projet établi ou probable. Mais aussi dans la vue "Collaborateurs", ou on
 pourrait mettre en place un code couleur, afin de faire ressortir les
 collaborateurs qui possède une charge satisfaisante ou bien une charge
-supérieure/inférieure. Tout comme l’outil Excel, il faudrait également rajouter
+supérieure/inférieure à 100\%. Tout comme l’outil Excel, il faudrait également rajouter
 des boutons radios pour modifier les charges en fonction de si on prend en
 compte les charges probables pondérées ou les charges au cas majorant.\\\\ Pour
 faire penser à l’utilisateur de rentrer les charges RAF, on pourrait ajouter une
-fenêtre pop-up, au début de chaque mois, pour demander la/les nouvelle(s)
+fenêtre pop-up, au début de chaque mois, pour demander la saisie de la/des nouvelle(s)
 valeur(s).\\\\ Concernant les formulaires, afin de faciliter la répartition des
 charges (lors de l'ajout d'un collaborateur, ou bien lors de la modification
 des pourcentages, formulaires 1.4, 1.5 et 4.1), on voudrait proposer, en
@@ -539,7 +539,7 @@ du passage d’un projet probable à un projet établi.
     \item{FOPT.3 - Radio bouton :}
 
     \begin{itemize}[label=-]
-      \item{Changement des charges en fonction de trois choix : sans probable ;
+      \item{Calcul des charges en fonction de trois choix : sans probable ;
        probable pondéré ; cas majorant (100\% de probabilité pour tous les
        projets probables)}
     \end{itemize}
