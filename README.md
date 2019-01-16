@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/PLsergent/pdc_itlink/tree/master.svg?style=svg&circle-token=c11bd2d91f03487614b7310d8552680f5a0aec6d)]
+
 # Outil\_PDC ITLink
 
 ## Installation
