@@ -1,6 +1,6 @@
 # Outil\_PDC ITLink
 
-### Installation
+## Installation
 
 Clone the repository :
 
@@ -25,5 +25,7 @@ By default got to this url : [http://127.0.0.1:8000/pdc/](http://127.0.0.1:8000/
 
 Good to go !
 
+## Description
 
+Internal management web application used to manage workloads planed. Through the application you can manage your projects, clients, tasks and assignments.
 
