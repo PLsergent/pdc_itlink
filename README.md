@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/PLsergent/pdc_itlink.svg?style=shield&circle-token=c11bd2d91f03487614b7310d8552680f5a0aec6d)](https://circleci.com/gh/PLsergent/pdc_itlink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
 
 # Outil\_PDC ITLink
