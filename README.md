@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/PLsergent/pdc_itlink.svg?style=shield&circle-token=c11bd2d91f03487614b7310d8552680f5a0aec6d)](https://circleci.com/gh/PLsergent/pdc_itlink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![](https://img.shields.io/github/languages/top/badges/shields.svg)](https://github.com/PLsergent/pdc_itlink)
 
 # Outil\_PDC ITLink
 
