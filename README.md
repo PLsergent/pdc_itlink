@@ -1,9 +1,5 @@
 # Outil\_PDC ITLink
 
----
-description: Internal management web application.
----
-
 ### Installation
 
 Clone the repository :
