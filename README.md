@@ -23,6 +23,7 @@ pipenv install
 Run the application :
 
 ```text
+cd pdc_app/
 pipenv run python manage.py runserver
 ```
 
