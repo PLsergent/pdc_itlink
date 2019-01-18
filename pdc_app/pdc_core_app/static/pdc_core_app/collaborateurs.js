@@ -1,5 +1,6 @@
 $(document).ready( function () {
     $('div .loader').addClass('is-hidden');
+    $('#all').removeClass('is-hidden');
     //loading stop
     var fntableSP = $('#myTable').dataTable({
       scrollX:        true,
