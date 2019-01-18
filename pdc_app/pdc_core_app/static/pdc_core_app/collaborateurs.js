@@ -1,4 +1,6 @@
 $(document).ready( function () {
+    $('div .loader').addClass('is-hidden');
+    //loading stop
     var fntableSP = $('#myTable').dataTable({
       scrollX:        true,
       scrollCollapse: true,
@@ -33,6 +35,8 @@ $(document).ready( function () {
     var table = tableSP;
     var tableP = fntableSP;
     var table_id = "#myTable"
+
+    $('#all').css('display', 'inline-block');
 
     $('#myTable_wrapper').wrap('<div id="hide" style="display:block"/>');
     $('#myTable2_wrapper').wrap('<div id="hide2" style="display:none"/>');
