@@ -37,8 +37,6 @@ $(document).ready( function () {
     var tableP = fntableSP;
     var table_id = "#myTable"
 
-    $('#all').css('display', 'inline-block');
-
     $('#myTable_wrapper').wrap('<div id="hide" style="display:block"/>');
     $('#myTable2_wrapper').wrap('<div id="hide2" style="display:none"/>');
     $('#myTable3_wrapper').wrap('<div id="hide3" style="display:none"/>');
