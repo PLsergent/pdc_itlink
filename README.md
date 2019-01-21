@@ -2,8 +2,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7](https://img.shields.io/badge/python-3.7-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
+_Special thanks to [IT Link](https://www.itlink.fr/) that gave me the opportunity to develop this application during my 10 weeks internship._
 
-# Outil\_PDC ITLink
+# Outil\_PDC
 
 ## Installation
 
