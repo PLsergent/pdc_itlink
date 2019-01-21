@@ -27,12 +27,12 @@ $(document).on('click', '.undo', function() {
 
 // Delete button
     $('.mydelete').on('click', function(){
-      var $this = $(this)
+      var $this = $(this);
       var id = $(this).data('id');
       $.confirm({
         title: 'Delete pop-up',
-        content: 'The deletion of a command may delete one or multiple\
-                  objects of affectation view. Do you want to proceed anyway?',
+        content: "The deletion of a command may delete one or multiple" +
+                  "objects of affectation view. Do you want to proceed anyway?",
         buttons: {
             confirm: function () {
               $.ajax({

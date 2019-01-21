@@ -1,17 +1,17 @@
 $(document).ready(function() {
   // Ajout du bouton delete à la fin de chaque ligne 'month value' donc une ligne
   // sur deux. Sinon ajout un <hr> à la suite
-  $("#assign").find('tr:eq(1)').append('<hr>')
+  $("#assign").find('tr:eq(1)').append('<hr>');
   var number = 0;
   var index = 0;
   $('#assign tr').each(function(){
     if (number >= 2){
       if (number % 2 == 0){
-        $(this).append($('#deletebutton').html())
-        $(this).find('.mydelete').attr('id', index)
+        $(this).append($('#deletebutton').html());
+        $(this).find('.mydelete').attr('id', index);
         index ++;
       }else{
-        $(this).append('<hr>')
+        $(this).append('<hr>');
       }
     }
     number ++;
@@ -23,7 +23,7 @@ $(document).ready(function() {
   var month = today.getMonth()+1;
   var year = today.getFullYear();
   $("#id_form-"+index+"-month_0").val(month);
-  $("#id_form-"+index+"-month_1").val(year)
+  $("#id_form-"+index+"-month_1").val(year);
 
 // Lorsque l'on click sur le bouton + on ajoute un form au formset
 // On défini le mois et l'année du nv form comme étant celui d'après à celui qui précède
@@ -65,21 +65,21 @@ $(document).ready(function() {
       elt.next().remove();
       elt.remove();
       var iter = 0;
-      total = (index-id)*2
+      total = (index-id)*2;
       while (iter < total){
         if (iter % 2 == 0){
           eltiter.find('th label').attr('for', "id_form-"+id+"-month_0");
           eltiter.find('td .w-month-year').attr({'name': "form-"+id+"-month_0", 'id': "id_form-"+id+"-month_0"});
-          eltiter.find('td .w-year').attr({'name': "form-"+id+"-month_1", 'id': "id_form-"+id+"-month_1"})
-          eltiter.find('a').attr('id', id)
+          eltiter.find('td .w-year').attr({'name': "form-"+id+"-month_1", 'id': "id_form-"+id+"-month_1"});
+          eltiter.find('a').attr('id', id);
           iter ++;
-          eltiter = eltiter.next()
+          eltiter = eltiter.next();
         }else{
           eltiter.find('th label').attr('for', "id_form-"+id+"-pourcentage");
-          eltiter.find('td select').attr({'name': "form-"+id+"-pourcentage", 'id': "id_form-"+id+"-pourcentage"})
+          eltiter.find('td select').attr({'name': "form-"+id+"-pourcentage", 'id': "id_form-"+id+"-pourcentage"});
           id ++;
           iter ++;
-          eltiter = eltiter.next()
+          eltiter = eltiter.next();
         }
       }
     }

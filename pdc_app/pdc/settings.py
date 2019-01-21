@@ -99,8 +99,8 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/pdc/'
 LOGOUT_REDIRECT_URL = '/pdc/accounts/login'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '142974375973-75h3ph43561g0a36nj5pr9b3hr4t5hos.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'rrYVrqvmjG-slGtdaY614lJA'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '508191649759-s4hrgv95urk7u6hc4uhj7cou2pe5c5va.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'iv7UCeUpiexPghTxdg7wjYJm'
 
 
 # Password validation

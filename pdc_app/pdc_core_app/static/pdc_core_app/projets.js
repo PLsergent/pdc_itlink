@@ -2,12 +2,12 @@
 
 function tooltip(table){
     $('.tooltip_data').hover(function(){
-      var total = 0
-      var colIndex = table.cell($(this)).index().column
+      var total = 0;
+      var colIndex = table.cell($(this)).index().column;
       var collab = $(this).closest('tr').children('td:eq(3)').text();
       table.rows( { filter: 'applied' } ).data().each(function(value, index) {
         if ( value[3] == collab ){
-          total += parseInt(value[colIndex])
+          total += parseInt(value[colIndex]);
         }
     });
       $(this).attr('data-tooltip', collab + ":" + total);
@@ -15,32 +15,31 @@ function tooltip(table){
   }
 //------------------------------------------------------------------------------------
   function color_alt(){
-      var value = ""
-      var projet = ""
-      var color = color1
-      var color1 = ""
-      var color2 = "has-background-grey-lighter"
+      var value = "";
+      var projet = "";
+      var color = color1;
+      var color1 = "";
+      var color2 = "has-background-grey-lighter";
       var rows = $('#myTable > tbody > tr').each(function(index){
-        value_update = $(this).children('td:eq(6)').text()
-        projet_udpdate = $(this).children('td:eq(5)').text()
+        value_update = $(this).children('td:eq(6)').text();
+        projet_udpdate = $(this).children('td:eq(5)').text();
         if (value != value_update || projet != projet_udpdate){
-          value = value_update
-          projet = projet_udpdate
+          value = value_update;
+          projet = projet_udpdate;
           if (color == color1){
-            color = color2
+            color = color2;
           }else{
-            color = color1
+            color = color1;
           }
-          $(this).addClass(color)
-          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
-          $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+          $(this).addClass(color);
+          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color);
+          $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color);
 
         }else{
-          $(this).addClass(color)
-          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
-          $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color)
+          $(this).addClass(color);
+          $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+")").addClass(color);
+          $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+")").addClass(color);
         }
-
       });
   }
 
@@ -116,7 +115,7 @@ $(document).on('click', '.undo', function() {
 });
 // ====== color cells ======
     table.cells().every( function () {
-        var data = this.data()
+        var data = this.data();
         if (!isNaN(data) && data.toString().indexOf('.') != -1){}else{
           if ( this.data() >= 80 ) {
               $(this.node()).addClass( 'has-background-success' );
@@ -204,8 +203,8 @@ $(document).on('click', '.undo', function() {
                   success: function(response){
                       $this.fadeOut(200);
                       $this.closest('tr').children('td:eq(9)').replaceWith('<td>True</td>');
-                      var proj = $this.closest('tr').children('td:eq(5)').text()
-                      var ref = $this.closest('tr').children('td:eq(6)').text()
+                      var proj = $this.closest('tr').children('td:eq(5)').text();
+                      var ref = $this.closest('tr').children('td:eq(6)').text();
                       table.rows().data().each(function(value, index) {
                         if ( value[5] == proj && value[6] == ref){
                           $(".DTFC_LeftBodyLiner > table > tbody > tr:eq("+index+") > td:eq(1) a.myupdate").fadeOut(200);
@@ -228,7 +227,7 @@ $(document).on('click', '.undo', function() {
     });
 // ====== Delete element ======
     $('.mydelete').on('click', function(){
-      var $this = $(this)
+      var $this = $(this);
       var id = $(this).data('id');
       var row = table.cell($(this)).index().row;
       $.confirm({
@@ -253,16 +252,16 @@ $(document).on('click', '.undo', function() {
                             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
                         },
                         success: function(response){
-                          var proj = $this.closest('tr').children('td:eq(5)').text()
-                          var ref = $this.closest('tr').children('td:eq(6)').text()
+                          var proj = $this.closest('tr').children('td:eq(5)').text();
+                          var ref = $this.closest('tr').children('td:eq(6)').text();
                           table.rows().data().each(function(value, index) {
                             if ( value[5] == proj && value[6] == ref){
-                              last = value.length - 1
+                              last = value.length - 1;
                               $(".DTFC_RightBodyLiner > table > tbody > tr:eq("+index+") > td:eq(1)").replaceWith(response);
                             }
                           });
                         }
-                      })
+                      });
                       $("#undo").fadeIn().removeClass("is-hidden");
                       $("#undo a").attr("href", "http://127.0.0.1:8000/pdc/history/revert_projet/RepartitionProjet/"+id);
                       setTimeout(function() {

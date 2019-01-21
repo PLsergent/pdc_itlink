@@ -56,7 +56,7 @@ $(document).ready(function() {
 
 // Delete button for every table
   $('#myTable .mydelete').on('click', function(){
-    var $this = $(this)
+    var $this = $(this);
     var id = $(this).data('id');
     $.confirm({
     title: 'Deletion pop-up',
@@ -112,7 +112,7 @@ $(document).ready(function() {
   });
 
   $('#myTable2 .mydelete').on('click', function(){
-    var $this = $(this)
+    var $this = $(this);
     var id = $(this).data('id');
     $.confirm({
     title: 'Deletion pop-up',
@@ -168,7 +168,7 @@ $(document).ready(function() {
   });
 
   $('#myTable3 .mydelete').on('click', function(){
-    var $this = $(this)
+    var $this = $(this);
     var id = $(this).data('id');
     $.confirm({
     title: 'Deletion pop-up',
@@ -224,7 +224,7 @@ $(document).ready(function() {
   });
 
   $('#myTable4 .mydelete').on('click', function(){
-    var $this = $(this)
+    var $this = $(this);
     var id = $(this).data('id');
     $.confirm({
     title: 'Deletion pop-up',
@@ -281,7 +281,7 @@ $(document).ready(function() {
 
 // Pass command from task
   $('.myupdate').on('click', function(){
-    var $this = $(this)
+    var $this = $(this);
     var id = $(this).data('id');
     $.confirm({
       title: 'Order in pop-up',

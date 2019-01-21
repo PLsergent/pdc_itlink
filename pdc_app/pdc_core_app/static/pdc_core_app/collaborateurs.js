@@ -35,7 +35,7 @@ $(document).ready( function () {
 
     var table = tableSP;
     var tableP = fntableSP;
-    var table_id = "#myTable"
+    var table_id = "#myTable";
 
     $('#myTable_wrapper').wrap('<div id="hide" style="display:block"/>');
     $('#myTable2_wrapper').wrap('<div id="hide2" style="display:none"/>');
@@ -52,7 +52,7 @@ $(document).ready( function () {
       }else{
         table = tableSP;
         tableP = fntableSP;
-        table_id = "#myTable"
+        table_id = "#myTable";
         $('#hide').fadeIn().css( 'display', 'block' );
         $('#switch_probablep').prop('checked', false);
         $('#hide2').css( 'display', 'none' );
@@ -67,7 +67,7 @@ $(document).ready( function () {
       }else{
         table = tablePP;
         tableP = fntablePP;
-        table_id = "#myTable2"
+        table_id = "#myTable2";
         $('#hide2').fadeIn().css( 'display', 'block' );
         $('#switch_woprobable').prop('checked', false);
         $('#hide').css( 'display', 'none' );
@@ -82,7 +82,7 @@ $(document).ready( function () {
       }else{
         table = tableCM;
         tableP = fntableCM;
-        table_id = "#myTable3"
+        table_id = "#myTable3";
         $('#hide3').fadeIn().css( 'display', 'block' );
         $('#switch_probablep').prop('checked', false);
         $('#hide2').css( 'display', 'none' );
@@ -204,7 +204,7 @@ $(document).ready( function () {
 
 // Delete button
     $('.mydelete').on('click', function(){
-      var $this = $(this)
+      var $this = $(this);
       var id = $(this).data('id');
       var row = table.cell($(this)).index().row;
       var idRow = table.rows().eq(0).indexOf(row);

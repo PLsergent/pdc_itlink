@@ -3,8 +3,8 @@ $(document).ready(function() {
 //color for actions cells
   var count = 0;
   $('table > tbody > tr').each(function(){
-    var cell = $(this).children('td:eq(4)')
-    console.log(cell.text())
+    var cell = $(this).children('td:eq(4)');
+    console.log(cell.text());
     if (cell.text().startsWith("MAJ")){
       cell.prepend('<i class="fas fa-pen-square"></i>');
       cell.addClass("has-background-warning");
@@ -22,7 +22,7 @@ $(document).ready(function() {
 
 // Highlight row when hover
   $('table > tbody > tr').hover(function(){
-    var cell = $(this).children('td:eq(4)')
+    var cell = $(this).children('td:eq(4)');
     if (cell.text().startsWith("MAJ")){
       $(this).addClass("has-background-warning");
     }else if(cell.text().startsWith("Création")){
@@ -33,7 +33,7 @@ $(document).ready(function() {
       $(this).addClass("has-background-info");
     }
   }, function(){
-    var cell = $(this).children('td:eq(4)')
+    var cell = $(this).children('td:eq(4)');
     if (cell.text().startsWith("MAJ")){
       $(this).removeClass("has-background-warning");
     }else if(cell.text().startsWith("Création")){

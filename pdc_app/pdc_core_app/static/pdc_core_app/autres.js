@@ -29,6 +29,11 @@ $(document).ready( function () {
         }
     });
 
+$(document).on('click', '.undo', function() {
+    $("#undo").addClass('is-hidden');
+    return false;
+});
+
     var getCookie = function (name) {
             var cookieValue = null;
             if (document.cookie && document.cookie !== '') {
@@ -47,7 +52,7 @@ $(document).ready( function () {
 
 // Delete button
     $('.mydelete').on('click', function(){
-      var $this = $(this)
+      var $this = $(this);
       var id = $(this).data('id');
       var row = table.cell($(this)).index().row;
       var idRow = table.rows().eq(0).indexOf(row);

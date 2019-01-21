@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import RepartitionActivite, RepartitionProjet, Commande, Projet
 from .models import Activite, Client, Collaborateur, Responsable_E, Equipe
-from .models import RDate, Pourcentage
+from .models import RDate, Pourcentage, History
 
 
 class RepartitionProjetAdmin(admin.ModelAdmin):
@@ -91,3 +91,11 @@ class PourcentageAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Pourcentage, PourcentageAdmin)
+
+
+class HistoryAdmin(admin.ModelAdmin):
+    ordering = ['date']
+    list_display = ('date', 'user', 'model', 'comment')
+
+
+admin.site.register(History, HistoryAdmin)

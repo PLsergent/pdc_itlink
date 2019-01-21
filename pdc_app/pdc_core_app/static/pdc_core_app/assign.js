@@ -1,16 +1,16 @@
 $(document).ready(function() {
   // Ajout des éléments au premier form du form set
   $('#id_form-TOTAL_FORMS').val(1);
-  $("#assign").find('tr:eq(1)').append('<hr>')
-  $("#assign").find('tr:eq(2)').append($('#deletebutton').html())
-  $("#assign").find('tr:eq(3)').append('<hr>')
+  $("#assign").find('tr:eq(1)').append('<hr>');
+  $("#assign").find('tr:eq(2)').append($('#deletebutton').html());
+  $("#assign").find('tr:eq(3)').append('<hr>');
 
   // Défini la valeur par défaut du premier form set en prenant le mois et l'année en cours
   var today = new Date();
   var month = today.getMonth()+1;
   var year = today.getFullYear();
   $("#id_form-0-month_0").val(month);
-  $('#id_form-0-month_1').val(year)
+  $('#id_form-0-month_1').val(year);
 
 // Lorsque l'on click sur le bouton + on ajoute un form au form set en utilisant
 // le empty_form défini en haut du template
@@ -53,21 +53,21 @@ $(document).ready(function() {
       elt.next().remove();
       elt.remove();
       var iter = 0;
-      total = (index-id)*2
+      total = (index-id)*2;
       while (iter < total){
         if (iter % 2 == 0){
           eltiter.find('th label').attr('for', "id_form-"+id+"-month_0");
           eltiter.find('td .w-month-year').attr({'name': "form-"+id+"-month_0", 'id': "id_form-"+id+"-month_0"});
-          eltiter.find('td .w-year').attr({'name': "form-"+id+"-month_1", 'id': "id_form-"+id+"-month_1"})
-          eltiter.find('a').attr('id', id)
+          eltiter.find('td .w-year').attr({'name': "form-"+id+"-month_1", 'id': "id_form-"+id+"-month_1"});
+          eltiter.find('a').attr('id', id);
           iter ++;
-          eltiter = eltiter.next()
+          eltiter = eltiter.next();
         }else{
           eltiter.find('th label').attr('for', "id_form-"+id+"-pourcentage");
-          eltiter.find('td select').attr({'name': "form-"+id+"-pourcentage", 'id': "id_form-"+id+"-pourcentage"})
+          eltiter.find('td select').attr({'name': "form-"+id+"-pourcentage", 'id': "id_form-"+id+"-pourcentage"});
           id ++;
           iter ++;
-          eltiter = eltiter.next()
+          eltiter = eltiter.next();
         }
       }
     }
