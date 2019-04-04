@@ -36,3 +36,9 @@ Good to go !
 
 Internal management web application used to manage workloads planed. Through the application you can manage your projects, clients, tasks and assignments.
 
+## Screenshots
+
+![projets](https://github.com/PLsergent/pdc_itlink/blob/master/pdc_app/pdc_core_app/static/image/projets_screen.png?raw=true)
+![collab](https://github.com/PLsergent/pdc_itlink/blob/master/pdc_app/pdc_core_app/static/image/collab_screen.png?raw=true)
+
+
