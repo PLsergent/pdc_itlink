@@ -446,7 +446,7 @@ class AjoutProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "Le projet %(projet) aa été créé avec succès."
+    success_message = "Le projet %(projet)s a été créé avec succès."
     permission_required = ('pdc_core_app.add_projet')
 
     def post(self, request):
@@ -493,7 +493,7 @@ class AjoutClient(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
-    success_message = "Le client %(client) aa été créé avec succès."
+    success_message = "Le client %(client)s a été créé avec succès."
     permission_required = ('pdc_core_app.add_client')
 
     def post(self, request):
@@ -539,7 +539,7 @@ class AjoutCollab(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
-    success_message = "Le collaborateur %(collab) aa été créé avec succès."
+    success_message = "Le collaborateur %(collab)s a été créé avec succès."
     permission_required = ('pdc_core_app.add_collaborateur')
 
     def post(self, request):
@@ -586,8 +586,8 @@ class PasserCommande(RevisionMixin, PermissionRequiredMixin,
     form_class = PasserCommandeForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "La commande pour le projet %(proj) " + \
-                      "aa été passée avec succès."
+    success_message = "La commande pour le projet %(proj)s " + \
+                      "a été passée avec succès."
     permission_required = ('pdc_core_app.add_commande')
 
     def post(self, request):
@@ -636,8 +636,8 @@ class NouvelleTacheProbable(RevisionMixin, PermissionRequiredMixin,
     form_class = NouvelleTacheProbableForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "La tâche probable pour le projet %(proj) " + \
-                      "aa été ajouté avec succès."
+    success_message = "La tâche probable pour le projet %(proj)s " + \
+                      "a été ajouté avec succès."
     permission_required = ('pdc_core_app.add_commande')
 
     def post(self, request):
@@ -859,7 +859,7 @@ class UpdateProjet(RevisionMixin, PermissionRequiredMixin, SuccessMessageMixin,
     form_class = AjoutProjetForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "Le projet %(projet) aa été modifié avec succès."
+    success_message = "Le projet %(projet)s a été modifié avec succès."
     permission_required = ('pdc_core_app.change_projet')
 
     def post(self, request, *args, **kwargs):
@@ -913,7 +913,7 @@ class UpdateClient(RevisionMixin, PermissionRequiredMixin,
     form_class = AjoutClientForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('data')
-    success_message = "Le client %(client) aa été modifié avec succès."
+    success_message = "Le client %(client)s a été modifié avec succès."
     permission_required = ('pdc_core_app.change_client')
 
     def post(self, request, *args, **kwargs):
@@ -967,7 +967,7 @@ class UpdateCollab(RevisionMixin, PermissionRequiredMixin,
     form_class = AjoutCollabForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('collaborateurs')
-    success_message = "Le collaborateur %(collab) aa été modifié avec succès."
+    success_message = "Le collaborateur %(collab)s a été modifié avec succès."
     permission_required = ('pdc_core_app.change_collaborateur')
 
     def post(self, request, *args, **kwargs):
@@ -1021,7 +1021,7 @@ class UpdateCommande(RevisionMixin, PermissionRequiredMixin,
     form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('commandes')
-    success_message = "La commande pour le projet %(cmd) aa été modifié " + \
+    success_message = "La commande pour le projet %(cmd)s a été modifié " + \
                       "avec succès."
     permission_required = ('pdc_core_app.change_commande')
 
@@ -1078,8 +1078,8 @@ class UpdateTacheProbable(RevisionMixin, PermissionRequiredMixin,
     form_class = UpdateCommandeForm
     template_name = 'pdc_core_app/add.html'
     success_url = reverse_lazy('projets')
-    success_message = "La tâche probable pour le projet %(proj) " + \
-                      "aa été modifié avec succès."
+    success_message = "La tâche probable pour le projet %(proj)s " + \
+                      "a été modifié avec succès."
     permission_required = ('pdc_core_app.change_commande')
 
     def post(self, request, *args, **kwargs):
