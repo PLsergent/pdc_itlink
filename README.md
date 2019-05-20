@@ -30,6 +30,10 @@ pipenv run python manage.py runserver
 
 By default got to this url : [http://127.0.0.1:8000/pdc/](http://127.0.0.1:8000/pdc/)
 
+Default super_user :
+- username : admin
+- password : admin
+
 Good to go !
 
 ## Description
